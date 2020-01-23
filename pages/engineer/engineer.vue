@@ -70,9 +70,7 @@
 				this.WOList = res.data
 				uni.hideLoading()
 			})
-		},
-		onShow: function onShow() {
-		    wx.hideHomeButton();
+			wx.hideHomeButton();
 		},
 		data() {
 			return {

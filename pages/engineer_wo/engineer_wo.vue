@@ -89,9 +89,17 @@ import Api from '../../api/wo';
 		methods: {
 			closeNowWO(orderId){
 				Api.closeWO(orderId).then(res => {
-					uni.relaunch({
-						url: '/pages/engineer/engineer'
+					uni.showToast({
+						icon:'success',
+						mask:true,
+						title: '关闭工单成功',
+						duration: 1000
 					})
+					setTimeout(function(){
+						uni.reLaunch({
+							url: '/pages/engineer/engineer'
+						})
+					},1000)
 				})
 			}
 		}

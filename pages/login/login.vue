@@ -48,24 +48,28 @@ import Api from '../../api/user';
 							icon:'success',
 							mask:true,
 							title: '登录成功',
-							duration: 2000
+							duration: 1000
 						})
 						uni.hideToast()
 						uni.setStorageSync('token', res.data.token);
 						if(res.data.role=="0"){
-							uni.switchTab({
-								url: '/pages/info/info'
-							});
+							setTimeout(function(){
+								uni.switchTab({
+									url: '/pages/info/info'
+								});
+							},1000)
 						}else if(res.data.role=="1"){
 							uni.showToast({
 								icon:'success',
 								mask:true,
 								title: '工程师',
-								duration: 2000
+								duration: 1000
 							})
-							uni.redirectTo({
-								url: '/pages/engineer/engineer'
-							})
+							setTimeout(function(){
+								uni.reLaunch({
+									url: '/pages/engineer/engineer'
+								})
+							},1000)
 						}else{
 							uni.showToast({
 								icon:'success',
