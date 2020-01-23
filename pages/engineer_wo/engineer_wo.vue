@@ -88,7 +88,11 @@ import Api from '../../api/wo';
 		},
 		methods: {
 			closeNowWO(orderId){
+				uni.showLoading({
+				    title: '关闭中',	
+				})
 				Api.closeWO(orderId).then(res => {
+					uni.hideLoading()
 					uni.showToast({
 						icon:'success',
 						mask:true,
