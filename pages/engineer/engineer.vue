@@ -2,13 +2,13 @@
 <view>
 	<view>
 	    <view class="inv-h-w">
-	        <view :class="['inv-h',Inv==0?'inv-h-se':'']" @click="Inv=0">当前工单</view>
-	        <view :class="['inv-h',Inv==1?'inv-h-se':'']" @click="Inv=1">历史工单</view>
+	        <view :class="['inv-h',Inv==0?'inv-h-se':'']" @click="changeTab(0)">当前工单</view>
+	        <view :class="['inv-h',Inv==1?'inv-h-se':'']" @click="changeTab(1)">历史工单</view>
 	    </view>
 	</view>
 	<view v-show="Inv == 0">
 		<view v-for="item in WOList" :key="item.orderId">
-			<view v-show="item.sts=='2'">
+			<view v-show="item.sts=='2'||item.sts=='3'">
 				<view class="cu-list menu">
 					<view class="cu-item" @click="goWODetail(item.orderId)">
 						<view class="content padding-tb-sm">
@@ -30,7 +30,7 @@
 	</view>
 	<view v-show="Inv == 1">
 		<view v-for="item in WOList" :key="item.orderId">
-			<view v-show="item.sts=='3'||item.sts=='4'">
+			<view v-show="item.sts=='4'">
 				<view class="cu-list menu">
 					<view class="cu-item" @click="goWODetail(item.orderId)">
 						<view class="content padding-tb-sm">
@@ -57,16 +57,23 @@
 	import Api from '../../api/wo';
 	export default {
 		onPullDownRefresh:function(){
-			Api.getHisWO().then(res => {
-				this.WOList = res.data
-				uni.stopPullDownRefresh()
-			})
+			if(this.Inv == 0){
+				Api.getEngineerWO().then(res => {
+					this.WOList = res.data
+					uni.stopPullDownRefresh()
+				})
+			}else if(this.Inv == 1){
+				Api.getEngineerHisWO()().then(res => {
+					this.WOList = res.data
+					uni.stopPullDownRefresh()
+				})
+			}
 		},
 		onLoad:function(){
 			uni.showLoading({
 			    title: '加载中'
 			});
-			Api.getHisWO().then(res => {
+			Api.getEngineerWO().then(res => {
 				this.WOList = res.data
 				uni.hideLoading()
 			})
@@ -95,7 +102,22 @@
 				})
 			},
 			changeTab(Inv){
-			    that.navIdx = Inv;
+				uni.showLoading({
+					mask:true
+				})
+			    this.Inv = Inv
+				if(this.Inv == 0){
+					Api.getEngineerWO().then(res => {
+						this.WOList = res.data
+						uni.hideLoading()
+					})
+				}else if(this.Inv == 1){
+					Api.getEngineerHisWO().then(res => {
+						this.WOList = res.data
+						console.log(this.WOList)
+						uni.hideLoading()
+					})
+				}
 			},
 			returnItem(item){
 				console.log(item)

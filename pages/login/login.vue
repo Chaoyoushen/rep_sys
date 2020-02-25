@@ -44,32 +44,31 @@ import Api from '../../api/user';
 				.then(res => {
 					uni.hideLoading()
 					if(res.code==200){
-						uni.showToast({
-							icon:'success',
-							mask:true,
-							title: '登录成功',
-							duration: 1000
-						})
-						uni.hideToast()
 						uni.setStorageSync('token', res.data.token);
 						if(res.data.role=="0"){
-							setTimeout(function(){
-								uni.switchTab({
-									url: '/pages/info/info'
-								});
-							},1000)
+							uni.showToast({
+								icon:'success',
+								mask:true,
+								title: '登录成功',
+								duration: 1000,
+								success:function(){
+									uni.switchTab({
+										url: '/pages/info/info'
+									});
+								}
+							})
 						}else if(res.data.role=="1"){
 							uni.showToast({
 								icon:'success',
 								mask:true,
 								title: '工程师',
-								duration: 1000
+								duration: 1000,
+								success:function(){
+									uni.reLaunch({
+										url: '/pages/engineer/engineer'
+									})
+								}
 							})
-							setTimeout(function(){
-								uni.reLaunch({
-									url: '/pages/engineer/engineer'
-								})
-							},1000)
 						}else{
 							uni.showToast({
 								icon:'success',

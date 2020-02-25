@@ -7594,9 +7594,9 @@ module.exports = g;
 
 /***/ }),
 /* 4 */
-/*!**************************************************!*\
-  !*** C:/Users/任继辉/Desktop/工作/rep_sys/pages.json ***!
-  \**************************************************/
+/*!**********************************!*\
+  !*** F:/code/rep_sys/pages.json ***!
+  \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8501,20 +8501,20 @@ module.exports = {"_from":"@dcloudio/uni-stat@alpha","_id":"@dcloudio/uni-stat@2
 
 /***/ }),
 /* 7 */
-/*!*******************************************************************!*\
-  !*** C:/Users/任继辉/Desktop/工作/rep_sys/pages.json?{"type":"style"} ***!
-  \*******************************************************************/
+/*!***************************************************!*\
+  !*** F:/code/rep_sys/pages.json?{"type":"style"} ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/login/login": { "navigationBarTitleText": "BNLD报修系统", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/index/index": { "navigationBarTitleText": "BNLD报修系统", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/worker_wo/worker_wo": { "navigationBarTitleText": "工单查看", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/custum_work_order/custum_work_order": { "navigationBarTitleText": "工单上报", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/info/info": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/his_wo/his_wo": { "navigationBarTitleText": "历史工单", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/engineer/engineer": { "navigationBarTitleText": "工程师", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/engineer_wo/engineer_wo": { "navigationBarTitleText": "工单详细信息", "usingComponents": {}, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "BNLD报修系统", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/login/login": { "navigationBarTitleText": "BNLD报修系统" }, "pages/index/index": { "navigationBarTitleText": "BNLD报修系统" }, "pages/worker_wo/worker_wo": { "navigationBarTitleText": "工单查看" }, "pages/custum_work_order/custum_work_order": { "navigationBarTitleText": "工单上报" }, "pages/info/info": {}, "pages/his_wo/his_wo": { "navigationBarTitleText": "历史工单", "enablePullDownRefresh": true }, "pages/engineer/engineer": { "navigationBarTitleText": "工程师", "enablePullDownRefresh": true }, "pages/engineer_wo/engineer_wo": { "navigationBarTitleText": "工单详细信息" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "BNLD报修系统", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 /* 8 */
-/*!******************************************************************!*\
-  !*** C:/Users/任继辉/Desktop/工作/rep_sys/pages.json?{"type":"stat"} ***!
-  \******************************************************************/
+/*!**************************************************!*\
+  !*** F:/code/rep_sys/pages.json?{"type":"stat"} ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8654,9 +8654,9 @@ function normalizeComponent (
 /* 19 */,
 /* 20 */,
 /* 21 */
-/*!***************************************************!*\
-  !*** C:/Users/任继辉/Desktop/工作/rep_sys/api/user.js ***!
-  \***************************************************/
+/*!***********************************!*\
+  !*** F:/code/rep_sys/api/user.js ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8673,6 +8673,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   },
 
+  logout: function logout() {
+    return (0, _index.default)().post('/user/logout', {
+      header: {
+        contentType: 'application/json' } });
+
+
+  },
+
   getUserInfo: function getUserInfo() {
     return (0, _index.default)().post('/user/getUserInfo', {
       header: {
@@ -8683,9 +8691,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 /* 22 */
-/*!******************************************************************!*\
-  !*** C:/Users/任继辉/Desktop/工作/rep_sys/common/request/js/index.js ***!
-  \******************************************************************/
+/*!**************************************************!*\
+  !*** F:/code/rep_sys/common/request/js/index.js ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8723,9 +8731,9 @@ create;exports.default = _default;
 
 /***/ }),
 /* 23 */
-/*!***********************************************************************!*\
-  !*** C:/Users/任继辉/Desktop/工作/rep_sys/common/request/js/core/index.js ***!
-  \***********************************************************************/
+/*!*******************************************************!*\
+  !*** F:/code/rep_sys/common/request/js/core/index.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8870,9 +8878,9 @@ MyRequest;exports.default = _default;
 
 /***/ }),
 /* 24 */
-/*!*****************************************************************************!*\
-  !*** C:/Users/任继辉/Desktop/工作/rep_sys/common/request/js/core/interceptor.js ***!
-  \*****************************************************************************/
+/*!*************************************************************!*\
+  !*** F:/code/rep_sys/common/request/js/core/interceptor.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8921,9 +8929,9 @@ Interceptor;exports.default = _default;
 
 /***/ }),
 /* 25 */
-/*!*****************************************************************************!*\
-  !*** C:/Users/任继辉/Desktop/工作/rep_sys/common/request/js/core/mergeConfig.js ***!
-  \*****************************************************************************/
+/*!*************************************************************!*\
+  !*** F:/code/rep_sys/common/request/js/core/mergeConfig.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9008,9 +9016,9 @@ mergeConfig;exports.default = _default;
 
 /***/ }),
 /* 26 */
-/*!******************************************************************!*\
-  !*** C:/Users/任继辉/Desktop/工作/rep_sys/common/request/js/tools.js ***!
-  \******************************************************************/
+/*!**************************************************!*\
+  !*** F:/code/rep_sys/common/request/js/tools.js ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9195,9 +9203,9 @@ $;exports.default = _default;
 
 /***/ }),
 /* 27 */
-/*!*************************************************************************!*\
-  !*** C:/Users/任继辉/Desktop/工作/rep_sys/common/request/js/core/network.js ***!
-  \*************************************************************************/
+/*!*********************************************************!*\
+  !*** F:/code/rep_sys/common/request/js/core/network.js ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9281,9 +9289,9 @@ function addTask(config, instance) {
 
 /***/ }),
 /* 28 */
-/*!*******************************************************************!*\
-  !*** C:/Users/任继辉/Desktop/工作/rep_sys/common/request/js/config.js ***!
-  \*******************************************************************/
+/*!***************************************************!*\
+  !*** F:/code/rep_sys/common/request/js/config.js ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9303,8 +9311,8 @@ var globalInterceptor = {
                                            * `header` 中`content-type`设置特殊参数 或 配置其他会导致触发 跨域 问题，出现跨域会直接进入响应拦截器的catch函数中
                                            */exports.globalInterceptor = globalInterceptor;
 var config = {
-  //baseURL: 'http://139.196.149.14:7002',
-  baseURL: 'http://127.0.0.1:7002',
+  baseURL: 'https://bnld.chaoyous.cn',
+  // baseURL:'http://127.0.0.1:7002',
   header: {
     // 'X-Auth-Token': 'xxxx',
     contentType: 'application/x-www-form-urlencoded'
@@ -10246,9 +10254,9 @@ if (hadRuntime) {
 /* 44 */,
 /* 45 */,
 /* 46 */
-/*!*************************************************!*\
-  !*** C:/Users/任继辉/Desktop/工作/rep_sys/api/wo.js ***!
-  \*************************************************/
+/*!*********************************!*\
+  !*** F:/code/rep_sys/api/wo.js ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10266,6 +10274,20 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   getHisWO: function getHisWO() {
     return (0, _index.default)().post('/wo/getHisWO', {
+      header: {
+        contentType: 'application/json' } });
+
+
+  },
+  getEngineerHisWO: function getEngineerHisWO() {
+    return (0, _index.default)().post('/wo/getEngineerHisWO', {
+      header: {
+        contentType: 'application/json' } });
+
+
+  },
+  getEngineerWO: function getEngineerWO() {
+    return (0, _index.default)().post('/wo/getEngineerWO', {
       header: {
         contentType: 'application/json' } });
 

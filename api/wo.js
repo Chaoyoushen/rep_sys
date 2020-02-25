@@ -16,6 +16,20 @@ export default {
 	        },
 	    });
 	},
+	getEngineerHisWO() {
+	    return Request().post('/wo/getEngineerHisWO', {
+	        header: {
+	            contentType: 'application/json'
+	        },
+	    });
+	},
+	getEngineerWO() {
+	    return Request().post('/wo/getEngineerWO', {
+	        header: {
+	            contentType: 'application/json'
+	        },
+	    });
+	},
 	getWOInfo(data) {
 	    return Request().post('/wo/getWOInfo', {
 	        header: {

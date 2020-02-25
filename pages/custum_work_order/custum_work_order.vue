@@ -145,7 +145,11 @@ import Api from '../../api/wo';
 				})
 			},
 			PickerChange(e) {
-				this.index = e.detail.value
+				if(e.detail.value === -1){
+					this.index = 0	
+				}else{
+					this.index = e.detail.value
+				}
 				this.faultId = this.faultPickerArray[this.index].value
 			},
 			MultiChange(e) {
@@ -229,16 +233,28 @@ import Api from '../../api/wo';
 				    title: '提交中',	
 				})
 				Api.createWO(data,this.imgList).then(res =>{
+					this.index = -1
+					this.imgList = []
+					this.multiIndex = [0, 0]
+					this.flag = false
+					this.machineId = ''
+					this.faultId = ''
+					this.description = ''
+					this.person = ''
+					this.phone = ''
 					uni.hideLoading()
 					if(res.code==200){
-						wx.showToast({
-							icon:'success',
-							mask:true,
-							title: '提交成功',
-							duration: 2000
-						})
-						uni.switchTab({
-							url:'/pages/his_wo/his_wo'
+						uni.showModal({
+							title:"提交成功",
+							content:"你已完成报修工单的提交！",
+							showCancel:false,
+							confirmText:"完成",
+							success:function(){
+								uni.hideLoading()
+								uni.reLaunch({
+									url:'/pages/his_wo/his_wo'
+								})
+							}
 						})
 					}else{
 						wx.showToast({

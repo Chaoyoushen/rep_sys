@@ -10,6 +10,14 @@ export default {
         });
     },
 	
+	logout() {
+	    return Request().post('/user/logout', {
+	        header: {
+	            contentType: 'application/json'
+	        },
+	    });
+	},
+	
 	getUserInfo() {
 	    return Request().post('/user/getUserInfo', {
 	        header: {
