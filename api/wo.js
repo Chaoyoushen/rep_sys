@@ -46,6 +46,22 @@ export default {
 			data:data
 		});
 	},
+	acceptWO(data) {
+		return Request().post('/wo/acceptWO', {
+			header: {
+				contentType: 'application/json'
+			},
+			data:data
+		});
+	},
+	uploadOperation(data) {
+	    return Request().post('/operation/uploadOperation', {
+	        header: {
+	            contentType: 'application/json'
+	        },
+			data:data
+	    });
+	},
 	async createWO(data,imgList) {
 		let imgPath = '';
 		for (let k in imgList) {
