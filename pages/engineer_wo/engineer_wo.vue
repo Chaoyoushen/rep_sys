@@ -170,9 +170,9 @@ import Api from '../../api/wo';
      },1000)
     })
    },
-   goWODetail(){
+   goWODetail(orderId){
    	uni.navigateTo({
-   		url:'/pages/operation_his/operation_his'
+   		url:'/pages/operation_his/operation_his?orderId='+orderId
    	})
    },
   }

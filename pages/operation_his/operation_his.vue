@@ -21,17 +21,17 @@
 <script>
 	import Api from '../../api/wo';
 	export default {
-		onPullDownRefresh:function(){
-			Api.getOpWO().then(res => {
+		onPullDownRefresh:function(option){
+			Api.getOpWO(option.orderId).then(res => {
 					this.WOList = res.data
 					uni.stopPullDownRefresh()
 				})
 		},
-		onLoad:function(){
+		onLoad:function(option){
 			uni.showLoading({
 			    title: '加载中'
 			});
-			Api.getOpWO().then(res => {
+			Api.getOpWO(option.orderId).then(res => {
 					this.WOList = res.data
 					uni.hideLoading()
 				})

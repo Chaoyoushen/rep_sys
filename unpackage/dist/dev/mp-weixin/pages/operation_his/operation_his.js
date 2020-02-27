@@ -190,7 +190,7 @@ var _wo = _interopRequireDefault(__webpack_require__(/*! ../../api/wo */ 46));fu
 //
 //
 //
-var _default = { onPullDownRefresh: function onPullDownRefresh() {var _this = this;_wo.default.getOpWO().then(function (res) {_this.WOList = res.data;uni.stopPullDownRefresh();});}, onLoad: function onLoad() {var _this2 = this;uni.showLoading({ title: '加载中' });_wo.default.getOpWO().then(function (res) {_this2.WOList = res.data;uni.hideLoading();});}, data: function data() {return { WOList: [] };
+var _default = { onPullDownRefresh: function onPullDownRefresh(option) {var _this = this;_wo.default.getOpWO(option.orderId).then(function (res) {_this.WOList = res.data;uni.stopPullDownRefresh();});}, onLoad: function onLoad(option) {var _this2 = this;uni.showLoading({ title: '加载中' });_wo.default.getOpWO(option.orderId).then(function (res) {_this2.WOList = res.data;uni.hideLoading();});}, data: function data() {return { WOList: [] };
   },
   methods: {
     getDate: function getDate(e) {

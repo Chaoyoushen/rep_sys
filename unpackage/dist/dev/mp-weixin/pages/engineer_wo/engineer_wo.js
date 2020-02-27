@@ -305,9 +305,9 @@ var _default = { onLoad: function onLoad(option) {var _this = this;_wo.default.g
         }, 1000);
       });
     },
-    goWODetail: function goWODetail() {
+    goWODetail: function goWODetail(orderId) {
       uni.navigateTo({
-        url: '/pages/operation_his/operation_his' });
+        url: '/pages/operation_his/operation_his?orderId=' + orderId });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
