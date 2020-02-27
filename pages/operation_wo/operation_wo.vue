@@ -40,7 +40,7 @@ import Api from '../../api/wo';
 				console.log(res)
 				this.person=res.data.person
 				this.operationId=option.operationId
-				this.operationInfo=option.operationInfo
+				this.operationInfo=res.data.operationInfo
 				
 			})
 		},

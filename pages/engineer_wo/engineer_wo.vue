@@ -70,7 +70,11 @@
     <button type="primary" disabled="true" plain="true">表单已关闭</button>
    </view>
   </view>
-  
+  <view class="button-sp-area">
+   <view class="padding flex flex-direction margin-top" >
+    <button type="primary" plain="true" @click="goWODetail(orderId)">查看操作</button>
+   </view>
+  </view>
  </view>
 </template>
 
@@ -165,7 +169,12 @@ import Api from '../../api/wo';
       })
      },1000)
     })
-   }
+   },
+   goWODetail(){
+   	uni.navigateTo({
+   		url:'/pages/operation_his/operation_his'
+   	})
+   },
   }
  }
 </script>

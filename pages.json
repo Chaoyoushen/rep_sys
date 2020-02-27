@@ -83,12 +83,7 @@
 				"selectedIconPath":"static/his_selected.png",
 				"text":"历史工单"
 			},
-			{
-				"pagePath":"pages/operation_his/operation_his",
-				"iconPath":"static/user.png",
-				"selectedIconPath":"static/user_selected.png",
-				"text":"操作信息"
-			},
+			
 			{
 				"pagePath":"pages/info/info",
 				"iconPath":"static/user.png",

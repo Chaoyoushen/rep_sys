@@ -10334,11 +10334,20 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       data: data });
 
   },
-  getOpWO: function getOpWO() {
+  getOPInfo: function getOPInfo(data) {
+    return (0, _index.default)().post('/operation/getOPInfo', {
+      header: {
+        contentType: 'application/json' },
+
+      data: data });
+
+  },
+  getOpWO: function getOpWO(data) {
     return (0, _index.default)().post('/operation/queryOPList', {
       header: {
-        contentType: 'application/json' } });
+        contentType: 'application/json' },
 
+      data: data });
 
   },
   uploadOperation: function uploadOperation(data) {

@@ -54,13 +54,19 @@
 				uni.navigateTo({
 					url:'../operation_wo/operation_wo?operationId='+operationId
 				})
+				
 			}
-			
 			}
 		}
 	
 </script>
 
 <style>
-
+ .cu-form-group .title {
+  min-width: calc(4em + 15px);
+ }
+ 
+ button{
+  width: 90%;
+ }
 </style>

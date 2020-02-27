@@ -210,6 +210,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
 var _wo = _interopRequireDefault(__webpack_require__(/*! ../../api/wo */ 46));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -286,11 +290,11 @@ var _wo = _interopRequireDefault(__webpack_require__(/*! ../../api/wo */ 46));fu
 //
 //
 //
-var _default = { onLoad: function onLoad(option) {var _this = this;_wo.default.getWOInfo(option.orderId).then(function (res) {console.log(res);_this.orderId = option.orderId;_this.person = res.data.person;_this.phone = res.data.phone;_this.br = res.data.br;_this.fault = res.data.fault;_this.machine = res.data.machine;_this.sts = res.data.wosts;});}, data: function data() {return { orderId: '', person: '', phone: '', fault: '', machine: '', br: '', sts: '' };}, methods: { setOperationInfo: function setOperationInfo(e) {this.operationInfo = e.detail.value;}, upOperation: function upOperation() {var data = { orderId: this.orderId, person: this.person, operationInfo: this.operationInfo };if (data.operationInfo == '') {uni.showToast({ title: '请输入理由', icon: 'none' });return;}uni.showLoading({ title: '提交中' });_wo.default.uploadOperation(data).then(function (res) {uni.hideLoading();if (res.code == 200) {uni.showModal({ title: "提交成功", content: "你已完成提交！", showCancel: false, confirmText: "完成", success: function success() {uni.hideLoading();uni.reLaunch({ url: '/pages/engineer/engineer' });} });} else {wx.showToast({ icon: 'none', title: '提交失败', mask: true, duration: 2000 });}});}, acceptNowWO: function acceptNowWO(orderId) {uni.showLoading({ title: '接受中' });_wo.default.acceptWO(orderId).then(function (res) {
-        uni.hideLoading();
-        uni.showToast({
-          icon: 'success',
-          mask: true,
+//
+//
+//
+//
+var _default = { onLoad: function onLoad(option) {var _this = this;_wo.default.getWOInfo(option.orderId).then(function (res) {console.log(res);_this.orderId = option.orderId;_this.person = res.data.person;_this.phone = res.data.phone;_this.br = res.data.br;_this.fault = res.data.fault;_this.machine = res.data.machine;_this.sts = res.data.wosts;});}, data: function data() {return { orderId: '', person: '', phone: '', fault: '', machine: '', br: '', sts: '' };}, methods: { setOperationInfo: function setOperationInfo(e) {this.operationInfo = e.detail.value;}, upOperation: function upOperation() {var data = { orderId: this.orderId, person: this.person, operationInfo: this.operationInfo };if (data.operationInfo == '') {uni.showToast({ title: '请输入理由', icon: 'none' });return;}uni.showLoading({ title: '提交中' });_wo.default.uploadOperation(data).then(function (res) {uni.hideLoading();if (res.code == 200) {uni.showModal({ title: "提交成功", content: "你已完成提交！", showCancel: false, confirmText: "完成", success: function success() {uni.hideLoading();uni.reLaunch({ url: '/pages/engineer/engineer' });} });} else {wx.showToast({ icon: 'none', title: '提交失败', mask: true, duration: 2000 });}});}, acceptNowWO: function acceptNowWO(orderId) {uni.showLoading({ title: '接受中' });_wo.default.acceptWO(orderId).then(function (res) {uni.hideLoading();uni.showToast({ icon: 'success', mask: true,
           title: '接受工单成功',
           duration: 1000 });
 
@@ -300,6 +304,11 @@ var _default = { onLoad: function onLoad(option) {var _this = this;_wo.default.g
 
         }, 1000);
       });
+    },
+    goWODetail: function goWODetail() {
+      uni.navigateTo({
+        url: '/pages/operation_his/operation_his' });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
