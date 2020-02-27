@@ -54,6 +54,13 @@ export default {
 			data:data
 		});
 	},
+	getOpWO() {
+	    return Request().post('/operation/queryOPList', {
+	        header: {
+	            contentType: 'application/json'
+	        },
+	    });
+	},
 	uploadOperation(data) {
 	    return Request().post('/operation/uploadOperation', {
 	        header: {

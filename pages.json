@@ -47,6 +47,19 @@
 				"navigationBarTitleText": "工单详细信息"
 			}
 		}
+        ,{
+            "path" : "pages/operation_his/operation_his",
+            "style" : {
+				"navigationBarTitleText": "工单信息",
+				"enablePullDownRefresh": true
+			}
+        },
+		{
+		    "path" : "pages/operation_wo/operation_wo",
+		    "style" : {
+				"navigationBarTitleText": "操作信息"
+			}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -69,6 +82,12 @@
 				"iconPath":"static/his.png",
 				"selectedIconPath":"static/his_selected.png",
 				"text":"历史工单"
+			},
+			{
+				"pagePath":"pages/operation_his/operation_his",
+				"iconPath":"static/user.png",
+				"selectedIconPath":"static/user_selected.png",
+				"text":"操作信息"
 			},
 			{
 				"pagePath":"pages/info/info",

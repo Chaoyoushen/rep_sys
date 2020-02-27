@@ -8525,7 +8525,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@alpha","_id":"@dcloudio/uni-stat@2
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/login/login": { "navigationBarTitleText": "BNLD报修系统" }, "pages/index/index": { "navigationBarTitleText": "BNLD报修系统" }, "pages/worker_wo/worker_wo": { "navigationBarTitleText": "工单查看" }, "pages/custum_work_order/custum_work_order": { "navigationBarTitleText": "工单上报" }, "pages/info/info": {}, "pages/his_wo/his_wo": { "navigationBarTitleText": "历史工单", "enablePullDownRefresh": true }, "pages/engineer/engineer": { "navigationBarTitleText": "工程师", "enablePullDownRefresh": true }, "pages/engineer_wo/engineer_wo": { "navigationBarTitleText": "工单详细信息" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "BNLD报修系统", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/login/login": { "navigationBarTitleText": "BNLD报修系统" }, "pages/index/index": { "navigationBarTitleText": "BNLD报修系统" }, "pages/worker_wo/worker_wo": { "navigationBarTitleText": "工单查看" }, "pages/custum_work_order/custum_work_order": { "navigationBarTitleText": "工单上报" }, "pages/info/info": {}, "pages/his_wo/his_wo": { "navigationBarTitleText": "历史工单", "enablePullDownRefresh": true }, "pages/engineer/engineer": { "navigationBarTitleText": "工程师", "enablePullDownRefresh": true }, "pages/engineer_wo/engineer_wo": { "navigationBarTitleText": "工单详细信息" }, "pages/operation_his/operation_his": { "navigationBarTitleText": "工单信息", "enablePullDownRefresh": true }, "pages/operation_wo/operation_wo": { "navigationBarTitleText": "操作信息" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "BNLD报修系统", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 /* 8 */
@@ -10332,6 +10332,13 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         contentType: 'application/json' },
 
       data: data });
+
+  },
+  getOpWO: function getOpWO() {
+    return (0, _index.default)().post('/operation/queryOPList', {
+      header: {
+        contentType: 'application/json' } });
+
 
   },
   uploadOperation: function uploadOperation(data) {
