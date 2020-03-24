@@ -7,7 +7,9 @@
     "pages/info/info",
     "pages/his_wo/his_wo",
     "pages/engineer/engineer",
-    "pages/engineer_wo/engineer_wo"
+    "pages/engineer_wo/engineer_wo",
+    "pages/operation_his/operation_his",
+    "pages/operation_wo/operation_wo"
   ],
   "subPackages": [],
   "window": {

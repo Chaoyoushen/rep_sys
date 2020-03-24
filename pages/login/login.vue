@@ -35,51 +35,84 @@ import Api from '../../api/user';
 				}, 
             }
         },
+		onLoad() {
+			if(uni.getStorageSync('token') != null){
+				this.direct(uni.getStorageSync('role'))
+			}
+		},
         methods: {
+			makeLogin(e){
+				wx.login({
+					timeout:5000,
+					success:(res)=>{
+						let data = {
+							workNo: e.detail.value.workNo,
+							password: e.detail.value.password,
+							code: res.code
+						}
+						Api.login(data)
+						.then(res => {
+							uni.hideLoading()
+							if(res.code==200){
+								uni.setStorageSync('token', res.data.token);
+								uni.setStorageSync('session_key', res.data.sessionKey);
+								uni.setStorageSync('role', res.data.role);
+								this.direct(res.data.role)
+							}
+						})
+					}
+				})
+			},
             login: function(e) {
 				uni.showLoading({
 				    title: '登录中',	
 				})
-				Api.login(e.detail.value)
-				.then(res => {
+				if(!uni.getStorageSync('token')){
+					this.makeLogin(e)
+				}else{
 					uni.hideLoading()
-					if(res.code==200){
-						uni.setStorageSync('token', res.data.token);
-						if(res.data.role=="0"){
-							uni.showToast({
-								icon:'success',
-								mask:true,
-								title: '登录成功',
-								duration: 1000,
-								success:function(){
-									uni.switchTab({
-										url: '/pages/info/info'
-									});
-								}
-							})
-						}else if(res.data.role=="1"){
-							uni.showToast({
-								icon:'success',
-								mask:true,
-								title: '工程师',
-								duration: 1000,
-								success:function(){
-									uni.reLaunch({
-										url: '/pages/engineer/engineer'
-									})
-								}
-							})
-						}else{
-							uni.showToast({
-								icon:'success',
-								mask:true,
-								title: '管理员',
-								duration: 2000
+					wx.checkSession({
+						success:()=>{
+							this.direct(uni.getStorageSync('role'))
+						},
+						fail:this.makeLogin(e)
+					})
+				}
+            },
+			direct(data){
+				if(data=="0"){
+					uni.showToast({
+						icon:'success',
+						mask:true,
+						title: '登录成功',
+						duration: 1000,
+						success:function(){
+							uni.switchTab({
+								url: '/pages/info/info'
+							});
+						}
+					})
+				}else if(data=="1"){
+					uni.showToast({
+						icon:'success',
+						mask:true,
+						title: '工程师',
+						duration: 1000,
+						success:function(){
+							uni.reLaunch({
+								url: '/pages/engineer/engineer'
 							})
 						}
-					}
-				})
-            }
+					})
+				}else{
+					uni.showToast({
+						icon:'success',
+						mask:true,
+						title: '管理员',
+						duration: 2000
+					})
+				}
+			}
         }
     }
 </script>
