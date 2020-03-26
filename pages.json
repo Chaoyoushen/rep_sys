@@ -60,6 +60,16 @@
 				"navigationBarTitleText": "操作信息"
 			}
 		}
+        ,{
+            "path" : "pages/grab_wo/grab_wo",
+            "style" : {
+				"navigationBarTitleText": "抢单"
+			}
+        }
+        ,{
+            "path" : "pages/grab_detail/grab_detail",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

@@ -30,6 +30,30 @@ export default {
 	        },
 	    });
 	},
+	
+	initGrabWOList() {
+	    return Request().post('/wo/initGrabWOList', {
+	        header: {
+	            contentType: 'application/json'
+	        },
+	    });
+	},
+	grabWO(data) {
+	    return Request().post('/wo/grabWO', {
+	        header: {
+	            contentType: 'application/json'
+	        },
+			data:data
+	    });
+	},
+	changeWOAcceptPerson(data) {
+	    return Request().post('/wo/changeWOAcceptPerson', {
+	        header: {
+	            contentType: 'application/json'
+	        },
+			data:data
+	    });
+	},
 	getWOInfo(data) {
 	    return Request().post('/wo/getWOInfo', {
 	        header: {
@@ -38,8 +62,8 @@ export default {
 			data:data
 	    });
 	},
-	closeWO(data) {
-		return Request().post('/wo/closeWO', {
+	queryNextPerson(data) {
+		return Request().post('/wo/queryNextPerson', {
 			header: {
 				contentType: 'application/json'
 			},

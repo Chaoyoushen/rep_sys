@@ -9,7 +9,9 @@
     "pages/engineer/engineer",
     "pages/engineer_wo/engineer_wo",
     "pages/operation_his/operation_his",
-    "pages/operation_wo/operation_wo"
+    "pages/operation_wo/operation_wo",
+    "pages/grab_wo/grab_wo",
+    "pages/grab_detail/grab_detail"
   ],
   "subPackages": [],
   "window": {
@@ -42,6 +44,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap71.json"
+  "usingComponents": {}
 }

@@ -1,5 +1,8 @@
 <template>
 <view>
+	<view class="padding flex flex-direction margin-top">
+		<button class="cu-btn bg-gradual-blue lg" @click="intoGrab">进入抢单页面</button>
+	</view>
 	<view>
 	    <view class="inv-h-w">
 	        <view :class="['inv-h',Inv==0?'inv-h-se':'']" @click="changeTab(0)">当前工单</view>
@@ -99,6 +102,11 @@
 				console.log(orderId)
 				uni.navigateTo({
 					url:'../engineer_wo/engineer_wo?orderId='+orderId
+				})
+			},
+			intoGrab(){
+				uni.navigateTo({
+					url:'../grab_wo/grab_wo'
 				})
 			},
 			changeTab(Inv){
