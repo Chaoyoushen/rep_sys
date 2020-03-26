@@ -754,7 +754,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -7083,7 +7083,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -7104,14 +7104,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -7187,7 +7187,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -9313,7 +9313,7 @@ function addTask(config, instance) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.saveToken = saveToken;exports.config = exports.globalInterceptor = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 29));var _interceptor = _interopRequireDefault(__webpack_require__(/*! ./core/interceptor */ 24));
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.saveToken = saveToken;exports.verifyToken = verifyToken;exports.config = exports.globalInterceptor = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 29));var _interceptor = _interopRequireDefault(__webpack_require__(/*! ./core/interceptor */ 24));
 var _index = _interopRequireDefault(__webpack_require__(/*! ./index */ 22));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
 
 var globalInterceptor = {
@@ -9386,9 +9386,12 @@ globalInterceptor.response.use( /*#__PURE__*/function () {var _ref = _asyncToGen
 
 
 
+
             data =
 
             res.data, code = res.data.code;_context.prev = 4;_context.next = 7;return (
+
+
 
 
               handleCode({ data: data, code: code, config: config }));case 7:return _context.abrupt("return", _context.sent);case 10:_context.prev = 10;_context.t0 = _context["catch"](4);return _context.abrupt("return",
@@ -9425,6 +9428,19 @@ function saveToken(token) {
   uni.setStorageSync('token', token);
 }
 
+function verifyToken(data) {
+  if (data.code === 501 && data.data === 2001) {
+    uni.showToast({
+      title: '登录过期',
+      success: function success() {
+        uni.reLaunch({
+          url: '/pages/login/login.vue' });
+
+      } });
+
+  }
+}
+
 /**
    * 处理 http状态码
    * @param {object} o
@@ -9434,13 +9450,27 @@ function saveToken(token) {
    * @return {object|Promise<reject>}
    */
 function handleCode(_ref2) {var data = _ref2.data,code = _ref2.code,config = _ref2.config;
+  if (data.code === 501 && data.data === 2001) {
+    uni.showModal({
+      showCancel: false,
+      title: '提示',
+      content: '登录过期请重试',
+      success: function success() {
+        debugger;
+        uni.setStorageSync('token', null);
+        uni.redirectTo({
+          url: '/pages/login/login.vue' });
+
+      } });
+
+  }
   var STATUS = {
     '200': function _() {
       return data;
     },
     '400': function _() {
       // return { code, msg: '请求错误' };
-      return Promise.reject({ code: code, msg: '请求错误' });
+      return Promise.reject();
     },
     '401': function _() {
 

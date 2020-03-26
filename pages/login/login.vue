@@ -54,10 +54,18 @@ import Api from '../../api/user';
 						.then(res => {
 							uni.hideLoading()
 							if(res.code==200){
-								uni.setStorageSync('token', res.data.token);
-								uni.setStorageSync('session_key', res.data.sessionKey);
-								uni.setStorageSync('role', res.data.role);
-								this.direct(res.data.role)
+								if(res.data.role=='2'){
+									uni.showToast({
+										icon:'success',
+										mask:true,
+										title: '管理员无权登录',
+										duration: 2000,
+									})
+								}else{
+									uni.setStorageSync('token', res.data.token);
+									uni.setStorageSync('role', res.data.role);
+									this.direct(res.data.role)
+								}
 							}
 						})
 					}
@@ -73,14 +81,19 @@ import Api from '../../api/user';
 					uni.hideLoading()
 					wx.checkSession({
 						success:()=>{
+							console.log('登录态有效')
 							this.direct(uni.getStorageSync('role'))
 						},
-						fail:this.makeLogin(e)
+						fail: () => {
+							console.log('登录态失效')
+							this.makeLogin(e)
+						}
 					})
 				}
             },
 			direct(data){
-				if(data=="0"){
+
+				if(data== '0'){
 					uni.showToast({
 						icon:'success',
 						mask:true,
@@ -88,11 +101,11 @@ import Api from '../../api/user';
 						duration: 1000,
 						success:function(){
 							uni.switchTab({
-								url: '/pages/info/info'
+								url: '/pages/his_wo/his_wo'
 							});
 						}
 					})
-				}else if(data=="1"){
+				}else if(data=='1'||data=='3'){
 					uni.showToast({
 						icon:'success',
 						mask:true,
@@ -103,13 +116,6 @@ import Api from '../../api/user';
 								url: '/pages/engineer/engineer'
 							})
 						}
-					})
-				}else{
-					uni.showToast({
-						icon:'success',
-						mask:true,
-						title: '管理员',
-						duration: 2000
 					})
 				}
 			}

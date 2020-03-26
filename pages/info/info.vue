@@ -36,6 +36,8 @@
 		methods: {
 			logout(){
 				Api.logout().then(()=>{
+					uni.setStorageSync('token',null)
+					uni.setStorageSync('role',null)
 					uni.reLaunch({
 						url: '../login/login'
 					})

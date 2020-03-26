@@ -70,10 +70,13 @@ globalInterceptor.response.use(
             return res;
         }
 
+
         const {
             data,
             data: { code }
         } = res;
+		
+
 
         try {
             return await handleCode({ data, code, config });
@@ -110,6 +113,19 @@ export function saveToken(token) {
     uni.setStorageSync('token', token);
 }
 
+export function verifyToken(data) {
+    if(data.code===501&&data.data===2001){
+    	uni.showToast({
+    		title:'登录过期',
+			success: () => {
+				uni.reLaunch({
+					url:'/pages/login/login.vue'
+				})
+			}
+    	})
+    }
+}
+
 /**
  * 处理 http状态码
  * @param {object} o
@@ -119,13 +135,27 @@ export function saveToken(token) {
  * @return {object|Promise<reject>}
  */
 function handleCode({ data, code, config }) {
+	if(data.code===501&&data.data===2001){
+		uni.showModal({
+			showCancel:false,
+			title:'提示',
+			content:'登录过期请重试',
+			success() {
+				debugger
+				uni.setStorageSync('token',null)
+				uni.redirectTo({
+					url:'/pages/login/login.vue'
+				})
+			}
+		})
+	}
     const STATUS = {
         '200'() {
             return data;
         },
         '400'() {
             // return { code, msg: '请求错误' };
-            return Promise.reject({ code, msg: '请求错误' });
+            return Promise.reject();
         },
         '401'() {
 

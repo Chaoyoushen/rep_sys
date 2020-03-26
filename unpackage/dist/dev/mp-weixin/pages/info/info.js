@@ -171,6 +171,8 @@ var _user = _interopRequireDefault(__webpack_require__(/*! ../../api/user */ 21)
 //
 //
 var _default = { onLoad: function onLoad() {var _this = this;_user.default.getUserInfo().then(function (res) {console.log(res);_this.bkName = res.data.name;});}, data: function data() {return { bkName: '' };}, methods: { logout: function logout() {_user.default.logout().then(function () {
+        uni.setStorageSync('token', null);
+        uni.setStorageSync('role', null);
         uni.reLaunch({
           url: '../login/login' });
 

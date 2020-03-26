@@ -196,10 +196,18 @@ var _default = { data: function data() {return { loginForm: { workNo: "05370", p
           then(function (res) {
             uni.hideLoading();
             if (res.code == 200) {
-              uni.setStorageSync('token', res.data.token);
-              uni.setStorageSync('session_key', res.data.sessionKey);
-              uni.setStorageSync('role', res.data.role);
-              _this.direct(res.data.role);
+              if (res.data.role == '2') {
+                uni.showToast({
+                  icon: 'success',
+                  mask: true,
+                  title: '管理员无权登录',
+                  duration: 2000 });
+
+              } else {
+                uni.setStorageSync('token', res.data.token);
+                uni.setStorageSync('role', res.data.role);
+                _this.direct(res.data.role);
+              }
             }
           });
         } });
@@ -215,14 +223,19 @@ var _default = { data: function data() {return { loginForm: { workNo: "05370", p
         uni.hideLoading();
         wx.checkSession({
           success: function success() {
+            console.log('登录态有效');
             _this2.direct(uni.getStorageSync('role'));
           },
-          fail: this.makeLogin(e) });
+          fail: function fail() {
+            console.log('登录态失效');
+            _this2.makeLogin(e);
+          } });
 
       }
     },
     direct: function direct(data) {
-      if (data == "0") {
+
+      if (data == '0') {
         uni.showToast({
           icon: 'success',
           mask: true,
@@ -230,11 +243,11 @@ var _default = { data: function data() {return { loginForm: { workNo: "05370", p
           duration: 1000,
           success: function success() {
             uni.switchTab({
-              url: '/pages/info/info' });
+              url: '/pages/his_wo/his_wo' });
 
           } });
 
-      } else if (data == "1") {
+      } else if (data == '1' || data == '3') {
         uni.showToast({
           icon: 'success',
           mask: true,
@@ -245,13 +258,6 @@ var _default = { data: function data() {return { loginForm: { workNo: "05370", p
               url: '/pages/engineer/engineer' });
 
           } });
-
-      } else {
-        uni.showToast({
-          icon: 'success',
-          mask: true,
-          title: '管理员',
-          duration: 2000 });
 
       }
     } } };exports.default = _default;
