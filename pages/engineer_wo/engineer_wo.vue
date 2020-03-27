@@ -48,6 +48,19 @@
     <text>{{machine}}</text>
    </view>
   </view>
+  <view class="cu-bar bg-white margin-top">
+   <view class="action">
+    <text class="cuIcon-title text-green"></text>
+    <text>工单图片</text>
+   </view>
+  </view>
+  <view class="image-list cu-form-group bg-white">
+	  <view class="image-item" v-for="(item,index) in images" :key="index">
+		  <view class="image-content">
+			  <image style="width: 180rpx; height: 200rpx;" mode="aspectFit" :src="item" @click="onImageTouch(index)"></image>
+		  </view>
+	  </view>
+  </view>
   <view class="cu-bar bg-white margin-top" v-show="sts === '3'">
    <view class="action">
     <text class="cuIcon-title text-green"></text>
@@ -91,8 +104,17 @@ import Api from '../../api/wo';
     this.fault=res.data.fault
     this.machine=res.data.machine
     this.sts=res.data.wosts
-   })
-  },
+	const tmp = res.data.images.split(';')
+		if (tmp[0] !== '') {
+		  const urls = []
+		  for (const index in tmp) {
+			const url = tmp[index]
+			urls.push(url)
+		  }
+		  this.images = urls;
+	   }
+	}
+  )},
   data() {
    return {
     orderId: '',
@@ -100,11 +122,18 @@ import Api from '../../api/wo';
     phone: '',
     fault: '',
     machine: '',
+	images: [],
     br: '',
     sts: '',
    };
   },
   methods: {
+	onImageTouch(index){
+		uni.previewImage({
+			current:index,
+			urls:this.images
+		})
+	},
    setOperationInfo(e){
     this.operationInfo = e.detail.value},
    upOperation(){

@@ -754,7 +754,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -7083,7 +7083,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -7104,14 +7104,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -7187,7 +7187,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -7611,9 +7611,9 @@ module.exports = g;
 
 /***/ }),
 /* 4 */
-/*!*********************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/pages.json ***!
-  \*********************************************/
+/*!**************************************!*\
+  !*** C:/code/app/rep_sys/pages.json ***!
+  \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8518,20 +8518,20 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 
 /***/ }),
 /* 7 */
-/*!**************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/pages.json?{"type":"style"} ***!
-  \**************************************************************/
+/*!*******************************************************!*\
+  !*** C:/code/app/rep_sys/pages.json?{"type":"style"} ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/login/login": { "navigationBarTitleText": "BNLD报修系统", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/index/index": { "navigationBarTitleText": "BNLD报修系统", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/worker_wo/worker_wo": { "navigationBarTitleText": "工单查看", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/custum_work_order/custum_work_order": { "navigationBarTitleText": "工单上报", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/info/info": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/his_wo/his_wo": { "navigationBarTitleText": "历史工单", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/engineer/engineer": { "navigationBarTitleText": "工程师", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/engineer_wo/engineer_wo": { "navigationBarTitleText": "工单详细信息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/operation_his/operation_his": { "navigationBarTitleText": "工单信息", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/operation_wo/operation_wo": { "navigationBarTitleText": "操作信息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/grab_wo/grab_wo": { "navigationBarTitleText": "抢单", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/grab_detail/grab_detail": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "BNLD报修系统", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/login/login": { "navigationBarTitleText": "BNLD报修系统" }, "pages/index/index": { "navigationBarTitleText": "BNLD报修系统" }, "pages/worker_wo/worker_wo": { "navigationBarTitleText": "工单查看" }, "pages/custum_work_order/custum_work_order": { "navigationBarTitleText": "工单上报" }, "pages/info/info": {}, "pages/his_wo/his_wo": { "navigationBarTitleText": "历史工单", "enablePullDownRefresh": true }, "pages/engineer/engineer": { "navigationBarTitleText": "工程师", "enablePullDownRefresh": true }, "pages/engineer_wo/engineer_wo": { "navigationBarTitleText": "工单详细信息" }, "pages/operation_his/operation_his": { "navigationBarTitleText": "工单信息", "enablePullDownRefresh": true }, "pages/operation_wo/operation_wo": { "navigationBarTitleText": "操作信息" }, "pages/grab_wo/grab_wo": { "navigationBarTitleText": "抢单" }, "pages/grab_detail/grab_detail": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "BNLD报修系统", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 /* 8 */
-/*!*************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/pages.json?{"type":"stat"} ***!
-  \*************************************************************/
+/*!******************************************************!*\
+  !*** C:/code/app/rep_sys/pages.json?{"type":"stat"} ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8671,9 +8671,9 @@ function normalizeComponent (
 /* 19 */,
 /* 20 */,
 /* 21 */
-/*!**********************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/api/user.js ***!
-  \**********************************************/
+/*!***************************************!*\
+  !*** C:/code/app/rep_sys/api/user.js ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8708,9 +8708,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 /* 22 */
-/*!*************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/common/request/js/index.js ***!
-  \*************************************************************/
+/*!******************************************************!*\
+  !*** C:/code/app/rep_sys/common/request/js/index.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8748,9 +8748,9 @@ create;exports.default = _default;
 
 /***/ }),
 /* 23 */
-/*!******************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/common/request/js/core/index.js ***!
-  \******************************************************************/
+/*!***********************************************************!*\
+  !*** C:/code/app/rep_sys/common/request/js/core/index.js ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8895,9 +8895,9 @@ MyRequest;exports.default = _default;
 
 /***/ }),
 /* 24 */
-/*!************************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/common/request/js/core/interceptor.js ***!
-  \************************************************************************/
+/*!*****************************************************************!*\
+  !*** C:/code/app/rep_sys/common/request/js/core/interceptor.js ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8946,9 +8946,9 @@ Interceptor;exports.default = _default;
 
 /***/ }),
 /* 25 */
-/*!************************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/common/request/js/core/mergeConfig.js ***!
-  \************************************************************************/
+/*!*****************************************************************!*\
+  !*** C:/code/app/rep_sys/common/request/js/core/mergeConfig.js ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9033,9 +9033,9 @@ mergeConfig;exports.default = _default;
 
 /***/ }),
 /* 26 */
-/*!*************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/common/request/js/tools.js ***!
-  \*************************************************************/
+/*!******************************************************!*\
+  !*** C:/code/app/rep_sys/common/request/js/tools.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9220,9 +9220,9 @@ $;exports.default = _default;
 
 /***/ }),
 /* 27 */
-/*!********************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/common/request/js/core/network.js ***!
-  \********************************************************************/
+/*!*************************************************************!*\
+  !*** C:/code/app/rep_sys/common/request/js/core/network.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9306,9 +9306,9 @@ function addTask(config, instance) {
 
 /***/ }),
 /* 28 */
-/*!**************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/common/request/js/config.js ***!
-  \**************************************************************/
+/*!*******************************************************!*\
+  !*** C:/code/app/rep_sys/common/request/js/config.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10301,9 +10301,9 @@ if (hadRuntime) {
 /* 44 */,
 /* 45 */,
 /* 46 */
-/*!********************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/api/wo.js ***!
-  \********************************************/
+/*!*************************************!*\
+  !*** C:/code/app/rep_sys/api/wo.js ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
