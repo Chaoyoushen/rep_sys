@@ -97,7 +97,7 @@ import Api from '../../api/wo';
 		methods: {
 			grabTheWO(orderId){
 			 uni.showLoading({
-			     title: '接受中', 
+			     title: '抢单中', 
 			 })
 			 Api.grabWO(orderId).then(res => {
 		      console.log(orderId)
@@ -105,7 +105,7 @@ import Api from '../../api/wo';
 			  uni.showToast({
 			   icon:'success',
 			   mask:true,
-			   title: '接受工单成功',
+			   title: '抢单成功',
 			   duration: 1000
 			  })
 			  setTimeout(function(){

@@ -70,6 +70,10 @@
             "path" : "pages/grab_detail/grab_detail",
             "style" : {}
         }
+        ,{
+            "path" : "pages/query_nextperson/query_nextperson",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

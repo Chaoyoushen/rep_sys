@@ -11,7 +11,8 @@
     "pages/operation_his/operation_his",
     "pages/operation_wo/operation_wo",
     "pages/grab_wo/grab_wo",
-    "pages/grab_detail/grab_detail"
+    "pages/grab_detail/grab_detail",
+    "pages/query_nextperson/query_nextperson"
   ],
   "subPackages": [],
   "window": {
