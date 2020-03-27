@@ -133,18 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-
-
-
-
-
-
-
-
-
-
-
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -257,18 +246,8 @@ var _wo = _interopRequireDefault(__webpack_require__(/*! ../../api/wo */ 46));fu
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default = { onLoad: function onLoad(option) {var _this = this;_wo.default.getWOInfo(option.orderId).then(function (res) {console.log(res);_this.person = res.data.person;_this.phone = res.data.phone;_this.br = res.data.br;_this.fault = res.data.fault;_this.machine = res.data.machine;_this.description = res.data.description;});}, data: function data() {return { person: '', phone: '', fault: '', machine: '', br: '', description: '' };}, methods: {} };exports.default = _default;
+var _default = { onLoad: function onLoad(option) {var _this = this;_wo.default.getWOInfo(option.orderId).then(function (res) {console.log(res);_this.person = res.data.person;_this.phone = res.data.phone;_this.br = res.data.br;_this.fault = res.data.fault;_this.machine = res.data.machine;_this.description = res.data.description;var tmp = res.data.images.split(';');if (tmp[0] !== '') {var urls = [];for (var index in tmp) {var url = tmp[index];urls.push(url);}_this.images = urls;}});}, data: function data() {return { images: [], person: '', phone: '', fault: '', machine: '', br: '', description: '' };}, methods: { onImageTouch: function onImageTouch(index) {uni.previewImage({ current: index, urls: this.images });} } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
