@@ -94,7 +94,7 @@
 			<button class="cu-btn bg-gradual-blue lg" @click="acceptNowWO(orderId)">接受表单</button>
 		</view>
 		<view class="padding flex flex-direction align-center" v-show="sts === '4'">
-			<button class="cu-btn bg-gradual-blue lg">表单已关闭</button>
+			<button class="cu-btn bg-gradual-brown lg">表单已关闭</button>
 		</view>
 		<view class="padding flex flex-direction align-center">
 			<button class="cu-btn bg-gradual-blue lg" @click="goWODetail(orderId)">查看操作</button>
