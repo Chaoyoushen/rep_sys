@@ -92,7 +92,6 @@ import Api from '../../api/user';
 				}
             },
 			direct(data){
-
 				if(data== '0'){
 					uni.showToast({
 						icon:'success',

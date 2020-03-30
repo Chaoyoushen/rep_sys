@@ -22,7 +22,7 @@
 			<view class="cu-bar bg-white margin-top">
 				<view class="action">
 					<text class="cuIcon-title text-green"></text>
-					<text>理由描述</text>
+					<text>描述</text>
 				</view>
 			</view>
 			<view class="cu-form-group bg-white">

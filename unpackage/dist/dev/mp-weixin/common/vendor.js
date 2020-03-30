@@ -754,7 +754,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -7083,7 +7083,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -7104,14 +7104,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -7187,7 +7187,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -7611,9 +7611,9 @@ module.exports = g;
 
 /***/ }),
 /* 4 */
-/*!*********************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/pages.json ***!
-  \*********************************************/
+/*!**************************************!*\
+  !*** C:/code/app/rep_sys/pages.json ***!
+  \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8518,9 +8518,9 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 
 /***/ }),
 /* 7 */
-/*!**************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/pages.json?{"type":"style"} ***!
-  \**************************************************************/
+/*!*******************************************************!*\
+  !*** C:/code/app/rep_sys/pages.json?{"type":"style"} ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8529,9 +8529,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 /* 8 */
-/*!*************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/pages.json?{"type":"stat"} ***!
-  \*************************************************************/
+/*!******************************************************!*\
+  !*** C:/code/app/rep_sys/pages.json?{"type":"stat"} ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8671,9 +8671,9 @@ function normalizeComponent (
 /* 19 */,
 /* 20 */,
 /* 21 */
-/*!**********************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/api/user.js ***!
-  \**********************************************/
+/*!***************************************!*\
+  !*** C:/code/app/rep_sys/api/user.js ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8708,9 +8708,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 /* 22 */
-/*!*************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/common/request/js/index.js ***!
-  \*************************************************************/
+/*!******************************************************!*\
+  !*** C:/code/app/rep_sys/common/request/js/index.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8748,9 +8748,9 @@ create;exports.default = _default;
 
 /***/ }),
 /* 23 */
-/*!******************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/common/request/js/core/index.js ***!
-  \******************************************************************/
+/*!***********************************************************!*\
+  !*** C:/code/app/rep_sys/common/request/js/core/index.js ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8895,9 +8895,9 @@ MyRequest;exports.default = _default;
 
 /***/ }),
 /* 24 */
-/*!************************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/common/request/js/core/interceptor.js ***!
-  \************************************************************************/
+/*!*****************************************************************!*\
+  !*** C:/code/app/rep_sys/common/request/js/core/interceptor.js ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8946,9 +8946,9 @@ Interceptor;exports.default = _default;
 
 /***/ }),
 /* 25 */
-/*!************************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/common/request/js/core/mergeConfig.js ***!
-  \************************************************************************/
+/*!*****************************************************************!*\
+  !*** C:/code/app/rep_sys/common/request/js/core/mergeConfig.js ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9033,9 +9033,9 @@ mergeConfig;exports.default = _default;
 
 /***/ }),
 /* 26 */
-/*!*************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/common/request/js/tools.js ***!
-  \*************************************************************/
+/*!******************************************************!*\
+  !*** C:/code/app/rep_sys/common/request/js/tools.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9220,9 +9220,9 @@ $;exports.default = _default;
 
 /***/ }),
 /* 27 */
-/*!********************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/common/request/js/core/network.js ***!
-  \********************************************************************/
+/*!*************************************************************!*\
+  !*** C:/code/app/rep_sys/common/request/js/core/network.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9306,9 +9306,9 @@ function addTask(config, instance) {
 
 /***/ }),
 /* 28 */
-/*!**************************************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/common/request/js/config.js ***!
-  \**************************************************************/
+/*!*******************************************************!*\
+  !*** C:/code/app/rep_sys/common/request/js/config.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9328,8 +9328,8 @@ var globalInterceptor = {
                                            * `header` 中`content-type`设置特殊参数 或 配置其他会导致触发 跨域 问题，出现跨域会直接进入响应拦截器的catch函数中
                                            */exports.globalInterceptor = globalInterceptor;
 var config = {
-  // baseURL: 'https://bnld.chaoyous.cn',
-  baseURL: 'http://127.0.0.1:7002',
+  baseURL: 'https://bnld.chaoyous.cn',
+  // baseURL:'http://127.0.0.1:7002',
   header: {
     // 'X-Auth-Token': 'xxxx',
     contentType: 'application/x-www-form-urlencoded'
@@ -9382,21 +9382,35 @@ globalInterceptor.response.use( /*#__PURE__*/function () {var _ref = _asyncToGen
 
             // 跳过 `request().download()` 这个拦截
             if (!(typeof res.tempFilePath !== 'undefined')) {_context.next = 3;break;}return _context.abrupt("return",
-            res);case 3:
+            res);case 3:if (!(
 
+            res.data.code === 501 && res.data.data === 2001)) {_context.next = 10;break;}
+            debugger;
+            uni.removeStorageSync('token');
+            uni.removeStorageSync('role');
+            uni.showModal({
+              showCancel: false,
+              title: '登录过期',
+              content: '请重新登录',
+              success: function success() {
+                uni.reLaunch({
+                  url: '/pages/login/login.vue' });
+
+              } });_context.next = 20;break;case 10:
 
 
 
             data =
 
-            res.data, code = res.data.code;_context.prev = 4;_context.next = 7;return (
+            res.data, code = res.data.code;_context.prev = 11;_context.next = 14;return (
 
 
 
 
-              handleCode({ data: data, code: code, config: config }));case 7:return _context.abrupt("return", _context.sent);case 10:_context.prev = 10;_context.t0 = _context["catch"](4);return _context.abrupt("return",
+              handleCode({ data: data, code: code, config: config }));case 14:return _context.abrupt("return", _context.sent);case 17:_context.prev = 17;_context.t0 = _context["catch"](11);return _context.abrupt("return",
 
-            Promise.reject(_context.t0));case 13:case "end":return _context.stop();}}}, _callee, this, [[4, 10]]);}));return function (_x, _x2) {return _ref.apply(this, arguments);};}(),
+            Promise.reject(_context.t0));case 20:case "end":return _context.stop();}}}, _callee, this, [[11, 17]]);}));return function (_x, _x2) {return _ref.apply(this, arguments);};}(),
+
 
 
 function (err, config) {
@@ -9433,6 +9447,8 @@ function verifyToken(data) {
     uni.showToast({
       title: '登录过期',
       success: function success() {
+        uni.removeStorageSync('token');
+        uni.removeStorageSync('role');
         uni.reLaunch({
           url: '/pages/login/login.vue' });
 
@@ -9450,20 +9466,6 @@ function verifyToken(data) {
    * @return {object|Promise<reject>}
    */
 function handleCode(_ref2) {var data = _ref2.data,code = _ref2.code,config = _ref2.config;
-  if (data.code === 501 && data.data === 2001) {
-    uni.showModal({
-      showCancel: false,
-      title: '提示',
-      content: '登录过期请重试',
-      success: function success() {
-        debugger;
-        uni.setStorageSync('token', null);
-        uni.redirectTo({
-          url: '/pages/login/login.vue' });
-
-      } });
-
-  }
   var STATUS = {
     '200': function _() {
       return data;
@@ -10301,9 +10303,9 @@ if (hadRuntime) {
 /* 44 */,
 /* 45 */,
 /* 46 */
-/*!********************************************!*\
-  !*** C:/Users/zhangchao/rep_sys/api/wo.js ***!
-  \********************************************/
+/*!*************************************!*\
+  !*** C:/code/app/rep_sys/api/wo.js ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

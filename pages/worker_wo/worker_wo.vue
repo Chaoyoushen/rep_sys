@@ -36,19 +36,27 @@
 			<view class="cu-form-group bg-white">
 				<text>{{description}}</text>
 			</view>
-		  <view class="cu-bar bg-white margin-top">
-		   <view class="action">
-			<text class="cuIcon-title text-green"></text>
-			<text>工单图片</text>
-		   </view>
-		  </view>
-		  <view class="image-list cu-form-group bg-white">
-			  <view class="image-item" v-for="(item,index) in images" :key="index">
-				  <view class="image-content">
-					  <image style="width: 180rpx; height: 200rpx;" mode="aspectFit" :src="item" @click="onImageTouch(index)"></image>
-				  </view>
-			  </view>
-		  </view>
+			<view v-if="images.length>0">
+				<view class="cu-bar bg-white margin-top">
+					<view class="action">
+						<text class="cuIcon-title text-green"></text>
+						<text>工单图片</text>
+					</view>
+				</view>
+				<view class="image-list cu-form-group bg-white">
+					<view class="image-item" v-for="(item,index) in images" :key="index">
+						<view class="image-content">
+							<image style="width: 180rpx; height: 200rpx;" mode="aspectFit" :src="item" @click="onImageTouch(index)"></image>
+						</view>
+					</view>
+				</view>
+			</view>
+			<view class="padding flex flex-direction margin-top">
+				<button class="cu-btn bg-gradual-blue lg" @click="flowDetail()">流程跟踪</button>
+			</view>
+			<view class="padding flex flex-direction margin-top" v-show="sts == '3'">
+				<button class="cu-btn bg-gradual-blue lg" @click="point()">评价并关单</button>
+			</view>
 
 		</form>
 	</view>
@@ -66,6 +74,8 @@ import Api from '../../api/wo';
 				this.fault=res.data.fault
 				this.machine=res.data.machine
 				this.description=res.data.description
+				this.wosts = res.data.wosts
+				this.woid = res.data.woid
 				const tmp = res.data.images.split(';')
 					if (tmp[0] !== '') {
 					  const urls = []
@@ -85,7 +95,9 @@ import Api from '../../api/wo';
 				fault: '',
 				machine: '',
 				br: '',
-				description: ''
+				description: '',
+				wosts: '',
+				woid: ''
 			};
 		},
 		methods: {
@@ -94,6 +106,14 @@ import Api from '../../api/wo';
 					current:index,
 					urls:this.images
 				})
+			},
+			flowDetail(){
+				uni.navigateTo({
+					url: '/pages/operation_his/operation_his?orderId=' + this.woid
+				})
+			},
+			point(orderId){
+				
 			}
 		}
 	}

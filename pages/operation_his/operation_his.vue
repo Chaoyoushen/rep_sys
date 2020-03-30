@@ -32,6 +32,7 @@
 			    title: '加载中'
 			});
 			Api.getOpWO(option.orderId).then(res => {
+					console.log(res)
 					this.WOList = res.data
 					uni.hideLoading()
 				})
@@ -47,7 +48,9 @@
 				var YY = date.getFullYear()
 				var MM = date.getMonth() + 1
 				var DD = date.getDate()
-				return YY+"年"+MM+"月"+DD+"日"
+				let h = date.getHours()
+				let m = date.getMinutes()
+				return YY+"年"+MM+"月"+DD+"日" + h +"点" + m +"分"
 			},
 			goWODetail(operationId){
 				console.log(operationId)

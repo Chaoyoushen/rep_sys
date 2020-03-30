@@ -3,6 +3,9 @@
 	<view class="padding flex flex-direction margin-top">
 		<button class="cu-btn bg-gradual-blue lg" @click="intoGrab">进入抢单页面</button>
 	</view>
+	<view class="padding flex flex-direction margin-top">
+		<button class="cu-btn bg-gradual-blue lg" @click="logout">退出登录</button>
+	</view>
 	<view>
 	    <view class="inv-h-w">
 	        <view :class="['inv-h',Inv==0?'inv-h-se':'']" @click="changeTab(0)">当前工单</view>
@@ -58,6 +61,7 @@
 
 <script>
 	import Api from '../../api/wo';
+	import userApi from '../../api/user';
 	export default {
 		onPullDownRefresh:function(){
 			if(this.Inv == 0){
@@ -129,6 +133,15 @@
 			},
 			returnItem(item){
 				console.log(item)
+			},
+			logout(){
+				userApi.logout().then(()=>{
+					uni.setStorageSync('token',null)
+					uni.setStorageSync('role',null)
+					uni.reLaunch({
+						url: '../login/login'
+					})
+				})
 			}
 		}
 	}

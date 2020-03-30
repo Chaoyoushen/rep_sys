@@ -13,8 +13,8 @@ export const globalInterceptor = {
  * `header` 中`content-type`设置特殊参数 或 配置其他会导致触发 跨域 问题，出现跨域会直接进入响应拦截器的catch函数中
  */
 export const config = {
-    // baseURL: 'https://bnld.chaoyous.cn',
-	 baseURL:'http://127.0.0.1:7002',
+    baseURL: 'https://bnld.chaoyous.cn',
+	 // baseURL:'http://127.0.0.1:7002',
     header: {
         // 'X-Auth-Token': 'xxxx',
         contentType: 'application/x-www-form-urlencoded'
@@ -69,21 +69,35 @@ globalInterceptor.response.use(
         if (typeof res.tempFilePath !== 'undefined') {
             return res;
         }
-
-
-        const {
-            data,
-            data: { code }
-        } = res;
+		if(res.data.code===501&&res.data.data===2001){
+			debugger
+			uni.removeStorageSync('token')
+			uni.removeStorageSync('role')
+			uni.showModal({
+				showCancel:false,
+				title:'登录过期',
+				content:'请重新登录',
+				success() {
+					uni.reLaunch({
+						url: '/pages/login/login.vue'
+					})
+				}
+			})
+		}else{
+			const {
+				data,
+				data: { code }
+			} = res;
+			
 		
-
-
-        try {
-            return await handleCode({ data, code, config });
-        } catch (err) {
-            return Promise.reject(err);
-        }
-    },
+		
+			try {
+				return await handleCode({ data, code, config });
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		}
+	},
     (err, config) => {
         console.error('is global response fail interceptor');
         console.error('err: ', err);
@@ -118,6 +132,8 @@ export function verifyToken(data) {
     	uni.showToast({
     		title:'登录过期',
 			success: () => {
+				uni.removeStorageSync('token')
+				uni.removeStorageSync('role')
 				uni.reLaunch({
 					url:'/pages/login/login.vue'
 				})
@@ -135,20 +151,6 @@ export function verifyToken(data) {
  * @return {object|Promise<reject>}
  */
 function handleCode({ data, code, config }) {
-	if(data.code===501&&data.data===2001){
-		uni.showModal({
-			showCancel:false,
-			title:'提示',
-			content:'登录过期请重试',
-			success() {
-				debugger
-				uni.setStorageSync('token',null)
-				uni.redirectTo({
-					url:'/pages/login/login.vue'
-				})
-			}
-		})
-	}
     const STATUS = {
         '200'() {
             return data;

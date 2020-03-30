@@ -52,29 +52,18 @@
 				</view>
 			</picker>
 		</view>
-		<view class="cu-bar bg-white margin-top">
-			<view class="action">
-				<text class="cuIcon-title text-green"></text>
-				<text>工单图片</text>
-			</view>
-		</view>
-		<view class="image-list cu-form-group bg-white">
-			<view class="image-item" v-for="(item,index) in images" :key="index">
-				<view class="image-content">
-					<image style="width: 180rpx; height: 200rpx;" mode="aspectFit" :src="item" @click="onImageTouch(index)"></image>
+		<view v-if="images.length>0">
+			<view class="cu-bar bg-white margin-top">
+				<view class="action">
+					<text class="cuIcon-title text-green"></text>
+					<text>工单图片</text>
 				</view>
 			</view>
-		</view>
-		<view class="cu-bar bg-white margin-top">
-			<view class="action">
-				<text class="cuIcon-title text-green"></text>
-				<text>工单图片</text>
-			</view>
-		</view>
-		<view class="image-list cu-form-group bg-white">
-			<view class="image-item" v-for="(item,index) in images" :key="index">
-				<view class="image-content">
-					<image style="width: 180rpx; height: 200rpx;" mode="aspectFit" :src="item" @click="onImageTouch(index)"></image>
+			<view class="image-list cu-form-group bg-white">
+				<view class="image-item" v-for="(item,index) in images" :key="index">
+					<view class="image-content">
+						<image style="width: 180rpx; height: 200rpx;" mode="aspectFit" :src="item" @click="onImageTouch(index)"></image>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -97,7 +86,7 @@
 			<button class="cu-btn bg-gradual-brown lg">表单已关闭</button>
 		</view>
 		<view class="padding flex flex-direction align-center">
-			<button class="cu-btn bg-gradual-blue lg" @click="goWODetail(orderId)">查看操作</button>
+			<button class="cu-btn bg-gradual-blue lg" @click="goWODetail(orderId)">流程跟踪</button>
 		</view>
 		<view class="padding flex flex-direction align-center" v-show="sts === '3'">
 			<button class="cu-btn bg-gradual-blue lg" @click="intoChangePerson(orderId)">进入转单页面</button>
