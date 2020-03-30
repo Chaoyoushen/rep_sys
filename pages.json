@@ -74,6 +74,10 @@
             "path" : "pages/query_nextperson/query_nextperson",
             "style" : {}
         }
+        ,{
+            "path" : "pages/machine_fault_change/machine_fault_change",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
