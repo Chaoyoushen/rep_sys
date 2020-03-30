@@ -36,7 +36,21 @@
 				<text>{{br}}</text>
 			</view>
 		</view>
-		<view class="cu-form-group bg-white margin-top">
+		<view class="cu-form-group">
+			<view class="title">故障分类</view>
+			<text>{{fault}}</text>
+		</view>
+		<view class="cu-form-group">
+			<view class="title">设备类型</view>
+			<text>{{machine}}</text>
+		</view>
+		<view class="cu-bar bg-white margin-top" v-show="sts === '3'">
+			<view class="action">
+				<text class="cuIcon-title text-green"></text>
+				<text>请确认故障分类和设备类型</text>
+			</view>
+		</view>
+		<view class="cu-form-group" v-show="sts === '3'">
 			<view class="title">故障分类</view>
 			<picker @change="PickerChange" :value="index" :range="faultPickerArray.map(x => x.label)">
 				<view class="picker">
@@ -44,9 +58,10 @@
 				</view>
 			</picker>
 		</view>
-		<view class="cu-form-group">
+		<view class="cu-form-group" v-show="sts === '3'">
 			<view class="title">设备类型</view>
-			<picker mode="multiSelector" @change="MultiChange" range-key="label" @columnchange="MultiColumnChange" :value="multiIndex" :range="multiArray">
+			<picker mode="multiSelector" @change="MultiChange" range-key="label" @columnchange="MultiColumnChange" :value="multiIndex"
+			 :range="multiArray">
 				<view class="picker">
 					{{multiIndex[0]==5?multiArray[0][multiIndex[0]].label:multiArray[1][multiIndex[1]].label}}
 				</view>
@@ -76,11 +91,11 @@
 		<view class="cu-form-group" v-show="sts === '3'">
 			<textarea maxlength="-1" @input="setOperationInfo" placeholder="结单理由"></textarea>
 		</view>
-		<view class="padding flex flex-direction align-center" v-show="sts === '3'">
-			<button class="cu-btn bg-gradual-blue lg" @click="upOperation">上传理由</button>
+		<view class="cu-form-group" v-show="sts === '2'">
+			<textarea maxlength="-1" @input="setOperationInfo" placeholder="处理意见"></textarea>
 		</view>
-		<view class="padding flex flex-direction align-center" v-show="sts === '2'">
-			<button class="cu-btn bg-gradual-blue lg" @click="acceptNowWO(orderId)">接受表单</button>
+		<view class="padding flex flex-direction align-center" v-show="sts === '2'||sts === '3'">
+			<button class="cu-btn bg-gradual-blue lg" @click="upOperation">上传</button>
 		</view>
 		<view class="padding flex flex-direction align-center" v-show="sts === '4'">
 			<button class="cu-btn bg-gradual-brown lg">表单已关闭</button>
@@ -88,7 +103,7 @@
 		<view class="padding flex flex-direction align-center">
 			<button class="cu-btn bg-gradual-blue lg" @click="goWODetail(orderId)">流程跟踪</button>
 		</view>
-		<view class="padding flex flex-direction align-center" v-show="sts === '3'">
+		<view class="padding flex flex-direction align-center" v-show="sts === '2'">
 			<button class="cu-btn bg-gradual-blue lg" @click="intoChangePerson(orderId)">进入转单页面</button>
 		</view>
 	</view>
@@ -118,16 +133,16 @@
 				}
 			})
 			Api.initWO().then(res => {
-					this.bkName = res.data.org
-					console.log(res.data)
-					this.machinePickerArray = res.data.machinePicker
-					this.faultPickerArray = res.data.faultPicker
-					this.multiArray[0] = res.data.machinePicker
-					this.multiArray[1] = res.data.machinePicker[0].children
-					this.machineId = this.multiArray[1][0].value
-					this.orgId = res.data.orgId
-					uni.hideLoading()
-				})
+				this.bkName = res.data.org
+				console.log(res.data)
+				this.machinePickerArray = res.data.machinePicker
+				this.faultPickerArray = res.data.faultPicker
+				this.multiArray[0] = res.data.machinePicker
+				this.multiArray[1] = res.data.machinePicker[0].children
+				this.machineId = this.multiArray[1][0].value
+				this.orgId = res.data.orgId
+				uni.hideLoading()
+			})
 		},
 		data() {
 			return {
@@ -148,26 +163,26 @@
 				machinePickerArray: [],
 				faultPickerArray: [],
 				flag: false,
-				machineId:'',
-				faultId:'',
-				description:'',
-				orgId:''
+				machineId: '',
+				faultId: '',
+				description: '',
+				orgId: ''
 			};
 		},
 		methods: {
 			PickerChange(e) {
-				if(e.detail.value === -1){
-					this.index = 0	
-				}else{
+				if (e.detail.value === -1) {
+					this.index = 0
+				} else {
 					this.index = e.detail.value
 				}
 				this.faultId = this.faultPickerArray[this.index].value
 			},
 			MultiChange(e) {
 				this.multiIndex = e.detail.value
-				if(this.multiArray[0][this.multiIndex[0]].value == '99999'){
+				if (this.multiArray[0][this.multiIndex[0]].value == '99999') {
 					this.machineId = this.multiArray[0][this.multiIndex[0]].value
-				}else{
+				} else {
 					this.machineId = this.multiArray[1][this.multiIndex[1]].value
 				}
 			},
@@ -177,14 +192,14 @@
 					multiIndex: this.multiIndex
 				};
 				let len = data.multiArray[0].length
-				console.log('len:'+len)
+				console.log('len:' + len)
 				data.multiIndex[e.detail.column] = e.detail.value
-				if(data.multiIndex[0] == 5){
+				if (data.multiIndex[0] == 5) {
 					data.multiArray[1] = []
 					this.multiIndex.splice(1, 0)
 				}
-				for(let i = 0 ; i < len ; i++){
-					if(data.multiIndex[0] == i){
+				for (let i = 0; i < len; i++) {
+					if (data.multiIndex[0] == i) {
 						data.multiArray[1] = data.multiArray[0][i].children
 						this.multiIndex.splice(1, 0)
 						break
@@ -209,6 +224,7 @@
 					operationInfo: this.operationInfo,
 					machineId: this.machineId,
 					faultId: this.faultId,
+					sts: this.sts,
 				}
 				console.log(data)
 				if (data.operationInfo == '') {
@@ -218,12 +234,14 @@
 					})
 					return
 				}
-				if(data.faultId==''){
-					uni.showToast({
-						title: '请选择故障类型',
-						icon: 'none'
-					})
-					return
+				if (data.sts == '3') {
+					if (data.faultId == '') {
+						uni.showToast({
+							title: '请选择故障类型',
+							icon: 'none'
+						})
+						return
+					}
 				}
 				uni.showLoading({
 					title: '提交中',
