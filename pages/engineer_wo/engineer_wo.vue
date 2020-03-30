@@ -90,7 +90,7 @@
 			<button class="cu-btn bg-gradual-blue lg" @click="goWODetail(orderId)">流程跟踪</button>
 		</view>
 		<view class="padding flex flex-direction align-center" v-show="sts === '2'">
-			<button class="cu-btn bg-gradual-blue lg" @click="acceptNowWO(orderId)">完成工单</button>
+			<button class="cu-btn bg-gradual-blue lg" @click="completeNowWO()">完成工单</button>
 		</view>
 		<view class="padding flex flex-direction align-center" v-show="sts === '2'">
 			<button class="cu-btn bg-gradual-blue lg" @click="intoChangePerson(orderId)">进入转单页面</button>
@@ -236,17 +236,28 @@
 					}
 				})
 			},
-			acceptNowWO(orderId) {
+			completeNowWO() {
+				let data = {
+					orderId: this.orderId,
+					operationInfo: this.operationInfo,
+				}
 				uni.showLoading({
 					title: '接受中',
 				})
-				Api.acceptWO(orderId).then(res => {
-					console.log(orderId)
+				if (data.operationInfo == '') {
+					uni.showToast({
+						title: '请输入理由',
+						icon: 'none'
+					})
+					return
+				}
+				Api.completeWO(data).then(res => {
+					console.log(data)
 					uni.hideLoading()
 					uni.showToast({
 						icon: 'success',
 						mask: true,
-						title: '接受工单成功',
+						title: '完成工单成功',
 						duration: 1000
 					})
 					setTimeout(function() {

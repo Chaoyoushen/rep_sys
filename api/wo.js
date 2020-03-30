@@ -79,7 +79,7 @@ export default {
 			data:data
 		});
 	},
-	acceptWO(data) {
+	completeWO(data) {
 		return Request().post('/wo/acceptWO', {
 			header: {
 				contentType: 'application/json'
