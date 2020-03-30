@@ -1,6 +1,0 @@
-
-.inv-h-w{background-color: #FFFFFF;height: 100rpx;display: -webkit-box;display: -webkit-flex;display: flex;}
-.inv-h{font-size: 30rpx;-webkit-box-flex: 1;-webkit-flex: 1;flex: 1;text-align: center;color: #C9C9C9;height: 100rpx;line-height: 100rpx;}
-.inv-h-se{color: #5BA7FF;border-bottom: 4rpx solid #5BA7FF;}
-page{background-color: #F2F2F2;}
-
