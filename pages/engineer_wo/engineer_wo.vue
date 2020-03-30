@@ -36,7 +36,21 @@
 				<text>{{br}}</text>
 			</view>
 		</view>
-		<view class="cu-form-group bg-white margin-top">
+		<view class="cu-form-group">
+			<view class="title">故障分类</view>
+				<text>{{fault}}</text>
+		</view>
+		<view class="cu-form-group">
+			<view class="title">设备类型</view>
+				<text>{{machine}}</text>
+		</view>
+		<view class="cu-bar bg-white margin-top">
+			<view class="action">
+				<text class="cuIcon-title text-green"></text>
+				<text>请确认故障分类和设备类型</text>
+			</view>
+		</view>
+		<view class="cu-form-group">
 			<view class="title">故障分类</view>
 			<picker @change="PickerChange" :value="index" :range="faultPickerArray.map(x => x.label)">
 				<view class="picker">
