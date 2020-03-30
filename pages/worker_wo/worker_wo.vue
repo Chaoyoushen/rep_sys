@@ -51,12 +51,29 @@
 					</view>
 				</view>
 			</view>
+			<view>
+				<view class="cu-bar bg-white margin-top">
+					<view class="action">
+						<text class="cuIcon-title text-green"></text>
+						<text>工单评价</text>
+					</view>
+				</view>
+				<view class="padding flex flex-direction bg-white" v-show="wosts == '3'">
+					<view class="cu-form-group">
+					<view class="title">满意度</view>
+					<uni-rate :value="rate" @change="rateChange"></uni-rate>
+					</view>
+					<view class="cu-form-group" v-if="rate!==5">
+						<textarea maxlength="-1" @input="setPointDiscuss" placeholder="请留下您的宝贵意见方便我们更好的进步"></textarea>
+					</view>
+					<button class="cu-btn bg-gradual-blue lg" @click="point">评价并关单</button>
+				</view>
+			</view>
+
 			<view class="padding flex flex-direction margin-top">
 				<button class="cu-btn bg-gradual-blue lg" @click="flowDetail()">流程跟踪</button>
 			</view>
-			<view class="padding flex flex-direction margin-top" v-show="sts == '3'">
-				<button class="cu-btn bg-gradual-blue lg" @click="point()">评价并关单</button>
-			</view>
+
 
 		</form>
 	</view>
@@ -64,7 +81,9 @@
 
 <script>
 import Api from '../../api/wo';
+import uniRate from '@/components/uni-rate/uni-rate.vue'
 	export default {
+		components: {uniRate},
 		onLoad:function(option){
 			Api.getWOInfo(option.orderId).then(res=>{
 				console.log(res)
@@ -87,6 +106,11 @@ import Api from '../../api/wo';
 				   }
 			})
 		},
+		watch: { 
+			value(newValue,oldValue) {
+				this.valueSync = newValue; 
+			} 
+		},
 		data() {
 			return {
 				images: [],
@@ -97,7 +121,9 @@ import Api from '../../api/wo';
 				br: '',
 				description: '',
 				wosts: '',
-				woid: ''
+				woid: '',
+				suggestion: '',
+				rate: 5
 			};
 		},
 		methods: {
@@ -112,10 +138,40 @@ import Api from '../../api/wo';
 					url: '/pages/operation_his/operation_his?orderId=' + this.woid
 				})
 			},
-			point(orderId){
-				
+			point(){
+				if(this.rate!==5&&this.suggestion===''){
+					uni.showToast({
+						icon:"none",
+						title:"请留下您宝贵的建议"
+					})
+				}else{
+					const data = {
+						rate: this.rate,
+						suggestion: this.suggestion,
+						orderId:this.woid
+					}
+					Api.rateWO(data).then(()=>{
+						uni.showModal({
+							content:"感谢您的评价",
+							title:"关单成功",
+							showCancel:false,
+							success: () => {
+								uni.switchTab({
+									url:"../his_wo/his_wo"
+								})
+							}
+						})
+					})
+				}
+			},
+			rateChange(e){
+				this.rate = e.value
+			},
+			setPointDiscuss(e){
+				this.suggestion = e.detail.value
 			}
-		}
+		},
+
 	}
 </script>
 

@@ -9,6 +9,15 @@ export default {
 	    });
 	},
 	
+	rateWO(data) {
+	    return Request().post('/wo/rateWO', {
+	        header: {
+	            contentType: 'application/json'
+	        },
+			data:data
+	    });
+	},
+	
 	getHisWO() {
 	    return Request().post('/wo/getHisWO', {
 	        header: {
