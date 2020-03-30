@@ -255,6 +255,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _wo = _interopRequireDefault(__webpack_require__(/*! ../../api/wo */ 46));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -365,10 +366,11 @@ var _wo = _interopRequireDefault(__webpack_require__(/*! ../../api/wo */ 46));fu
 //
 //
 //
-var _default = { onLoad: function onLoad(option) {var _this = this;_wo.default.getWOInfo(option.orderId).then(function (res) {console.log(res);_this.orderId = option.orderId;_this.person = res.data.person;_this.phone = res.data.phone;_this.br = res.data.br;_this.fault = res.data.fault;_this.machine = res.data.machine;_this.sts = res.data.wosts;var tmp = res.data.images.split(';');if (tmp[0] !== '') {var urls = [];for (var index in tmp) {var url = tmp[index];urls.push(url);}_this.images = urls;}});_wo.default.initWO().then(function (res) {_this.bkName = res.data.org;console.log(res.data);_this.machinePickerArray = res.data.machinePicker;_this.faultPickerArray = res.data.faultPicker;_this.multiArray[0] = res.data.machinePicker;_this.multiArray[1] = res.data.machinePicker[0].children;_this.machineId = _this.multiArray[1][0].value;_this.orgId = res.data.orgId;uni.hideLoading();});}, data: function data() {return { orderId: '', person: '', phone: '', fault: '', machine: '', br: '', sts: '', operationInfo: '', images: [], index: -1, imgList: [], bkName: '', multiArray: [], multiIndex: [0, 0], machinePickerArray: [], faultPickerArray: [], flag: false, machineId: '', faultId: '', description: '', orgId: '' };}, methods: { PickerChange: function PickerChange(e) {if (e.detail.value === -1) {this.index = 0;} else {this.index = e.detail.value;}this.faultId = this.faultPickerArray[this.index].value;}, MultiChange: function MultiChange(e) {this.multiIndex = e.detail.value;if (this.multiArray[0][this.multiIndex[0]].value == '99999') {this.machineId = this.multiArray[0][this.multiIndex[0]].value;} else {this.machineId = this.multiArray[1][this.multiIndex[1]].value;}}, MultiColumnChange: function MultiColumnChange(e) {var data = { multiArray: this.multiArray, multiIndex: this.multiIndex };var len = data.multiArray[0].length;console.log('len:' + len);data.multiIndex[e.detail.column] = e.detail.value;if (data.multiIndex[0] == 5) {data.multiArray[1] = [];this.multiIndex.splice(1, 0);}for (var i = 0; i < len; i++) {if (data.multiIndex[0] == i) {data.multiArray[1] = data.multiArray[0][i].children;this.multiIndex.splice(1, 0);break;}}this.multiArray = data.multiArray;this.multiIndex = data.multiIndex;}, setOperationInfo: function setOperationInfo(e) {this.operationInfo = e.detail.value;}, onImageTouch: function onImageTouch(index) {uni.previewImage({ current: index, urls: this.images });}, upOperation: function upOperation() {var data = { orderId: this.orderId, person: this.person,
-        operationInfo: this.operationInfo,
+//
+var _default = { onLoad: function onLoad(option) {var _this = this;_wo.default.getWOInfo(option.orderId).then(function (res) {console.log(res);_this.orderId = option.orderId;_this.person = res.data.person;_this.phone = res.data.phone;_this.br = res.data.br;_this.fault = res.data.fault;_this.machine = res.data.machine;_this.sts = res.data.wosts;var tmp = res.data.images.split(';');if (tmp[0] !== '') {var urls = [];for (var index in tmp) {var url = tmp[index];urls.push(url);}_this.images = urls;}});_wo.default.initWO().then(function (res) {_this.bkName = res.data.org;console.log(res.data);_this.machinePickerArray = res.data.machinePicker;_this.faultPickerArray = res.data.faultPicker;_this.multiArray[0] = res.data.machinePicker;_this.multiArray[1] = res.data.machinePicker[0].children;_this.machineId = _this.multiArray[1][0].value;_this.orgId = res.data.orgId;uni.hideLoading();});}, data: function data() {return { orderId: '', person: '', phone: '', fault: '', machine: '', br: '', sts: '', operationInfo: '', images: [], index: -1, imgList: [], bkName: '', multiArray: [], multiIndex: [0, 0], machinePickerArray: [], faultPickerArray: [], flag: false, machineId: '', faultId: '', description: '', orgId: '' };}, methods: { PickerChange: function PickerChange(e) {if (e.detail.value === -1) {this.index = 0;} else {this.index = e.detail.value;}this.faultId = this.faultPickerArray[this.index].value;}, MultiChange: function MultiChange(e) {this.multiIndex = e.detail.value;if (this.multiArray[0][this.multiIndex[0]].value == '99999') {this.machineId = this.multiArray[0][this.multiIndex[0]].value;} else {this.machineId = this.multiArray[1][this.multiIndex[1]].value;}}, MultiColumnChange: function MultiColumnChange(e) {var data = { multiArray: this.multiArray, multiIndex: this.multiIndex };var len = data.multiArray[0].length;console.log('len:' + len);data.multiIndex[e.detail.column] = e.detail.value;if (data.multiIndex[0] == 5) {data.multiArray[1] = [];this.multiIndex.splice(1, 0);}for (var i = 0; i < len; i++) {if (data.multiIndex[0] == i) {data.multiArray[1] = data.multiArray[0][i].children;this.multiIndex.splice(1, 0);break;}}this.multiArray = data.multiArray;this.multiIndex = data.multiIndex;}, setOperationInfo: function setOperationInfo(e) {this.operationInfo = e.detail.value;}, onImageTouch: function onImageTouch(index) {uni.previewImage({ current: index, urls: this.images });}, upOperation: function upOperation() {var data = { orderId: this.orderId, person: this.person, operationInfo: this.operationInfo,
         machineId: this.machineId,
-        faultId: this.faultId };
+        faultId: this.faultId,
+        sts: this.sts };
 
       console.log(data);
       if (data.operationInfo == '') {
@@ -378,12 +380,14 @@ var _default = { onLoad: function onLoad(option) {var _this = this;_wo.default.g
 
         return;
       }
-      if (data.faultId == '') {
-        uni.showToast({
-          title: '请选择故障类型',
-          icon: 'none' });
+      if (data.sts == '3') {
+        if (data.faultId == '') {
+          uni.showToast({
+            title: '请选择故障类型',
+            icon: 'none' });
 
-        return;
+          return;
+        }
       }
       uni.showLoading({
         title: '提交中' });
