@@ -77,6 +77,15 @@
 				</view>
 			</view>
 		</view>
+		<view class="cu-bar margin-top bg-white" v-show="sts === '2'">
+			<view class="action">
+				<text class="cuIcon-title text-green"></text>是否完单
+			</view>
+			<view class="action">
+				<text class="text-df margin-right-sm">完单</text>
+				<switch @change="SetComplete" :class="shadow?'checked':''" color="#39B54A"></switch>
+			</view>
+		</view>
 		<view class="cu-bar bg-white margin-top" v-show="sts === '3'">
 			<view class="action">
 				<text class="cuIcon-title text-green"></text>
@@ -206,6 +215,9 @@
 			setOperationInfo(e) {
 				this.operationInfo = e.detail.value
 			},
+			SetComplete(e) {
+				this.complete = e.detail.value
+			},
 			onImageTouch(index) {
 				uni.previewImage({
 					current: index,
@@ -220,6 +232,7 @@
 					machineId: this.machineId,
 					faultId: this.faultId,
 					sts: this.sts,
+					complete: this.complete,
 				}
 				console.log(data)
 				if (data.operationInfo == '') {
@@ -270,6 +283,9 @@
 						})
 					}
 				})
+				if(data.complete == true){
+				Api.completeWO(data)
+				}
 			},
 			completeNowWO() {
 				let data = {
