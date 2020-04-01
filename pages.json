@@ -78,6 +78,10 @@
             "path" : "pages/machine_fault_change/machine_fault_change",
             "style" : {}
         }
+        ,{
+            "path" : "pages/engineer_his_wo/engineer_his_wo",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

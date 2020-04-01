@@ -1,16 +1,19 @@
 <template>
 <view>
-	<view class="padding flex flex-direction margin-top">
-		<button class="cu-btn bg-gradual-blue lg" @click="intoGrab">进入抢单页面</button>
-	</view>
-	<view class="padding flex flex-direction margin-top">
-		<button class="cu-btn bg-gradual-blue lg" @click="logout">退出登录</button>
-	</view>
-	<view>
-	    <view class="inv-h-w">
-	        <view :class="['inv-h',Inv==0?'inv-h-se':'']" @click="changeTab(0)">当前工单</view>
-	        <view :class="['inv-h',Inv==1?'inv-h-se':'']" @click="changeTab(1)">历史工单</view>
-	    </view>
+	
+	<view class="cu-bar tabbar bg-white">
+		<view class="action">
+			<view class="cuIcon-cu-image">
+				<image src="/static/service.png" @click="changeTab(0)"></image>
+			</view>
+			<view class="text-gray">工单</view>
+		</view>
+		<view class="action">
+			<view class="cuIcon-cu-image" @click="changeTab(1)">
+				<image src="/static/user.png"></image>
+			</view>
+			<view class="text-gray">我的</view>
+		</view>
 	</view>
 	<view v-show="Inv == 0">
 		<view v-for="item in WOList" :key="item.orderId">
@@ -35,25 +38,14 @@
 		</view>
 	</view>
 	<view v-show="Inv == 1">
-		<view v-for="item in WOList" :key="item.orderId">
-			<view v-show="item.sts=='4'">
-				<view class="cu-list menu">
-					<view class="cu-item" @click="goWODetail(item.orderId)">
-						<view class="content padding-tb-sm">
-							<view>
-								<text class="margin-right-xs text-cut">{{item.description}}</text>
-							</view>
-							<view class="text-gray text-sm">
-								<text class="margin-right-xs text-cut" maxlength="10">{{item.person}}</text>
-							</view>
-						</view>
-						<view class="action">
-							<view class="text-grey text-xs">{{getDate(item.createdDate)}}</view>
-							<view :class="tagList[parseInt(item.sts)-1]">{{tagInfoList[parseInt(item.sts)-1]}}</view>
-						</view>
-					</view>
-				</view>
-			</view>
+		<view class="padding flex flex-direction margin-top">
+			<button class="cu-btn bg-gradual-blue lg" @click="intoGrab">进入抢单页面</button>
+		</view>
+		<view class="padding flex flex-direction margin-top">
+			<button class="cu-btn bg-gradual-blue lg" @click="intoHis">查询历史工单</button>
+		</view>
+		<view class="padding flex flex-direction margin-top">
+			<button class="cu-btn bg-gradual-blue lg" @click="logout">退出登录</button>
 		</view>
 	</view>
 </view>
@@ -111,6 +103,11 @@
 			intoGrab(){
 				uni.navigateTo({
 					url:'../grab_wo/grab_wo'
+				})
+			},
+			intoHis(){
+				uni.navigateTo({
+					url:'../engineer_his_wo/engineer_his_wo'
 				})
 			},
 			changeTab(Inv){
