@@ -36,14 +36,6 @@
 				<text>{{br}}</text>
 			</view>
 		</view>
-		<view class="cu-form-group">
-			<view class="title">故障分类</view>
-			<text>{{fault}}</text>
-		</view>
-		<view class="cu-form-group">
-			<view class="title">设备类型</view>
-			<text>{{machine}}</text>
-		</view>
 		<view class="cu-bar bg-white margin-top">
 			<view class="action">
 				<text class="cuIcon-title text-green"></text>
@@ -52,6 +44,23 @@
 		</view>
 		<view class="cu-form-group bg-white">
 			<text>{{description}}</text>
+		</view>
+		<view class="cu-form-group">
+			<view class="title">故障分类</view>
+			<picker @change="PickerChange" :value="index" :range="faultPickerArray.map(x => x.label)">
+				<view class="picker">
+					{{index>-1?faultPickerArray[index].label:fault}}
+				</view>
+			</picker>
+		</view>
+		<view class="cu-form-group">
+			<view class="title">设备类型</view>
+			<picker mode="multiSelector" @change="MultiChange" range-key="label" @columnchange="MultiColumnChange" :value="multiIndex"
+			 :range="multiArray">
+				<view class="picker">
+					{{multiIndex[0]>-1?multiArray[1][multiIndex[1]].label:machine}}
+				</view>
+			</picker>
 		</view>
 		<view v-if="images.length>0">
 			<view class="cu-bar bg-white margin-top">
@@ -81,22 +90,13 @@
 			<textarea maxlength="-1" @input="setOperationInfo" placeholder="处理意见"></textarea>
 		</view>
 		<view class="padding flex flex-direction align-center" v-show="sts === '2'||sts === '3'">
-			<button class="cu-btn bg-gradual-blue lg" @click="upOperation">上传</button>
+			<button class="cu-btn bg-gradual-blue lg" @click="upOperation">提交</button>
 		</view>
 		<view class="padding flex flex-direction align-center" v-show="sts === '4'">
 			<button class="cu-btn bg-gradual-brown lg">表单已关闭</button>
 		</view>
 		<view class="padding flex flex-direction align-center">
 			<button class="cu-btn bg-gradual-blue lg" @click="goWODetail(orderId)">流程跟踪</button>
-		</view>
-		<view class="padding flex flex-direction align-center" v-show="sts === '2'">
-			<button class="cu-btn bg-gradual-blue lg" @click="completeNowWO()">完成工单</button>
-		</view>
-		<view class="padding flex flex-direction align-center" v-show="sts === '2'">
-			<button class="cu-btn bg-gradual-blue lg" @click="intoChangePerson(orderId)">进入转单页面</button>
-		</view>
-		<view class="padding flex flex-direction align-center" v-show="sts === '2'">
-			<button class="cu-btn bg-gradual-blue lg" @click="intoChangeFaultMachine(orderId)">进入改变设备类型故障描述页面</button>
 		</view>
 	</view>
 </template>
@@ -115,6 +115,8 @@
 				this.description = res.data.description
 				this.machine = res.data.machine
 				this.sts = res.data.wosts
+				this.faultId = res.data.faultId
+				this.machineId =res.data.machineId
 				const tmp = res.data.images.split(';')
 				if (tmp[0] !== '') {
 					const urls = []
@@ -124,6 +126,17 @@
 					}
 					this.images = urls;
 				}
+			})
+			Api.initWO().then(res => {
+				this.bkName = res.data.org
+				this.orderId = option.orderId
+				console.log(res.data)
+				this.machinePickerArray = res.data.machinePicker
+				this.faultPickerArray = res.data.faultPicker
+				this.multiArray[0] = res.data.machinePicker
+				this.multiArray[1] = res.data.machinePicker[0].children
+				this.orgId = res.data.orgId
+				uni.hideLoading()
 			})
 		},
 		data() {
@@ -137,7 +150,13 @@
 				sts: '',
 				operationInfo: '',
 				images: [],
+				index: -1,
 				imgList: [],
+				bkName: '',
+				multiArray: [],
+				multiIndex: [-1, -1],
+				machinePickerArray: [],
+				faultPickerArray: [],
 				flag: false,
 				machineId: '',
 				faultId: '',
@@ -198,12 +217,28 @@
 					orderId: this.orderId,
 					person: this.person,
 					operationInfo: this.operationInfo,
+					machineId: this.machineId,
+					faultId: this.faultId,
 					sts: this.sts,
 				}
 				console.log(data)
 				if (data.operationInfo == '') {
 					uni.showToast({
 						title: '请输入理由',
+						icon: 'none'
+					})
+					return
+				}
+				if (data.faultId == '') {
+					uni.showToast({
+						title: '请选择故障类型',
+						icon: 'none'
+					})
+					return
+				}
+				if (data.faultId == '') {
+					uni.showToast({
+						title: '请选择故障类型',
 						icon: 'none'
 					})
 					return
