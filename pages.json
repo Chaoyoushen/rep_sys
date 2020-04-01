@@ -79,11 +79,15 @@
             "style" : {}
         }
         ,{
+<<<<<<< HEAD
             "path" : "pages/info_change/info_change",
             "style" : {}
         }
         ,{
             "path" : "pages/close_wo_list/close_wo_list",
+=======
+            "path" : "pages/engineer_his_wo/engineer_his_wo",
+>>>>>>> 93378290b1522f684425dc650bd77cc340c05246
             "style" : {}
         }
     ],
