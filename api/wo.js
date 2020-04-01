@@ -18,11 +18,12 @@ export default {
 	    });
 	},
 	
-	getHisWO() {
+	getHisWO(data) {
 	    return Request().post('/wo/getHisWO', {
 	        header: {
 	            contentType: 'application/json'
 	        },
+			data:data
 	    });
 	},
 	getEngineerHisWO() {

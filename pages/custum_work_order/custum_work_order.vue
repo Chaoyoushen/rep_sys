@@ -9,11 +9,11 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">联系人</view>
-				<input @input="setPerson" style="text-align:right"></input>
+				<input @input="setPerson" style="text-align:right" :value="person"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">电话号码</view>
-				<input @input="setPhone" style="text-align:right"></input>
+				<input @input="setPhone" style="text-align:right" :value="phone"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">归属网点</view>
@@ -76,6 +76,24 @@
 <script>
 import Api from '../../api/wo';
 	export default {
+		onShow:function(){
+			uni.showLoading({
+			    title: '加载中'
+			});
+			Api.initWO().then(res => {
+					this.bkName = res.data.org
+					console.log(res.data)
+					this.machinePickerArray = res.data.machinePicker
+					this.faultPickerArray = res.data.faultPicker
+					this.multiArray[0] = res.data.machinePicker
+					this.multiArray[1] = res.data.machinePicker[0].children
+					this.machineId = this.multiArray[1][0].value
+					this.orgId = res.data.orgId
+					this.person = res.data.person
+					this.phone = res.data.phone
+					uni.hideLoading()
+				})
+		},
 		onLoad:function(){
 			uni.showLoading({
 			    title: '加载中'
@@ -89,6 +107,8 @@ import Api from '../../api/wo';
 					this.multiArray[1] = res.data.machinePicker[0].children
 					this.machineId = this.multiArray[1][0].value
 					this.orgId = res.data.orgId
+					this.person = res.data.person
+					this.phone = res.data.phone
 					uni.hideLoading()
 				})
 		},
@@ -111,6 +131,16 @@ import Api from '../../api/wo';
 			};
 		},
 		methods: {
+			ValidatePhone(val){
+			    var isPhone = /^([0-9]{3,4}-)?[0-9]{7,8}$///手机号码
+			    var isMob= /^0?1[3|4|5|8][0-9]\d{8}$/// 座机格式
+			    if(isMob.test(val)||isPhone.test(val)){
+			        return true;
+			    }
+			    else{
+			        return false;
+			    }
+			},
 			ChooseImage() {
 				uni.chooseImage({
 					count: 4, //默认9
@@ -214,6 +244,13 @@ import Api from '../../api/wo';
 						icon: 'none'
 					})
 					return
+				}
+				if (this.ValidatePhone(data.phone) == false) {
+				 uni.showToast({
+					title: '联系电话格式错误',
+					icon: 'none'
+				 })
+				 return
 				}
 				if(data.faultId==''){
 					uni.showToast({

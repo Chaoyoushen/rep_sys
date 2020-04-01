@@ -78,6 +78,14 @@
             "path" : "pages/machine_fault_change/machine_fault_change",
             "style" : {}
         }
+        ,{
+            "path" : "pages/info_change/info_change",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/close_wo_list/close_wo_list",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

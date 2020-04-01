@@ -19,10 +19,18 @@ export default {
 	},
 	
 	getUserInfo() {
-	    return Request().post('/user/getUserInfo', {
+	    return Request().post('/user/getWxUserInfo', {
 	        header: {
 	            contentType: 'application/json'
 	        },
 	    });
 	},
+	changeWxUserInfo(data) {
+	    return Request().post('/user/changeWxUserInfo', {
+	        header: {
+	            contentType: 'application/json'
+	        },
+			data:data
+	    });
+	}
 };

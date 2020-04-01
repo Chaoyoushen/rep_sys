@@ -23,7 +23,7 @@
 	import Api from '../../api/wo';
 	export default {
 		onPullDownRefresh:function(){
-			Api.getHisWO({type:"0"}).then(res => {
+			Api.getHisWO({type:"1"}).then(res => {
 					this.WOList = res.data
 					uni.stopPullDownRefresh()
 				})
@@ -32,7 +32,7 @@
 			uni.showLoading({
 			    title: '加载中'
 			});
-			Api.getHisWO({type:"0"}).then(res => {
+			Api.getHisWO({type:"1"}).then(res => {
 					this.WOList = res.data
 					uni.hideLoading()
 				})
@@ -41,7 +41,7 @@
 			uni.showLoading({
 			    title: '加载中'
 			});
-			Api.getHisWO({type:"0"}).then(res => {
+			Api.getHisWO({type:"1"}).then(res => {
 					this.WOList = res.data
 					uni.hideLoading()
 				})

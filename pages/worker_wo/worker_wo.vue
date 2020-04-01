@@ -51,14 +51,14 @@
 					</view>
 				</view>
 			</view>
-			<view>
+			<view v-show="wosts == '3'">
 				<view class="cu-bar bg-white margin-top">
 					<view class="action">
 						<text class="cuIcon-title text-green"></text>
 						<text>工单评价</text>
 					</view>
 				</view>
-				<view class="padding flex flex-direction bg-white" v-show="wosts == '3'">
+				<view class="padding flex flex-direction bg-white">
 					<view class="cu-form-group">
 					<view class="title">满意度</view>
 					<uni-rate :value="rate" @change="rateChange"></uni-rate>
