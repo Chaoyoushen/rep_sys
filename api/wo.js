@@ -8,7 +8,13 @@ export default {
 	        },
 	    });
 	},
-	
+	initChangePerson() {
+	    return Request().post('/wo/initWOAcceptPerson', {
+	        header: {
+	            contentType: 'application/json'
+	        },
+	    });
+	},
 	rateWO(data) {
 	    return Request().post('/wo/rateWO', {
 	        header: {

@@ -1,6 +1,5 @@
 <template>
 <view>
-	
 	<view class="cu-bar tabbar bg-white">
 		<view class="action">
 			<view class="cuIcon-cu-image">
@@ -38,11 +37,13 @@
 		</view>
 	</view>
 	<view v-show="Inv == 1">
-		<view class="padding flex flex-direction margin-top">
-			<button class="cu-btn bg-gradual-blue lg" @click="intoGrab">进入抢单页面</button>
+		<view class="cu-form-group bg-white" @click="intoGrab">
+			<view class="title">进入抢单页面</view>
+			<text class="lg text-gray cuIcon-right"></text>
 		</view>
-		<view class="padding flex flex-direction margin-top">
-			<button class="cu-btn bg-gradual-blue lg" @click="intoHis">查询历史工单</button>
+		<view class="cu-form-group bg-white" @click="intoHis">
+			<view class="title">历史工单查询</view>
+			<text class="lg text-gray cuIcon-right"></text>
 		</view>
 		<view class="padding flex flex-direction margin-top">
 			<button class="cu-btn bg-gradual-blue lg" @click="logout">退出登录</button>
