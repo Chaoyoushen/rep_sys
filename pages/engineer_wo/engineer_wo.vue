@@ -294,6 +294,15 @@
 					})
 					return
 				}
+				if (data.complete == true) {
+					if (data.nextPersonId != ''){
+					uni.showToast({
+						title: '请勿同时转单交单',
+						icon: 'none'
+					})
+					}
+					return
+				}
 				uni.showLoading({
 					title: '提交中',
 				})
