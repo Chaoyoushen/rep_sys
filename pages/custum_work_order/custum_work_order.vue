@@ -31,7 +31,7 @@
 				<view class="title">设备类型</view>
 				<picker mode="multiSelector" @change="MultiChange" range-key="label" @columnchange="MultiColumnChange" :value="multiIndex" :range="multiArray">
 					<view class="picker">
-						{{multiIndex[0]==5?multiArray[0][multiIndex[0]].label:multiArray[1][multiIndex[1]].label}}
+						{{multiArray[0][multiIndex[0]].children.length===0?multiArray[0][multiIndex[0]].label:multiArray[1][multiIndex[1]].label}}
 					</view>
 				</picker>
 			</view>
@@ -94,24 +94,6 @@ import Api from '../../api/wo';
 					uni.hideLoading()
 				})
 		},
-		onLoad:function(){
-			uni.showLoading({
-			    title: '加载中'
-			});
-			Api.initWO().then(res => {
-					this.bkName = res.data.org
-					console.log(res.data)
-					this.machinePickerArray = res.data.machinePicker
-					this.faultPickerArray = res.data.faultPicker
-					this.multiArray[0] = res.data.machinePicker
-					this.multiArray[1] = res.data.machinePicker[0].children
-					this.machineId = this.multiArray[1][0].value
-					this.orgId = res.data.orgId
-					this.person = res.data.person
-					this.phone = res.data.phone
-					uni.hideLoading()
-				})
-		},
 		data() {
 			return {
 				index: -1,
@@ -132,9 +114,8 @@ import Api from '../../api/wo';
 		},
 		methods: {
 			ValidatePhone(val){
-			    var isPhone = /^([0-9]{3,4}-)?[0-9]{7,8}$///手机号码
-			    var isMob= /^0?1[3|4|5|8][0-9]\d{8}$/// 座机格式
-			    if(isMob.test(val)||isPhone.test(val)){
+			    var isPhone = /^1[3456789]\d{9}$///手机号码
+			    if(isPhone.test(val)){
 			        return true;
 			    }
 			    else{
@@ -184,7 +165,7 @@ import Api from '../../api/wo';
 			},
 			MultiChange(e) {
 				this.multiIndex = e.detail.value
-				if(this.multiArray[0][this.multiIndex[0]].value == '99999'){
+				if(this.multiArray[0][this.multiIndex[0]].children===null||this.multiArray[0][this.multiIndex[0]].children.length===0){
 					this.machineId = this.multiArray[0][this.multiIndex[0]].value
 				}else{
 					this.machineId = this.multiArray[1][this.multiIndex[1]].value
@@ -198,16 +179,12 @@ import Api from '../../api/wo';
 				let len = data.multiArray[0].length
 				console.log('len:'+len)
 				data.multiIndex[e.detail.column] = e.detail.value
-				if(data.multiIndex[0] == 5){
+				if(data.multiArray[0][data.multiIndex[0]].children === null||data.multiArray[0][data.multiIndex[0]].children.length === 0){
 					data.multiArray[1] = []
 					this.multiIndex.splice(1, 0)
-				}
-				for(let i = 0 ; i < len ; i++){
-					if(data.multiIndex[0] == i){
-						data.multiArray[1] = data.multiArray[0][i].children
-						this.multiIndex.splice(1, 0)
-						break
-					}
+				}else{
+					data.multiArray[1] = data.multiArray[0][data.multiIndex[0]].children
+					this.multiIndex.splice(1, 0)
 				}
 				this.multiArray = data.multiArray
 				this.multiIndex = data.multiIndex
