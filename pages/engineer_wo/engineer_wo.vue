@@ -62,6 +62,15 @@
 				</view>
 			</picker>
 		</view>
+		<view class="cu-form-group" v-show="sts === '2'">
+			<view class="title">转单</view>
+			<picker mode="multiSelector" @change="MultiPersonChange" range-key="label" @columnchange="MultiPersonColumnChange" :value="multiPersonIndex"
+			 :range="multiPersonArray">
+				<view class="picker">
+					{{multiPersonIndex[0]>-1?multiPersonArray[1][multiPersonIndex[1]].label:'请选择转单人'}}
+				</view>
+			</picker>
+		</view>
 		<view v-if="images.length>0">
 			<view class="cu-bar bg-white margin-top">
 				<view class="action">
@@ -75,6 +84,15 @@
 						<image style="width: 180rpx; height: 200rpx;" mode="aspectFit" :src="item" @click="onImageTouch(index)"></image>
 					</view>
 				</view>
+			</view>
+		</view>
+		<view class="cu-bar margin-top bg-white" v-show="sts === '2'">
+			<view class="action">
+				<text class="cuIcon-title text-green"></text>是否完单
+			</view>
+			<view class="action">
+				<text class="text-df margin-right-sm">完单</text>
+				<switch @change="SetComplete" :class="shadow?'checked':''" color="#39B54A"></switch>
 			</view>
 		</view>
 		<view class="cu-bar bg-white margin-top" v-show="sts === '3'">
@@ -116,7 +134,7 @@
 				this.machine = res.data.machine
 				this.sts = res.data.wosts
 				this.faultId = res.data.faultId
-				this.machineId =res.data.machineId
+				this.machineId = res.data.machineId
 				const tmp = res.data.images.split(';')
 				if (tmp[0] !== '') {
 					const urls = []
@@ -138,6 +156,13 @@
 				this.orgId = res.data.orgId
 				uni.hideLoading()
 			})
+			Api.initChangePerson().then(res => {
+				console.log(res.data)
+				this.personPickerArray = res.data.personPicker
+				this.multiPersonArray[0] = res.data.personPicker
+				this.multiPersonArray[1] = res.data.personPicker[0].children
+				uni.hideLoading()
+			})
 		},
 		data() {
 			return {
@@ -154,14 +179,20 @@
 				imgList: [],
 				bkName: '',
 				multiArray: [],
+				multiPersonArray: [],
 				multiIndex: [-1, -1],
+				multiPersonIndex: [-1, -1],
 				machinePickerArray: [],
 				faultPickerArray: [],
+				personPickerArray: [],
 				flag: false,
 				machineId: '',
 				faultId: '',
 				description: '',
-				orgId: ''
+				orgId: '',
+				personId:'',
+				nextPersonId: '',
+				complete: false
 			};
 		},
 		methods: {
@@ -203,8 +234,33 @@
 				this.multiArray = data.multiArray
 				this.multiIndex = data.multiIndex
 			},
+			MultiPersonChange(e) {
+				this.multiPersonIndex = e.detail.value				
+				this.personId = this.multiPersonArray[1][this.multiPersonIndex[1]].value
+			},
+			MultiPersonColumnChange(e) {
+				let data = {
+					multiPersonArray: this.multiPersonArray,
+					multiPersonIndex: this.multiPersonIndex
+				};
+				let len = data.multiPersonArray[0].length
+				console.log('len:' + len)
+				data.multiPersonIndex[e.detail.column] = e.detail.value
+				for (let i = 0; i < len; i++) {
+					if (data.multiPersonIndex[0] == i) {
+						data.multiPersonArray[1] = data.multiPersonArray[0][i].children
+						this.multiPersonIndex.splice(1, 0)
+						break
+					}
+				}
+				this.multiPersonArray = data.multiPersonArray
+				this.multiPersonIndex = data.multiPersonIndex
+			},
 			setOperationInfo(e) {
 				this.operationInfo = e.detail.value
+			},
+			SetComplete(e) {
+				this.complete = e.detail.value
 			},
 			onImageTouch(index) {
 				uni.previewImage({
@@ -220,6 +276,8 @@
 					machineId: this.machineId,
 					faultId: this.faultId,
 					sts: this.sts,
+					complete: this.complete,
+					nextPersonId: this.personId
 				}
 				console.log(data)
 				if (data.operationInfo == '') {
@@ -236,40 +294,70 @@
 					})
 					return
 				}
-				if (data.faultId == '') {
+				if (data.complete == true) {
+					if (data.nextPersonId != ''){
 					uni.showToast({
-						title: '请选择故障类型',
+						title: '请勿同时转单交单',
 						icon: 'none'
 					})
+					}
 					return
 				}
 				uni.showLoading({
 					title: '提交中',
 				})
-				Api.uploadOperation(data).then(res => {
-					uni.hideLoading()
-					if (res.code == 200) {
-						uni.showModal({
-							title: "提交成功",
-							content: "你已完成提交！",
-							showCancel: false,
-							confirmText: "完成",
-							success: function() {
-								uni.hideLoading()
-								uni.reLaunch({
-									url: '/pages/engineer/engineer'
-								})
-							}
-						})
-					} else {
-						wx.showToast({
-							icon: 'none',
-							title: '提交失败',
-							mask: true,
-							duration: 2000
-						})
-					}
-				})
+				if (data.complete == false) {
+					Api.uploadOperation(data).then(res => {
+						uni.hideLoading()
+						if (res.code == 200) {
+							uni.showModal({
+								title: "提交成功",
+								content: "你已完成提交！",
+								showCancel: false,
+								confirmText: "完成",
+								success: function() {
+									uni.hideLoading()
+									uni.reLaunch({
+										url: '/pages/engineer/engineer'
+									})
+								}
+							})
+						} else {
+							wx.showToast({
+								icon: 'none',
+								title: '提交失败',
+								mask: true,
+								duration: 2000
+							})
+						}
+					})
+				}
+				if (data.complete == true) {
+					Api.completeWO(data).then(res => {
+						uni.hideLoading()
+						if (res.code == 200) {
+							uni.showModal({
+								title: "提交成功",
+								content: "你已完成提交！",
+								showCancel: false,
+								confirmText: "完成",
+								success: function() {
+									uni.hideLoading()
+									uni.reLaunch({
+										url: '/pages/engineer/engineer'
+									})
+								}
+							})
+						} else {
+							wx.showToast({
+								icon: 'none',
+								title: '提交失败',
+								mask: true,
+								duration: 2000
+							})
+						}
+					})
+				}
 			},
 			completeNowWO() {
 				let data = {
@@ -307,16 +395,7 @@
 					url: '/pages/operation_his/operation_his?orderId=' + orderId
 				})
 			},
-			intoChangePerson(orderId) {
-				uni.navigateTo({
-					url: '/pages/query_nextperson/query_nextperson?orderId=' + orderId
-				})
-			},
-			intoChangeFaultMachine(orderId) {
-				uni.navigateTo({
-					url: '/pages/machine_fault_change/machine_fault_change?orderId=' + orderId
-				})
-			},
+			
 		}
 	}
 </script>

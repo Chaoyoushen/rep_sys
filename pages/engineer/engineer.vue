@@ -1,76 +1,105 @@
 <template>
-<view>
-	
-	<view class="cu-bar tabbar bg-white">
-		<view class="action">
-			<view class="cuIcon-cu-image">
-				<image src="/static/service.png" @click="changeTab(0)"></image>
-			</view>
-			<view class="text-gray">工单</view>
-		</view>
-		<view class="action">
-			<view class="cuIcon-cu-image" @click="changeTab(1)">
-				<image src="/static/user.png"></image>
-			</view>
-			<view class="text-gray">我的</view>
-		</view>
-	</view>
-	<view v-show="Inv == 0">
-		<view v-for="item in WOList" :key="item.orderId">
-			<view v-show="item.sts=='2'||item.sts=='3'">
-				<view class="cu-list menu">
-					<view class="cu-item" @click="goWODetail(item.orderId)">
-						<view class="content padding-tb-sm">
-							<view>
-								<text class="margin-right-xs text-cut">{{item.description}}</text>
+	<view>
+		<view class=" margin-bottom-xl">
+			<view v-show="Inv == 0">
+				<view v-for="item in WOList" :key="item.orderId">
+					<view v-show="item.sts=='2'||item.sts=='3'">
+						<view class="cu-list menu">
+							<view class="cu-item" @click="goWODetail(item.orderId)">
+								<view class="content padding-tb-sm">
+									<view>
+										<text class="margin-right-xs text-cut">{{item.description}}</text>
+									</view>
+									<view class="text-gray text-sm">
+										<text class="margin-right-xs text-cut" maxlength="10">{{item.person}}</text>
+									</view>
+								</view>
+								<view class="action">
+									<view class="text-grey text-xs">{{getDate(item.createdDate)}}</view>
+									<view :class="tagList[parseInt(item.sts)-1]">{{tagInfoList[parseInt(item.sts)-1]}}</view>
+								</view>
 							</view>
-							<view class="text-gray text-sm">
-								<text class="margin-right-xs text-cut" maxlength="10">{{item.person}}</text>
-							</view>
-						</view>
-						<view class="action">
-							<view class="text-grey text-xs">{{getDate(item.createdDate)}}</view>
-							<view :class="tagList[parseInt(item.sts)-1]">{{tagInfoList[parseInt(item.sts)-1]}}</view>
 						</view>
 					</view>
 				</view>
 			</view>
+			<view v-show="Inv == 1">
+				<view v-for="item in WOList" :key="item.orderId">
+					<view class="cu-list menu">
+						<view class="cu-item" @click="goWOAcceptDetail(item.orderId)">
+							<view class="content padding-tb-sm">
+								<view>
+									<text class="margin-right-xs text-cut">{{item.description}}</text>
+								</view>
+								<view class="text-gray text-sm">
+									<text class="margin-right-xs text-cut" maxlength="10">{{item.person}}</text>
+								</view>
+							</view>
+							<view class="action">
+								<view class="text-grey text-xs">{{getDate(item.createdDate)}}</view>
+								<view :class="tagList[0]">{{tagInfoList[0]}}</view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+			<view v-show="Inv == 2">
+				<view class="cu-form-group bg-white" @click="intoHis">
+					<view class="title">历史工单查询</view>
+					<text class="lg text-gray cuIcon-right"></text>
+				</view>
+				<view class="padding flex flex-direction margin-top">
+					<button class="cu-btn bg-gradual-blue lg" @click="logout">退出登录</button>
+				</view>
+			</view>
+		</view>
+		<view class="cu-form-group bg-gray">
+			<view class="title"></view>
+			<text class="lg text-gray "></text>
+		</view>
+		<view class="cu-bar tabbar bg-white  solid-bottom ">
+			<view class="action">
+				<view class="cuIcon-cu-image" @click="changeTab(0)">
+					<image :src="tab1List[Inv]" ></image>
+				</view>
+				<view class="text-gray">工单</view>
+			</view>
+			<view class="action">
+				<view class="cuIcon-cu-image" @click="changeTab(1)">
+					<image :src="tab2List[Inv]"></image>
+				</view>
+				<view class="text-gray">抢单</view>
+			</view>
+			<view class="action">
+				<view class="cuIcon-cu-image" @click="changeTab(2)">
+					<image :src="tab3List[Inv]"></image>
+				</view>
+				<view class="text-gray">我的</view>
+			</view>
 		</view>
 	</view>
-	<view v-show="Inv == 1">
-		<view class="padding flex flex-direction margin-top">
-			<button class="cu-btn bg-gradual-blue lg" @click="intoGrab">进入抢单页面</button>
-		</view>
-		<view class="padding flex flex-direction margin-top">
-			<button class="cu-btn bg-gradual-blue lg" @click="intoHis">查询历史工单</button>
-		</view>
-		<view class="padding flex flex-direction margin-top">
-			<button class="cu-btn bg-gradual-blue lg" @click="logout">退出登录</button>
-		</view>
-	</view>
-</view>
 </template>
 
 <script>
 	import Api from '../../api/wo';
 	import userApi from '../../api/user';
 	export default {
-		onPullDownRefresh:function(){
-			if(this.Inv == 0){
+		onPullDownRefresh: function() {
+			if (this.Inv == 0) {
 				Api.getEngineerWO().then(res => {
 					this.WOList = res.data
 					uni.stopPullDownRefresh()
 				})
-			}else if(this.Inv == 1){
-				Api.getEngineerHisWO()().then(res => {
+			} else if (this.Inv == 1) {
+				Api.initGrabWOList().then(res => {
 					this.WOList = res.data
 					uni.stopPullDownRefresh()
 				})
 			}
 		},
-		onLoad:function(){
+		onLoad: function() {
 			uni.showLoading({
-			    title: '加载中'
+				title: '加载中'
 			});
 			Api.getEngineerWO().then(res => {
 				this.WOList = res.data
@@ -81,60 +110,80 @@
 		data() {
 			return {
 				WOList: [],
-				tagList: ["cu-tag round bg-orange light","cu-tag round bg-blue light","cu-tag round bg-green light","cu-tag round bg-grey light"],
-				tagInfoList: ['待审批','已分派','已处理','已关闭'],
-				Inv:0
+				tagList: ["cu-tag round bg-orange light", "cu-tag round bg-blue light", "cu-tag round bg-green light",
+					"cu-tag round bg-grey light"
+				],
+				tab1List: ["/static/his_selected.png", "/static/his.png", "/static/his.png"
+				],
+				tab2List: ["/static/service.png", "/static/service_selected.png", "/static/service.png"
+				],
+				tab3List: ["/static/user.png", "/static/user.png", "/static/user_selected.png"
+				],
+				tagInfoList: ['待抢单', '已分派', '已处理', '已关闭'],
+				Inv: 0
 			}
 		},
 		methods: {
-			getDate(e){
+			getDate(e) {
 				var date = new Date(parseInt(e));
 				var YY = date.getFullYear()
 				var MM = date.getMonth() + 1
 				var DD = date.getDate()
-				return YY+"年"+MM+"月"+DD+"日"
+				return YY + "年" + MM + "月" + DD + "日"
 			},
-			goWODetail(orderId){
+			goWODetail(orderId) {
 				console.log(orderId)
 				uni.navigateTo({
-					url:'../engineer_wo/engineer_wo?orderId='+orderId
+					url: '../engineer_wo/engineer_wo?orderId=' + orderId
 				})
 			},
-			intoGrab(){
+			intoGrab() {
 				uni.navigateTo({
-					url:'../grab_wo/grab_wo'
+					url: '../grab_wo/grab_wo'
 				})
 			},
-			intoHis(){
+			intoHis() {
 				uni.navigateTo({
-					url:'../engineer_his_wo/engineer_his_wo'
+					url: '../engineer_his_wo/engineer_his_wo'
 				})
 			},
-			changeTab(Inv){
+			changeTab(Inv) {
 				uni.showLoading({
-					mask:true
+					mask: true
 				})
-			    this.Inv = Inv
-				if(this.Inv == 0){
+				this.Inv = Inv
+				if (this.Inv == 0) {
 					Api.getEngineerWO().then(res => {
 						this.WOList = res.data
 						uni.hideLoading()
 					})
-				}else if(this.Inv == 1){
-					Api.getEngineerHisWO().then(res => {
+				} else if (this.Inv == 1) {
+					Api.initGrabWOList().then(res => {
 						this.WOList = res.data
 						console.log(this.WOList)
 						uni.hideLoading()
 					})
+				} else if (this.Inv == 2) {
+					uni.hideLoading()
 				}
 			},
-			returnItem(item){
+			goWOAcceptDetail(orderId) {
+				console.log(orderId)
+				uni.navigateTo({
+					url: '../grab_detail/grab_detail?orderId=' + orderId
+				})
+			},
+			tabClick(index) {
+				console.log('返回tabBar索引：' + index)
+				this.currentTabIndex = index
+			},
+			returnItem(item) {
 				console.log(item)
 			},
-			logout(){
-				userApi.logout().then(()=>{
-					uni.setStorageSync('token',null)
-					uni.setStorageSync('role',null)
+			logout() {
+				userApi.logout().then(() => {
+					uni.setStorageSync('token', null)
+					uni.setStorageSync('role', null)
 					uni.reLaunch({
 						url: '../login/login'
 					})
@@ -145,9 +194,36 @@
 </script>
 
 <style>
-	.inv-h-w{background-color: #FFFFFF;height: 100upx;display: flex;}
-	.inv-h{font-size: 30upx;flex: 1;text-align: center;color: #C9C9C9;height: 100upx;line-height: 100upx;}
-	.inv-h-se{color: #5BA7FF;border-bottom: 4upx solid #5BA7FF;}
-	page{background-color: #F2F2F2;}
-</style>
+	.cu-bar.tabbar {
+		padding: 0;
+		height: calc(50upx);
+		padding-bottom: calc(env(safe-area-inset-bottom) / 2);
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+	}
 
+	.inv-h-w {
+		background-color: #FFFFFF;
+		height: 100upx;
+		display: flex;
+	}
+
+	.inv-h {
+		font-size: 30upx;
+		flex: 1;
+		text-align: center;
+		color: #C9C9C9;
+		height: 100upx;
+		line-height: 100upx;
+	}
+
+	.inv-h-se {
+		color: #5BA7FF;
+		border-bottom: 4upx solid #5BA7FF;
+	}
+
+	page {
+		background-color: #f0f0f0;
+	}
+</style>
