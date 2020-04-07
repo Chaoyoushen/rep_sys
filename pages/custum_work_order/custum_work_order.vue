@@ -165,7 +165,7 @@ import Api from '../../api/wo';
 			},
 			MultiChange(e) {
 				this.multiIndex = e.detail.value
-				if(this.multiArray[0][this.multiIndex[0]].children===null||this.multiArray[0][this.multiIndex[0]].children.length===0){
+				if(this.multiArray[0][this.multiIndex[0]].children.length===0){
 					this.machineId = this.multiArray[0][this.multiIndex[0]].value
 				}else{
 					this.machineId = this.multiArray[1][this.multiIndex[1]].value
