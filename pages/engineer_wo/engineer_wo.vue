@@ -58,16 +58,16 @@
 			<picker mode="multiSelector" @change="MultiChange" range-key="label" @columnchange="MultiColumnChange" :value="multiIndex"
 			 :range="multiArray">
 				<view class="picker">
-					{{multiIndex[0]>-1?multiArray[1][multiIndex[1]].label:machine}}
+					{{multiIndex[1]>-1?multiArray[1][multiIndex[1]].label:machine}}
 				</view>
 			</picker>
 		</view>
 		<view class="cu-form-group" v-show="sts === '2'">
 			<view class="title">转单</view>
-			<picker mode="multiSelector" @change="MultiPersonChange" range-key="label" @columnchange="MultiPersonColumnChange" :value="multiPersonIndex"
-			 :range="multiPersonArray">
+			<picker mode="multiSelector" @change="MultiPersonChange" range-key="label" @columnchange="MultiPersonColumnChange"
+			 :value="multiPersonIndex" :range="multiPersonArray">
 				<view class="picker">
-					{{multiPersonIndex[0]>-1?multiPersonArray[1][multiPersonIndex[1]].label:'请选择转单人'}}
+					{{multiPersonIndex[1]>-1?multiPersonArray[1][multiPersonIndex[1]].label:'请选择转单人'}}
 				</view>
 			</picker>
 		</view>
@@ -147,13 +147,15 @@
 			})
 			Api.initWO().then(res => {
 				this.bkName = res.data.org
-				this.orderId = option.orderId
 				console.log(res.data)
 				this.machinePickerArray = res.data.machinePicker
 				this.faultPickerArray = res.data.faultPicker
 				this.multiArray[0] = res.data.machinePicker
 				this.multiArray[1] = res.data.machinePicker[0].children
+				this.machineId = this.multiArray[1][0].value
 				this.orgId = res.data.orgId
+				this.person = res.data.person
+				this.phone = res.data.phone
 				uni.hideLoading()
 			})
 			Api.initChangePerson().then(res => {
@@ -180,8 +182,8 @@
 				bkName: '',
 				multiArray: [],
 				multiPersonArray: [],
-				multiIndex: [-1, -1],
-				multiPersonIndex: [-1, -1],
+				multiIndex: [0, -1],
+				multiPersonIndex: [0, -1],
 				machinePickerArray: [],
 				faultPickerArray: [],
 				personPickerArray: [],
@@ -190,7 +192,7 @@
 				faultId: '',
 				description: '',
 				orgId: '',
-				personId:'',
+				personId: '',
 				nextPersonId: '',
 				complete: false
 			};
@@ -206,7 +208,7 @@
 			},
 			MultiChange(e) {
 				this.multiIndex = e.detail.value
-				if (this.multiArray[0][this.multiIndex[0]].value == '99999') {
+				if (this.multiArray[0][this.multiIndex[0]].children.length === 0) {
 					this.machineId = this.multiArray[0][this.multiIndex[0]].value
 				} else {
 					this.machineId = this.multiArray[1][this.multiIndex[1]].value
@@ -220,22 +222,19 @@
 				let len = data.multiArray[0].length
 				console.log('len:' + len)
 				data.multiIndex[e.detail.column] = e.detail.value
-				if (data.multiIndex[0] == 5) {
+				if (data.multiArray[0][data.multiIndex[0]].children === null || data.multiArray[0][data.multiIndex[0]].children.length ===
+					0) {
 					data.multiArray[1] = []
 					this.multiIndex.splice(1, 0)
-				}
-				for (let i = 0; i < len; i++) {
-					if (data.multiIndex[0] == i) {
-						data.multiArray[1] = data.multiArray[0][i].children
-						this.multiIndex.splice(1, 0)
-						break
-					}
+				} else {
+					data.multiArray[1] = data.multiArray[0][data.multiIndex[0]].children
+					this.multiIndex.splice(1, 0)
 				}
 				this.multiArray = data.multiArray
 				this.multiIndex = data.multiIndex
 			},
 			MultiPersonChange(e) {
-				this.multiPersonIndex = e.detail.value				
+				this.multiPersonIndex = e.detail.value
 				this.personId = this.multiPersonArray[1][this.multiPersonIndex[1]].value
 			},
 			MultiPersonColumnChange(e) {
@@ -246,13 +245,8 @@
 				let len = data.multiPersonArray[0].length
 				console.log('len:' + len)
 				data.multiPersonIndex[e.detail.column] = e.detail.value
-				for (let i = 0; i < len; i++) {
-					if (data.multiPersonIndex[0] == i) {
-						data.multiPersonArray[1] = data.multiPersonArray[0][i].children
-						this.multiPersonIndex.splice(1, 0)
-						break
-					}
-				}
+				data.multiPersonArray[1] = data.multiPersonArray[0][data.multiPersonIndex[0]].children
+				this.multiPersonIndex.splice(1, 0)
 				this.multiPersonArray = data.multiPersonArray
 				this.multiPersonIndex = data.multiPersonIndex
 			},
@@ -295,11 +289,11 @@
 					return
 				}
 				if (data.complete == true) {
-					if (data.nextPersonId != ''){
-					uni.showToast({
-						title: '请勿同时转单交单',
-						icon: 'none'
-					})
+					if (data.nextPersonId != '') {
+						uni.showToast({
+							title: '请勿同时转单交单',
+							icon: 'none'
+						})
 					}
 					return
 				}
@@ -395,7 +389,7 @@
 					url: '/pages/operation_his/operation_his?orderId=' + orderId
 				})
 			},
-			
+
 		}
 	}
 </script>
