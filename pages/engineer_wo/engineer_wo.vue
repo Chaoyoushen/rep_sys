@@ -281,6 +281,7 @@
 					})
 					return
 				}
+				debugger
 				if (data.faultId == '') {
 					uni.showToast({
 						title: '请选择故障类型',
@@ -292,10 +293,10 @@
 					if (data.nextPersonId != '') {
 						uni.showToast({
 							title: '请勿同时转单交单',
-							icon: 'none'
+							icon: 'none',
 						})
+						return
 					}
-					return
 				}
 				uni.showLoading({
 					title: '提交中',

@@ -76,7 +76,7 @@
 <script>
 import Api from '../../api/wo';
 	export default {
-		onShow:function(){
+		onLoad:function(){
 			uni.showLoading({
 			    title: '加载中'
 			});
