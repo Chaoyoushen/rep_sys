@@ -46,10 +46,18 @@
 			<text>{{description}}</text>
 		</view>
 		<view class="cu-form-group">
-			<view class="title">故障分类</view>
+			<view class="title">故障区域</view>
 			<picker @change="PickerChange" :value="index" :range="faultPickerArray.map(x => x.label)">
 				<view class="picker">
 					{{index>-1?faultPickerArray[index].label:fault}}
+				</view>
+			</picker>
+		</view>
+		<view class="cu-form-group">
+			<view class="title">故障分类</view>
+			<picker @change="FaultPickerChange" :value="faultIndex" :range="faultTypePicker">
+				<view class="picker">
+					{{faultIndex>-1?faultTypePicker[faultIndex]:faultType}}
 				</view>
 			</picker>
 		</view>
@@ -134,7 +142,11 @@
 				this.machine = res.data.machine
 				this.sts = res.data.wosts
 				this.faultId = res.data.faultId
+				this.faultType = res.data.faultType
 				this.machineId = res.data.machineId
+				if(res.data.faultType.length == 0){
+					this.faultType = '请选择故障类型'
+				}
 				const tmp = res.data.images.split(';')
 				if (tmp[0] !== '') {
 					const urls = []
@@ -152,7 +164,6 @@
 				this.faultPickerArray = res.data.faultPicker
 				this.multiArray[0] = res.data.machinePicker
 				this.multiArray[1] = res.data.machinePicker[0].children
-				this.machineId = this.multiArray[1][0].value
 				this.orgId = res.data.orgId
 				this.person = res.data.person
 				this.phone = res.data.phone
@@ -171,13 +182,16 @@
 				orderId: '',
 				person: '',
 				phone: '',
+				faultTypePicker: ["网络问题","操作系统及驱动问题","设备硬件问题","应用软件问题","使用操作问题"],
 				fault: '',
 				machine: '',
+				faultType: '',
 				br: '',
 				sts: '',
 				operationInfo: '',
 				images: [],
 				index: -1,
+				faultIndex: -1,
 				imgList: [],
 				bkName: '',
 				multiArray: [],
@@ -205,6 +219,13 @@
 					this.index = e.detail.value
 				}
 				this.faultId = this.faultPickerArray[this.index].value
+			},
+			FaultPickerChange(e) {
+				if (e.detail.value === -1) {
+					this.faultIndex = 0
+				} else {
+					this.faultIndex = e.detail.value
+				}
 			},
 			MultiChange(e) {
 				this.multiIndex = e.detail.value
@@ -271,7 +292,8 @@
 					faultId: this.faultId,
 					sts: this.sts,
 					complete: this.complete,
-					nextPersonId: this.personId
+					nextPersonId: this.personId,
+					faultType: this.faultIndex,
 				}
 				console.log(data)
 				if (data.operationInfo == '') {
@@ -281,7 +303,6 @@
 					})
 					return
 				}
-				debugger
 				if (data.faultId == '') {
 					uni.showToast({
 						title: '请选择故障类型',
@@ -297,6 +318,9 @@
 						})
 						return
 					}
+				}
+				if (data.faultType == -1) {
+					data.faultType = null
 				}
 				uni.showLoading({
 					title: '提交中',
@@ -353,37 +377,6 @@
 						}
 					})
 				}
-			},
-			completeNowWO() {
-				let data = {
-					orderId: this.orderId,
-					operationInfo: this.operationInfo,
-				}
-				uni.showLoading({
-					title: '接受中',
-				})
-				if (data.operationInfo == '') {
-					uni.showToast({
-						title: '请输入理由',
-						icon: 'none'
-					})
-					return
-				}
-				Api.completeWO(data).then(res => {
-					console.log(data)
-					uni.hideLoading()
-					uni.showToast({
-						icon: 'success',
-						mask: true,
-						title: '完成工单成功',
-						duration: 1000
-					})
-					setTimeout(function() {
-						uni.reLaunch({
-							url: '/pages/engineer/engineer'
-						})
-					}, 1000)
-				})
 			},
 			goWODetail(orderId) {
 				uni.navigateTo({
