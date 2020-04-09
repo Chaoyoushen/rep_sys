@@ -20,7 +20,7 @@
 				<text>{{br}}</text>
 			</view>
 			<view class="cu-form-group bg-white margin-top">
-				<view class="title">故障分类</view>
+				<view class="title">故障区域</view>
 					<text>{{fault}}</text>
 			</view>
 			<view class="cu-form-group">
