@@ -102,9 +102,9 @@ globalInterceptor.response.use(
         console.error('err: ', err);
         console.error('config: ', config);
 
-        showToast(err);
+        showToast(err.message);
 
-        return Promise.reject(err);
+        return Promise.reject(err.message);
         // return false;
     }
 );
