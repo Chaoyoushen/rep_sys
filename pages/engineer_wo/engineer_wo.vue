@@ -99,7 +99,7 @@
 				<text class="cuIcon-title text-green"></text>是否完单
 			</view>
 			<view class="action">
-				<text class="text-df margin-right-sm">完单</text>
+				<text class="text-df margin-right-sm">结单</text>
 				<switch @change="SetComplete" :class="shadow?'checked':''" color="#39B54A"></switch>
 			</view>
 		</view>
@@ -110,7 +110,7 @@
 			</view>
 		</view>
 		<view class="cu-form-group" v-show="sts === '3'">
-			<textarea maxlength="-1" @input="setOperationInfo" placeholder="结单理由"></textarea>
+			<textarea maxlength="-1" @input="setOperationInfo" placeholder="结单意见"></textarea>
 		</view>
 		<view class="cu-form-group" v-show="sts === '2'">
 			<textarea maxlength="-1" @input="setOperationInfo" placeholder="处理意见"></textarea>
@@ -131,8 +131,10 @@
 	import Api from '../../api/wo';
 	export default {
 		onLoad: function(option) {
+			uni.showLoading({
+				title: '加载中'
+			})
 			Api.getWOInfo(option.orderId).then(res => {
-				console.log(res)
 				this.orderId = option.orderId
 				this.person = res.data.person
 				this.phone = res.data.phone
@@ -144,7 +146,7 @@
 				this.faultId = res.data.faultId
 				this.faultType = res.data.faultType
 				this.machineId = res.data.machineId
-				if(res.data.faultType.length == 0){
+				if (res.data.faultType.length == 0) {
 					this.faultType = '请选择故障类型'
 				}
 				const tmp = res.data.images.split(';')
@@ -156,33 +158,28 @@
 					}
 					this.images = urls;
 				}
-			})
-			Api.initWO().then(res => {
-				this.bkName = res.data.org
-				console.log(res.data)
-				this.machinePickerArray = res.data.machinePicker
-				this.faultPickerArray = res.data.faultPicker
-				this.multiArray[0] = res.data.machinePicker
-				this.multiArray[1] = res.data.machinePicker[0].children
-				this.orgId = res.data.orgId
-				this.person = res.data.person
-				this.phone = res.data.phone
-				uni.hideLoading()
-			})
-			Api.initChangePerson().then(res => {
-				console.log(res.data)
-				this.personPickerArray = res.data.personPicker
-				this.multiPersonArray[0] = res.data.personPicker
-				this.multiPersonArray[1] = res.data.personPicker[0].children
-				uni.hideLoading()
-			})
+			}).then(
+				Api.initWO().then(res => {
+					this.machinePickerArray = res.data.machinePicker
+					this.faultPickerArray = res.data.faultPicker
+					this.multiArray[0] = res.data.machinePicker
+					this.multiArray[1] = res.data.machinePicker[0].children
+				})
+			).then(
+				Api.initChangePerson().then(res => {
+					this.personPickerArray = res.data.personPicker
+					this.multiPersonArray[0] = res.data.personPicker
+					this.multiPersonArray[1] = res.data.personPicker[0].children
+					uni.hideLoading()
+				})
+			)
 		},
 		data() {
 			return {
 				orderId: '',
 				person: '',
 				phone: '',
-				faultTypePicker: ["网络问题","操作系统及驱动问题","设备硬件问题","应用软件问题","使用操作问题"],
+				faultTypePicker: ["网络问题", "操作系统及驱动问题", "设备硬件问题", "应用软件问题", "使用操作问题"],
 				fault: '',
 				machine: '',
 				faultType: '',
@@ -298,14 +295,7 @@
 				console.log(data)
 				if (data.operationInfo == '') {
 					uni.showToast({
-						title: '请输入理由',
-						icon: 'none'
-					})
-					return
-				}
-				if (data.faultId == '') {
-					uni.showToast({
-						title: '请选择故障类型',
+						title: '请填写意见',
 						icon: 'none'
 					})
 					return
@@ -318,6 +308,13 @@
 						})
 						return
 					}
+				}
+				if (this.faultIndex == -1 && this.faultType == '请选择故障类型') {
+					uni.showToast({
+						title: '请选择故障类型',
+						icon: 'none'
+					})
+					return
 				}
 				if (data.faultType == -1) {
 					data.faultType = null

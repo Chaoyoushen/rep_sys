@@ -20,7 +20,7 @@
 				<text>{{bkName}}</text>
 			</view>
 			<view class="cu-form-group bg-white margin-top">
-				<view class="title">故障分类</view>
+				<view class="title">故障区域</view>
 				<picker @change="PickerChange" :value="index" :range="faultPickerArray.map(x => x.label)">
 					<view class="picker">
 						{{index>-1?faultPickerArray[index].label:'请选择分类'}}
