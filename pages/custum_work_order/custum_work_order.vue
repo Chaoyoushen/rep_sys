@@ -201,7 +201,7 @@
 				this.person = e.detail.value
 			},
 			createWO() {
-				this.isDisable = true
+				
 				let data = {
 					machineId: this.machineId,
 					faultId: this.faultId,
@@ -246,6 +246,7 @@
 					})
 					return
 				}
+				this.isDisable = true
 				uni.showLoading({
 					title: '提交中',
 				})

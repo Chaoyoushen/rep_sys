@@ -21,11 +21,11 @@
 			</view>
 			<view class="cu-form-group bg-white margin-top">
 				<view class="title">故障区域</view>
-					<text>{{fault}}</text>
+				<text>{{fault}}</text>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">设备类型</view>
-					<text>{{machine}}</text>
+				<text>{{machine}}</text>
 			</view>
 			<view class="cu-bar bg-white margin-top">
 				<view class="action">
@@ -53,7 +53,7 @@
 			</view>
 
 			<view class="padding flex flex-direction margin-top">
-				<button class="cu-btn bg-gradual-blue lg" @click="grabTheWO(orderId)">抢单</button>
+				<button class="cu-btn bg-gradual-blue lg" @click="grabTheWO(orderId)" :disabled="isDisable">抢单</button>
 			</view>
 
 		</form>
@@ -61,18 +61,18 @@
 </template>
 
 <script>
-import Api from '../../api/wo';
+	import Api from '../../api/wo';
 	export default {
-		onLoad:function(option){
-			Api.getWOInfo(option.orderId).then(res=>{
+		onLoad: function(option) {
+			Api.getWOInfo(option.orderId).then(res => {
 				console.log(res)
-				this.person=res.data.person
-				this.orderId=option.orderId
-				this.phone=res.data.phone
-				this.br=res.data.br
-				this.fault=res.data.fault
-				this.machine=res.data.machine
-				this.description=res.data.description
+				this.person = res.data.person
+				this.orderId = option.orderId
+				this.phone = res.data.phone
+				this.br = res.data.br
+				this.fault = res.data.fault
+				this.machine = res.data.machine
+				this.description = res.data.description
 				const tmp = res.data.images.split(';')
 				if (tmp[0] !== '') {
 					const urls = []
@@ -93,29 +93,31 @@ import Api from '../../api/wo';
 				br: '',
 				description: '',
 				orderId: '',
-				images: []
+				images: [],
+				isDisable: false
 			};
 		},
 		methods: {
-			grabTheWO(orderId){
-			 uni.showLoading({
-			     title: '抢单中', 
-			 })
-			 Api.grabWO(orderId).then(res => {
-		      console.log(orderId)
-			  uni.hideLoading()
-			  uni.showToast({
-			   icon:'success',
-			   mask:true,
-			   title: '抢单成功',
-			   duration: 1000
-			  })
-			  setTimeout(function(){
-			   uni.reLaunch({
-			    url: '/pages/engineer/engineer'
-			   })
-			  },1000)
-			 })
+			grabTheWO(orderId) {
+				this.isDisable = true
+				uni.showLoading({
+					title: '抢单中',
+				})
+				Api.grabWO(orderId).then(res => {
+					console.log(orderId)
+					uni.hideLoading()
+					uni.showToast({
+						icon: 'success',
+						mask: true,
+						title: '抢单成功',
+						duration: 1000
+					})
+					setTimeout(function() {
+						uni.reLaunch({
+							url: '/pages/engineer/engineer'
+						})
+					}, 1000)
+				})
 			},
 			onImageTouch(index) {
 				uni.previewImage({

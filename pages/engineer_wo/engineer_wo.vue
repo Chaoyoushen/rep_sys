@@ -116,7 +116,7 @@
 			<textarea maxlength="-1" @input="setOperationInfo" placeholder="处理意见"></textarea>
 		</view>
 		<view class="padding flex flex-direction align-center" v-show="sts === '2'||sts === '3'">
-			<button class="cu-btn bg-gradual-blue lg" @click="upOperation">提交</button>
+			<button class="cu-btn bg-gradual-blue lg" @click="upOperation" :disabled="isDisable">提交</button>
 		</view>
 		<view class="padding flex flex-direction align-center" v-show="sts === '4'">
 			<button class="cu-btn bg-gradual-brown lg">表单已关闭</button>
@@ -205,7 +205,8 @@
 				orgId: '',
 				personId: '',
 				nextPersonId: '',
-				complete: false
+				complete: false,
+				isDisable: false
 			};
 		},
 		methods: {
@@ -319,6 +320,7 @@
 				if (data.faultType == -1) {
 					data.faultType = null
 				}
+				this.isDisable = true
 				uni.showLoading({
 					title: '提交中',
 				})

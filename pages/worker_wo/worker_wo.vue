@@ -66,7 +66,7 @@
 					<view class="cu-form-group" v-if="rate!==5">
 						<textarea maxlength="-1" @input="setPointDiscuss" placeholder="请留下您的宝贵意见方便我们更好的进步"></textarea>
 					</view>
-					<button class="cu-btn bg-gradual-blue lg" @click="point">评价并关单</button>
+					<button class="cu-btn bg-gradual-blue lg" @click="point" :disabled="isDisable">评价并关单</button>
 				</view>
 			</view>
 
@@ -123,7 +123,8 @@ import uniRate from '@/components/uni-rate/uni-rate.vue'
 				wosts: '',
 				woid: '',
 				suggestion: '',
-				rate: 5
+				rate: 5,
+				isDisable: false
 			};
 		},
 		methods: {
@@ -150,6 +151,7 @@ import uniRate from '@/components/uni-rate/uni-rate.vue'
 						suggestion: this.suggestion,
 						orderId:this.woid
 					}
+					this.isDisable = true
 					Api.rateWO(data).then(()=>{
 						uni.showModal({
 							content:"感谢您的评价",
