@@ -29,7 +29,8 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">设备类型</view>
-				<picker mode="multiSelector" @change="MultiChange" range-key="label" @columnchange="MultiColumnChange" :value="multiIndex" :range="multiArray">
+				<picker mode="multiSelector" @change="MultiChange" range-key="label" @columnchange="MultiColumnChange" :value="multiIndex"
+				 :range="multiArray">
 					<view class="picker">
 						{{multiArray[0][multiIndex[0]].children.length===0?multiArray[0][multiIndex[0]].label:multiArray[1][multiIndex[1]].label}}
 					</view>
@@ -56,7 +57,7 @@
 			<view class="cu-form-group">
 				<view class="grid col-4 grid-square flex-sub">
 					<view class="bg-img" v-for="(item,index) in imgList" :key="index" @tap="ViewImage" :data-url="imgList[index]">
-					 <image :src="imgList[index]" mode="aspectFill"></image>
+						<image :src="imgList[index]" mode="aspectFill"></image>
 						<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
 							<text class='cuIcon-close'></text>
 						</view>
@@ -67,32 +68,32 @@
 				</view>
 			</view>
 			<view class="padding flex flex-direction margin-top">
-				<button class="cu-btn bg-gradual-blue lg" @click="createWO">提交</button>
+				<button class="cu-btn bg-gradual-blue lg" @click="createWO" :disabled="isDisable">提交</button>
 			</view>
 		</form>
 	</view>
 </template>
 
 <script>
-import Api from '../../api/wo';
+	import Api from '../../api/wo';
 	export default {
-		onLoad:function(){
+		onLoad: function() {
 			uni.showLoading({
-			    title: '加载中'
+				title: '加载中'
 			});
 			Api.initWO().then(res => {
-					this.bkName = res.data.org
-					console.log(res.data)
-					this.machinePickerArray = res.data.machinePicker
-					this.faultPickerArray = res.data.faultPicker
-					this.multiArray[0] = res.data.machinePicker
-					this.multiArray[1] = res.data.machinePicker[0].children
-					this.machineId = this.multiArray[1][0].value
-					this.orgId = res.data.orgId
-					this.person = res.data.person
-					this.phone = res.data.phone
-					uni.hideLoading()
-				})
+				this.bkName = res.data.org
+				console.log(res.data)
+				this.machinePickerArray = res.data.machinePicker
+				this.faultPickerArray = res.data.faultPicker
+				this.multiArray[0] = res.data.machinePicker
+				this.multiArray[1] = res.data.machinePicker[0].children
+				this.machineId = this.multiArray[1][0].value
+				this.orgId = res.data.orgId
+				this.person = res.data.person
+				this.phone = res.data.phone
+				uni.hideLoading()
+			})
 		},
 		data() {
 			return {
@@ -104,29 +105,29 @@ import Api from '../../api/wo';
 				machinePickerArray: [],
 				faultPickerArray: [],
 				flag: false,
-				machineId:'',
-				faultId:'',
-				description:'',
+				machineId: '',
+				faultId: '',
+				description: '',
 				person: '',
 				phone: '',
-				orgId:''
+				orgId: '',
+				isDisable: false
 			};
 		},
 		methods: {
-			ValidatePhone(val){
-			    var isPhone = /^1[3456789]\d{9}$///手机号码
-			    if(isPhone.test(val)){
-			        return true;
-			    }
-			    else{
-			        return false;
-			    }
+			ValidatePhone(val) {
+				var isPhone = /^1[3456789]\d{9}$/ //手机号码
+				if (isPhone.test(val)) {
+					return true;
+				} else {
+					return false;
+				}
 			},
 			ChooseImage() {
 				uni.chooseImage({
 					count: 4, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-					sourceType: ['album','camera'], 
+					sourceType: ['album', 'camera'],
 					success: (res) => {
 						if (this.imgList.length != 0) {
 							this.imgList = this.imgList.concat(res.tempFilePaths)
@@ -156,18 +157,18 @@ import Api from '../../api/wo';
 				})
 			},
 			PickerChange(e) {
-				if(e.detail.value === -1){
-					this.index = 0	
-				}else{
+				if (e.detail.value === -1) {
+					this.index = 0
+				} else {
 					this.index = e.detail.value
 				}
 				this.faultId = this.faultPickerArray[this.index].value
 			},
 			MultiChange(e) {
 				this.multiIndex = e.detail.value
-				if(this.multiArray[0][this.multiIndex[0]].children.length===0){
+				if (this.multiArray[0][this.multiIndex[0]].children.length === 0) {
 					this.machineId = this.multiArray[0][this.multiIndex[0]].value
-				}else{
+				} else {
 					this.machineId = this.multiArray[1][this.multiIndex[1]].value
 				}
 			},
@@ -177,28 +178,30 @@ import Api from '../../api/wo';
 					multiIndex: this.multiIndex
 				};
 				let len = data.multiArray[0].length
-				console.log('len:'+len)
+				console.log('len:' + len)
 				data.multiIndex[e.detail.column] = e.detail.value
-				if(data.multiArray[0][data.multiIndex[0]].children === null||data.multiArray[0][data.multiIndex[0]].children.length === 0){
+				if (data.multiArray[0][data.multiIndex[0]].children === null || data.multiArray[0][data.multiIndex[0]].children.length ===
+					0) {
 					data.multiArray[1] = []
 					this.multiIndex.splice(1, 0)
-				}else{
+				} else {
 					data.multiArray[1] = data.multiArray[0][data.multiIndex[0]].children
 					this.multiIndex.splice(1, 0)
 				}
 				this.multiArray = data.multiArray
 				this.multiIndex = data.multiIndex
 			},
-			setDescription(e){
+			setDescription(e) {
 				this.description = e.detail.value
 			},
-			setPhone(e){
+			setPhone(e) {
 				this.phone = e.detail.value
 			},
-			setPerson(e){
+			setPerson(e) {
 				this.person = e.detail.value
 			},
-			createWO(){
+			createWO() {
+				this.isDisable = true
 				let data = {
 					machineId: this.machineId,
 					faultId: this.faultId,
@@ -206,16 +209,16 @@ import Api from '../../api/wo';
 					phone: this.phone,
 					description: this.description,
 					orgId: this.orgId,
-					imgPath:''
+					imgPath: ''
 				}
-				if(data.person==''){
+				if (data.person == '') {
 					uni.showToast({
 						title: '请输入姓名',
 						icon: 'none'
 					})
 					return
 				}
-				if(data.phone==''){
+				if (data.phone == '') {
 					uni.showToast({
 						title: '请输入联系方式',
 						icon: 'none'
@@ -223,20 +226,20 @@ import Api from '../../api/wo';
 					return
 				}
 				if (this.ValidatePhone(data.phone) == false) {
-				 uni.showToast({
-					title: '联系电话格式错误',
-					icon: 'none'
-				 })
-				 return
+					uni.showToast({
+						title: '联系电话格式错误',
+						icon: 'none'
+					})
+					return
 				}
-				if(data.faultId==''){
+				if (data.faultId == '') {
 					uni.showToast({
 						title: '请选择故障类型',
 						icon: 'none'
 					})
 					return
 				}
-				if(data.description==''){
+				if (data.description == '') {
 					uni.showToast({
 						title: '请输入问题描述',
 						icon: 'none'
@@ -244,9 +247,9 @@ import Api from '../../api/wo';
 					return
 				}
 				uni.showLoading({
-				    title: '提交中',	
+					title: '提交中',
 				})
-				Api.createWO(data,this.imgList).then(res =>{
+				Api.createWO(data, this.imgList).then(res => {
 					this.index = -1
 					this.imgList = []
 					this.multiIndex = [0, 0]
@@ -257,30 +260,31 @@ import Api from '../../api/wo';
 					this.person = ''
 					this.phone = ''
 					uni.hideLoading()
-					if(res.code==200){
+					if (res.code == 200) {
 						uni.showModal({
-							title:"提交成功",
-							content:"你已完成报修工单的提交！",
-							showCancel:false,
-							confirmText:"完成",
-							success:function(){
+							title: "提交成功",
+							content: "你已完成报修工单的提交！",
+							showCancel: false,
+							confirmText: "完成",
+							success: function() {
 								uni.hideLoading()
 								uni.reLaunch({
-									url:'/pages/his_wo/his_wo'
+									url: '/pages/his_wo/his_wo'
 								})
 							}
 						})
-					}else{
+					} else {
 						wx.showToast({
-							icon:'none',
+							icon: 'none',
 							title: '提交失败',
-							mask:true,
+							mask: true,
 							duration: 2000
 						})
 					}
-
 				})
+
 			}
+
 		}
 	}
 </script>
