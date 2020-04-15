@@ -149,7 +149,7 @@
 				],
 				tab3List: ["/static/user.png", "/static/user.png", "/static/user_selected.png"
 				],
-				tagInfoList: ['待抢单', '已分派', '已处理', '已关闭'],
+				tagInfoList: ['待抢单', '处理中', '已处理', '已关闭'],
 				Inv: 0,
 				bkName: '',
 				name: '',

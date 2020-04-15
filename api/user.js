@@ -32,5 +32,13 @@ export default {
 	        },
 			data:data
 	    });
+	},
+	searchOrg(data) {
+	    return Request().post('/user/getOrgList', {
+	        header: {
+	            contentType: 'application/json'
+	        },
+			data:data
+	    });
 	}
 };

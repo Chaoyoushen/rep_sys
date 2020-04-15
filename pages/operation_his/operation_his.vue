@@ -22,7 +22,7 @@
 	import Api from '../../api/wo';
 	export default {
 		onPullDownRefresh:function(option){
-			Api.getOpWO(option.orderId).then(res => {
+			Api.getOpWO(this.orderId).then(res => {
 					this.WOList = res.data
 					uni.stopPullDownRefresh()
 				})
@@ -31,6 +31,7 @@
 			uni.showLoading({
 			    title: '加载中'
 			});
+			this.orderId = option.orderId
 			Api.getOpWO(option.orderId).then(res => {
 					console.log(res)
 					this.WOList = res.data
@@ -40,6 +41,7 @@
 		data() {
 			return {
 			WOList: [],
+			orderId: ''
 			}
 		},
 		methods: {

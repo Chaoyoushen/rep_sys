@@ -95,6 +95,29 @@
 				uni.hideLoading()
 			})
 		},
+		onShow:function(){
+			uni.showLoading({
+			    title: '加载中'
+			});
+			if(uni.getStorageSync('refresh_flag') === '1'){
+				Api.initWO().then(res => {
+						this.bkName = res.data.org
+						console.log(res.data)
+						this.machinePickerArray = res.data.machinePicker
+						this.faultPickerArray = res.data.faultPicker
+						this.multiArray[0] = res.data.machinePicker
+						this.multiArray[1] = res.data.machinePicker[0].children
+						this.machineId = this.multiArray[1][0].value
+						this.orgId = res.data.orgId
+						this.person = res.data.person
+						this.phone = res.data.phone
+						uni.setStorageSync('refresh_flag','0')
+						uni.hideLoading()
+					})
+			}else{
+				uni.hideLoading()
+			}
+		},
 		data() {
 			return {
 				index: -1,
