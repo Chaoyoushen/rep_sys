@@ -96,7 +96,7 @@
 		</view>
 		<view class="cu-bar margin-top bg-white" v-show="sts === '2'">
 			<view class="action">
-				<text class="cuIcon-title text-green"></text>是否完单
+				<text class="cuIcon-title text-green"></text>是否结单
 			</view>
 			<view class="action">
 				<text class="text-df margin-right-sm">结单</text>
@@ -106,7 +106,7 @@
 		<view class="cu-bar bg-white margin-top" v-show="sts === '3'">
 			<view class="action">
 				<text class="cuIcon-title text-green"></text>
-				<text>结单理由</text>
+				<text>结单意见</text>
 			</view>
 		</view>
 		<view class="cu-form-group" v-show="sts === '3'">

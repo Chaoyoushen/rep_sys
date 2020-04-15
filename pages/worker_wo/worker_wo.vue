@@ -66,6 +66,8 @@
 					<view class="cu-form-group" v-if="rate!==5">
 						<textarea maxlength="-1" @input="setPointDiscuss" placeholder="请留下您的宝贵意见方便我们更好的进步"></textarea>
 					</view>
+				</view>
+				<view class="padding flex flex-direction margin-top">
 					<button class="cu-btn bg-gradual-blue lg" @click="point">评价并关单</button>
 				</view>
 			</view>

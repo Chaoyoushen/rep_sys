@@ -69,41 +69,20 @@ globalInterceptor.response.use(
         if (typeof res.tempFilePath !== 'undefined') {
             return res;
         }
-		if(res.data.code===501&&res.data.data===2001){
-			uni.removeStorageSync('token')
-			uni.removeStorageSync('role')
-			uni.showModal({
-				showCancel:false,
-				title:'登录过期',
-				content:'请重新登录',
-				success() {
-					uni.reLaunch({
-						url: '/pages/login/login.vue'
-					})
-				}
-			})
-		}else{
-			const {
-				data,
-				data: { code }
-			} = res;
-			
 		
+		const {
+			data,
+			data: { code }
+		} = res;
 		
-			try {
-				return await handleCode({ data, code, config });
-			} catch (err) {
-				return Promise.reject(err);
-			}
+		try {
+			return await handleCode({ data, code, config });
+		} catch (err) {
+			return Promise.reject(err);
 		}
 	},
     (err, config) => {
-        console.error('is global response fail interceptor');
-        console.error('err: ', err);
-        console.error('config: ', config);
-
-        showToast(err.message);
-
+		showToast(err.message);
         return Promise.reject(err.message);
         // return false;
     }
@@ -175,7 +154,7 @@ function handleCode({ data, code, config }) {
 // 显示消息提示框
 function showToast(data) {
     uni.showToast({
-        title: JSON.stringify(data),
+        title: data,
         icon: 'none',
         duration: 5000
     });
