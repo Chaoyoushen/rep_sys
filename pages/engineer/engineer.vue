@@ -109,13 +109,11 @@
 		onPullDownRefresh: function() {
 			if (this.Inv == 0) {
 				Api.getEngineerWO().then(res => {
-					Api.verifyToken(res)
 					this.WOList = res.data
 					uni.stopPullDownRefresh()
 				})
 			} else if (this.Inv == 1) {
 				Api.initGrabWOList().then(res => {
-					Api.verifyToken(res)
 					this.WOList = res.data
 					uni.stopPullDownRefresh()
 				})
@@ -133,7 +131,6 @@
 				title: '加载中'
 			});
 			Api.getEngineerWO().then(res => {
-				Api.verifyToken(res)
 				this.WOList = res.data
 				uni.hideLoading()
 			})

@@ -21,13 +21,11 @@
 
 <script>
 	import Api from '../../api/wo';
-	import config from '../../common/request/js/config.js'
 	export default {
 		onPullDownRefresh: function() {
 			Api.getHisWO({
 				type: "1"
 			}).then(res => {
-				config.verifyToken(res)
 				this.WOList = res.data
 				uni.stopPullDownRefresh()
 			})
@@ -39,7 +37,6 @@
 			Api.getHisWO({
 				type: "1"
 			}).then(res => {
-				config.verifyToken(res)
 				this.WOList = res.data
 				uni.hideLoading()
 			})
@@ -51,7 +48,6 @@
 			Api.getHisWO({
 				type: "1"
 			}).then(res => {
-				config.verifyToken(res)
 				this.WOList = res.data
 				uni.hideLoading()
 			})
