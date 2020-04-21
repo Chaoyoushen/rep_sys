@@ -82,7 +82,7 @@
 		<view class="cu-bar tabbar bg-white  solid-bottom ">
 			<view class="action">
 				<view class="cuIcon-cu-image" @click="changeTab(0)">
-					<image :src="tab1List[Inv]" ></image>
+					<image :src="tab1List[Inv]"></image>
 				</view>
 				<view class="text-gray">工单</view>
 			</view>
@@ -109,16 +109,17 @@
 		onPullDownRefresh: function() {
 			if (this.Inv == 0) {
 				Api.getEngineerWO().then(res => {
+					Api.verifyToken(res)
 					this.WOList = res.data
 					uni.stopPullDownRefresh()
 				})
 			} else if (this.Inv == 1) {
 				Api.initGrabWOList().then(res => {
+					Api.verifyToken(res)
 					this.WOList = res.data
 					uni.stopPullDownRefresh()
 				})
-			}
-			else if (this.Inv == 2) {
+			} else if (this.Inv == 2) {
 				userApi.getUserInfo().then(res => {
 					this.bkName = res.data.bkName
 					this.name = res.data.name
@@ -132,6 +133,7 @@
 				title: '加载中'
 			});
 			Api.getEngineerWO().then(res => {
+				Api.verifyToken(res)
 				this.WOList = res.data
 				uni.hideLoading()
 			})
@@ -143,12 +145,9 @@
 				tagList: ["cu-tag round bg-orange light", "cu-tag round bg-blue light", "cu-tag round bg-green light",
 					"cu-tag round bg-grey light"
 				],
-				tab1List: ["/static/his_selected.png", "/static/his.png", "/static/his.png"
-				],
-				tab2List: ["/static/service.png", "/static/service_selected.png", "/static/service.png"
-				],
-				tab3List: ["/static/user.png", "/static/user.png", "/static/user_selected.png"
-				],
+				tab1List: ["/static/his_selected.png", "/static/his.png", "/static/his.png"],
+				tab2List: ["/static/service.png", "/static/service_selected.png", "/static/service.png"],
+				tab3List: ["/static/user.png", "/static/user.png", "/static/user_selected.png"],
 				tagInfoList: ['待抢单', '处理中', '已处理', '已关闭'],
 				Inv: 0,
 				bkName: '',
@@ -205,7 +204,7 @@
 					userApi.getUserInfo().then(res => {
 						this.bkName = res.data.bkName
 						this.name = res.data.name
-						this.phone = res.data.phone			
+						this.phone = res.data.phone
 						uni.hideLoading()
 					})
 				}
