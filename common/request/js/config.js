@@ -74,6 +74,9 @@ globalInterceptor.response.use(
 			data,
 			data: { code }
 		} = res;
+		if(data.code===501&&data.data===2001){
+			return data
+		}
 		
 		try {
 			return await handleCode({ data, code, config });
@@ -117,6 +120,7 @@ export function verifyToken(data) {
 				})
 			}
     	})
+		return
     }
 }
 

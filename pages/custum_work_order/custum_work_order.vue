@@ -68,7 +68,7 @@
 				</view>
 			</view>
 			<view class="padding flex flex-direction margin-top">
-				<button class="cu-btn bg-gradual-blue lg" @click="createWO" :disabled="isDisable">提交</button>
+				<button class="cu-btn bg-gradual-blue lg" @click="SubscribeMessage" :disabled="isDisable">提交</button>
 			</view>
 		</form>
 	</view>
@@ -223,8 +223,22 @@
 			setPerson(e) {
 				this.person = e.detail.value
 			},
-			createWO() {
-				
+			SubscribeMessage(){
+				const that = this
+				wx.requestSubscribeMessage({
+					tmplIds: ['BEKtTpq7v8JLiNpxbuZzYCz5ygoIIJez2Vzflr2yDgs'],
+					success(res){
+						console.log('success')
+						console.log(res)
+						that.createWO()
+					},
+					fail(res){
+						console.log('fail')
+						console.log(res)
+					}
+				})
+			},
+			createWO() {		
 				let data = {
 					machineId: this.machineId,
 					faultId: this.faultId,
