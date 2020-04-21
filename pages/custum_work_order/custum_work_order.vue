@@ -224,21 +224,6 @@
 				this.person = e.detail.value
 			},
 			SubscribeMessage(){
-				const that = this
-				wx.requestSubscribeMessage({
-					tmplIds: ['BEKtTpq7v8JLiNpxbuZzYCz5ygoIIJez2Vzflr2yDgs'],
-					success(res){
-						console.log('success')
-						console.log(res)
-						that.createWO()
-					},
-					fail(res){
-						console.log('fail')
-						console.log(res)
-					}
-				})
-			},
-			createWO() {		
 				let data = {
 					machineId: this.machineId,
 					faultId: this.faultId,
@@ -283,6 +268,21 @@
 					})
 					return
 				}
+				const that = this
+				wx.requestSubscribeMessage({
+					tmplIds: ['BEKtTpq7v8JLiNpxbuZzYCz5ygoIIJez2Vzflr2yDgs'],
+					success(res){
+						console.log('success')
+						console.log(res)
+						that.createWO(data)
+					},
+					fail(res){
+						console.log('fail')
+						console.log(res)
+					}
+				})
+			},
+			createWO(data) {		
 				this.isDisable = true
 				uni.showLoading({
 					title: '提交中',

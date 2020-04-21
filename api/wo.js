@@ -155,7 +155,22 @@ export default {
             }
         });
         return instance;
-    }
+    },
+	verifyToken(data) {
+	    if(data.code===501&&data.data===2001){
+	    	uni.showToast({
+	    		title:'登录过期',
+				success: () => {
+					uni.removeStorageSync('token')
+					uni.removeStorageSync('role')
+					uni.reLaunch({
+						url:'/pages/login/login.vue'
+					})
+				}
+	    	})
+			return
+	    }
+	}
 	
 	
 }

@@ -83,14 +83,13 @@
 
 <script>
 import Api from '../../api/wo';
-import config from '../../common/request/js/config.js'
 import uniRate from '@/components/uni-rate/uni-rate.vue'
 	export default {
 		components: {uniRate},
 		onLoad:function(option){
 			Api.getWOInfo(option.orderId).then(res=>{
 				console.log(res)
-				config.verifyToken(res)
+				Api.verifyToken(res)
 				this.person=res.data.person
 				this.phone=res.data.phone
 				this.br=res.data.br
