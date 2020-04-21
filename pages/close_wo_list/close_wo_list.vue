@@ -1,70 +1,82 @@
 <template>
-<view>
-	<view class="cu-list menu" v-for="item in WOList" :key="item.orderId">
-		<view class="cu-item" @click="goWODetail(item.orderId)">
-			<view class="content padding-tb-sm">
-				<view>
-					<text class="margin-right-xs text-cut">{{item.description}}</text>
+	<view>
+		<view class="cu-list menu" v-for="item in WOList" :key="item.orderId">
+			<view class="cu-item" @click="goWODetail(item.orderId)">
+				<view class="content padding-tb-sm">
+					<view>
+						<text class="margin-right-xs text-cut">{{item.description}}</text>
+					</view>
+					<view class="text-gray text-sm">
+						<text class="margin-right-xs text-cut" maxlength="10">{{item.person}}</text>
+					</view>
 				</view>
-				<view class="text-gray text-sm">
-					<text class="margin-right-xs text-cut" maxlength="10">{{item.person}}</text>
+				<view class="action">
+					<view class="text-grey text-xs">{{getDate(item.createdDate)}}</view>
+					<view :class="tagList[parseInt(item.sts)-1]">{{tagInfoList[parseInt(item.sts)-1]}}</view>
 				</view>
-			</view>
-			<view class="action">
-				<view class="text-grey text-xs">{{getDate(item.createdDate)}}</view>
-				<view :class="tagList[parseInt(item.sts)-1]">{{tagInfoList[parseInt(item.sts)-1]}}</view>
 			</view>
 		</view>
 	</view>
-</view>
 </template>
 
 <script>
 	import Api from '../../api/wo';
+	import config from '../../common/request/js/config.js'
 	export default {
-		onPullDownRefresh:function(){
-			Api.getHisWO({type:"1"}).then(res => {
-					this.WOList = res.data
-					uni.stopPullDownRefresh()
-				})
+		onPullDownRefresh: function() {
+			Api.getHisWO({
+				type: "1"
+			}).then(res => {
+				config.verifyToken(res)
+				this.WOList = res.data
+				uni.stopPullDownRefresh()
+			})
 		},
-		onShow:function(){
+		onShow: function() {
 			uni.showLoading({
-			    title: '加载中'
+				title: '加载中'
 			});
-			Api.getHisWO({type:"1"}).then(res => {
-					this.WOList = res.data
-					uni.hideLoading()
-				})
+			Api.getHisWO({
+				type: "1"
+			}).then(res => {
+				config.verifyToken(res)
+				this.WOList = res.data
+				uni.hideLoading()
+			})
 		},
-		onLoad:function(){
+		onLoad: function() {
 			uni.showLoading({
-			    title: '加载中'
+				title: '加载中'
 			});
-			Api.getHisWO({type:"1"}).then(res => {
-					this.WOList = res.data
-					uni.hideLoading()
-				})
+			Api.getHisWO({
+				type: "1"
+			}).then(res => {
+				config.verifyToken(res)
+				this.WOList = res.data
+				uni.hideLoading()
+			})
 		},
 		data() {
 			return {
-			WOList: [],
-			tagList: ["cu-tag round bg-orange light","cu-tag round bg-blue light","cu-tag round bg-green light","cu-tag round bg-grey light"],
-			tagInfoList: ['待审批','已分派','已处理','已关闭'],
+				WOList: [],
+				tagList: ["cu-tag round bg-orange light", "cu-tag round bg-blue light", "cu-tag round bg-green light",
+					"cu-tag round bg-grey light"
+				],
+				tagInfoList: ['待审批', '已分派', '已处理', '已关闭'],
 			}
 		},
 		methods: {
-			getDate(e){
+			getDate(e) {
 				var date = new Date(parseInt(e));
 				var YY = date.getFullYear()
 				var MM = date.getMonth() + 1
 				var DD = date.getDate()
-				return YY+"年"+MM+"月"+DD+"日"
+				return YY + "年" + MM + "月" + DD + "日"
 			},
-			goWODetail(orderId){
+			goWODetail(orderId) {
 				console.log(orderId)
 				uni.navigateTo({
-					url:'../worker_wo/worker_wo?orderId='+orderId
+					url: '../worker_wo/worker_wo?orderId=' + orderId
 				})
 			}
 		}
