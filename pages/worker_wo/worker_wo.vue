@@ -89,7 +89,6 @@ import uniRate from '@/components/uni-rate/uni-rate.vue'
 		onLoad:function(option){
 			Api.getWOInfo(option.orderId).then(res=>{
 				console.log(res)
-				Api.verifyToken(res)
 				this.person=res.data.person
 				this.phone=res.data.phone
 				this.br=res.data.br

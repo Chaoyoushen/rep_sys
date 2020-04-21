@@ -75,14 +75,29 @@ globalInterceptor.response.use(
 			data: { code }
 		} = res;
 		if(data.code===501&&data.data===2001){
-			return data
+			uni.showModal({
+				showCancel:false,
+				title:'登录过期',
+				content:'请重新登录',
+				success:function(){
+					uni.removeStorageSync('token')
+					uni.removeStorageSync('role')
+					uni.reLaunch({
+						url:'/pages/login/login',
+						complete:function(){
+							console.log('complete')
+						}
+					})
+				}
+			})
+		}else{
+			try {
+				return await handleCode({ data, code, config });
+			} catch (err) {
+				return Promise.reject(err);
+			}
 		}
-		
-		try {
-			return await handleCode({ data, code, config });
-		} catch (err) {
-			return Promise.reject(err);
-		}
+
 	},
     (err, config) => {
 		showToast(err.message);
