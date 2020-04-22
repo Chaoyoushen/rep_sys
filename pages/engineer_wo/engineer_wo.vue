@@ -118,9 +118,6 @@
 		<view class="padding flex flex-direction align-center" v-show="sts === '2'||sts === '3'">
 			<button class="cu-btn bg-gradual-blue lg" @click="upOperation" :disabled="isDisable">提交</button>
 		</view>
-		<view class="padding flex flex-direction align-center" v-show="sts === '4'">
-			<button class="cu-btn bg-gradual-brown lg">表单已关闭</button>
-		</view>
 		<view class="padding flex flex-direction align-center">
 			<button class="cu-btn bg-gradual-blue lg" @click="goWODetail(orderId)">流程跟踪</button>
 		</view>

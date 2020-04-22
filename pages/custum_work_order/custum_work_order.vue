@@ -2,7 +2,7 @@
 	<view>
 		<form name="cusWO">
 			<view class="cu-bar margin-top">
-				<text style="color: #ED1C24;margin-left: 20rpx;margin-right: 10rpx;">报修范围：支持办公及电子设备故障报修,531交易报错请提交531运维工单</text>
+				<text style="color: #ED1C24;margin-left: 20rpx;margin-right: 10rpx;">报修范围：支持办公及电子设备故障报修,开通网络权限、531交易报错请提交生产运维工单</text>
 			</view>
 
 			<view class="cu-bar bg-white margin-top">
