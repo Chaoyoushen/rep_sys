@@ -72,7 +72,7 @@
 				</view>
 			</view>
 			<view class="padding flex flex-direction margin-top">
-				<button class="cu-btn bg-gradual-blue lg" @click="createWO" :disabled="isDisable">提交</button>
+				<button class="cu-btn bg-gradual-blue lg" @tap="createWO" :disabled="isDisable">提交</button>
 			</view>
 		</form>
 	</view>
@@ -278,17 +278,17 @@
 					title: '提交中',
 				})
 				Api.createWO(data, this.imgList).then(res => {
-					this.index = -1
-					this.imgList = []
-					this.multiIndex = [0, 0]
-					this.flag = false
-					this.machineId = ''
-					this.faultId = ''
-					this.description = ''
-					this.person = ''
-					this.phone = ''
 					uni.hideLoading()
 					if (res.code == 200) {
+						this.index = -1
+						this.imgList = []
+						this.multiIndex = [0, 0]
+						this.flag = false
+						this.machineId = ''
+						this.faultId = ''
+						this.description = ''
+						this.person = ''
+						this.phone = ''
 						wx.requestSubscribeMessage({
 							tmplIds: ['BEKtTpq7v8JLiNpxbuZzYCz5ygoIIJez2Vzflr2yDgs'],
 							success(res){
@@ -316,7 +316,20 @@
 							}
 						})
 
-					} else {
+					}else if (res.code===501&&res.data===6005){
+						uni.showModal({
+							title: "提交失败",
+							content: "你还存在未评价工单！",
+							showCancel: false,
+							confirmText: "去评价",
+							success: function() {
+								uni.hideLoading()
+								uni.reLaunch({
+									url: '/pages/his_wo/his_wo'
+								})
+							}
+						})
+					}else {
 						wx.showToast({
 							icon: 'none',
 							title: '提交失败',

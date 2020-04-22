@@ -50,7 +50,7 @@
 			return {
 			WOList: [],
 			tagList: ["cu-tag round bg-orange light","cu-tag round bg-blue light","cu-tag round bg-green light","cu-tag round bg-grey light"],
-			tagInfoList: ['待审批','处理中','已处理','已关闭'],
+			tagInfoList: ['待审批','处理中','待评价','已关闭'],
 			}
 		},
 		methods: {

@@ -88,6 +88,8 @@ globalInterceptor.response.use(
 				}
 			})
 			return data
+		}else if(data.code===501&&data.data===6005){
+			return data
 		}else{
 			try {
 				return await handleCode({ data, code, config });
