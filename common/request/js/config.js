@@ -83,13 +83,11 @@ globalInterceptor.response.use(
 					uni.removeStorageSync('token')
 					uni.removeStorageSync('role')
 					uni.reLaunch({
-						url:'/pages/login/login',
-						complete:function(){
-							console.log('complete')
-						}
+						url:'/pages/login/login'
 					})
 				}
 			})
+			return data
 		}else{
 			try {
 				return await handleCode({ data, code, config });

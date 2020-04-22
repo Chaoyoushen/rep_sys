@@ -1,6 +1,10 @@
 <template>
 	<view>
 		<form name="cusWO">
+			<view class="cu-bar margin-top">
+				<text style="color: #ED1C24;margin-left: 20rpx;margin-right: 10rpx;">报修范围：支持办公及电子设备故障报修,531交易报错请提交531运维工单</text>
+			</view>
+
 			<view class="cu-bar bg-white margin-top">
 				<view class="action">
 					<text class="cuIcon-title text-green"></text>
@@ -68,7 +72,7 @@
 				</view>
 			</view>
 			<view class="padding flex flex-direction margin-top">
-				<button class="cu-btn bg-gradual-blue lg" @click="SubscribeMessage" :disabled="isDisable">提交</button>
+				<button class="cu-btn bg-gradual-blue lg" @click="createWO" :disabled="isDisable">提交</button>
 			</view>
 		</form>
 	</view>
@@ -223,7 +227,7 @@
 			setPerson(e) {
 				this.person = e.detail.value
 			},
-			SubscribeMessage(){
+			createWO() {
 				let data = {
 					machineId: this.machineId,
 					faultId: this.faultId,
@@ -269,20 +273,6 @@
 					return
 				}
 				const that = this
-				wx.requestSubscribeMessage({
-					tmplIds: ['BEKtTpq7v8JLiNpxbuZzYCz5ygoIIJez2Vzflr2yDgs'],
-					success(res){
-						console.log('success')
-						console.log(res)
-						that.createWO(data)
-					},
-					fail(res){
-						console.log('fail')
-						console.log(res)
-					}
-				})
-			},
-			createWO(data) {		
 				this.isDisable = true
 				uni.showLoading({
 					title: '提交中',
@@ -299,18 +289,33 @@
 					this.phone = ''
 					uni.hideLoading()
 					if (res.code == 200) {
-						uni.showModal({
-							title: "提交成功",
-							content: "你已完成报修工单的提交！",
-							showCancel: false,
-							confirmText: "完成",
-							success: function() {
-								uni.hideLoading()
-								uni.reLaunch({
-									url: '/pages/his_wo/his_wo'
+						wx.requestSubscribeMessage({
+							tmplIds: ['BEKtTpq7v8JLiNpxbuZzYCz5ygoIIJez2Vzflr2yDgs'],
+							success(res){
+								console.log('success')
+								console.log(res)
+								that.createWO(data)
+							},
+							fail(res){
+								console.log('fail')
+								console.log(res)
+							},
+							complete(){
+								uni.showModal({
+									title: "提交成功",
+									content: "你已完成报修工单的提交！",
+									showCancel: false,
+									confirmText: "完成",
+									success: function() {
+										uni.hideLoading()
+										uni.reLaunch({
+											url: '/pages/his_wo/his_wo'
+										})
+									}
 								})
 							}
 						})
+
 					} else {
 						wx.showToast({
 							icon: 'none',

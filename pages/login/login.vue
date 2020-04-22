@@ -3,7 +3,7 @@
 		<form @submit="login">
 			<view class="flex padding justify-center">
 				<view class="cu-bar margin-top">
-					<view class="title">BNLD登录</view>
+					<view class="title">登录</view>
 				</view>
 			</view>
 			<view class="margin-top">

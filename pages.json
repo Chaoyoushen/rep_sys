@@ -3,7 +3,7 @@
 		{
 			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": "BNLD报修系统"
+				"navigationBarTitleText": "技术服务平台"
 			}
 		},
 		{
@@ -91,7 +91,7 @@
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "BNLD报修系统",
+		"navigationBarTitleText": "技术服务平台",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
