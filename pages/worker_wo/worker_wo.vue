@@ -34,7 +34,7 @@
 				</view>
 			</view>
 			<view class="cu-form-group bg-white">
-				<text>{{description}}</text>
+				<text class="detail_text">{{description}}</text>
 			</view>
 			<view v-if="images.length>0">
 				<view class="cu-bar bg-white margin-top">
@@ -182,5 +182,14 @@ import uniRate from '@/components/uni-rate/uni-rate.vue'
 <style>
 	.cu-form-group .title {
 		min-width: calc(4em + 15px);
+	}
+	
+	.detail_text{
+	  display: -webkit-box;
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	  word-break: break-all;
+	  -webkit-box-orient: vertical;
+	  -webkit-line-clamp: 100;
 	}
 </style>
