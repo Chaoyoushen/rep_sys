@@ -96,6 +96,7 @@
 				this.orgId = res.data.orgId
 				this.person = res.data.person
 				this.phone = res.data.phone
+				this.tmplIds.push(res.data.tmpId)
 				uni.hideLoading()
 			})
 		},
@@ -115,6 +116,7 @@
 						this.orgId = res.data.orgId
 						this.person = res.data.person
 						this.phone = res.data.phone
+						this.tmplIds.push(res.data.tmpId)
 						uni.setStorageSync('refresh_flag','0')
 						uni.hideLoading()
 					})
@@ -138,7 +140,8 @@
 				person: '',
 				phone: '',
 				orgId: '',
-				isDisable: false
+				isDisable: false,
+				tmplIds: []
 			};
 		},
 		methods: {
@@ -253,7 +256,7 @@
 				}
 				if (this.ValidatePhone(data.phone) == false) {
 					uni.showToast({
-						title: '联系电话格式错误',
+						title: '联系电话格式错误，请输入11位手机号',
 						icon: 'none'
 					})
 					return
@@ -290,7 +293,7 @@
 						this.person = ''
 						this.phone = ''
 						wx.requestSubscribeMessage({
-							tmplIds: ['BEKtTpq7v8JLiNpxbuZzYCz5ygoIIJez2Vzflr2yDgs'],
+							tmplIds: this.tmplIds,
 							success(res){
 								console.log('success')
 								console.log(res)

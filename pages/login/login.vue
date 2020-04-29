@@ -100,7 +100,7 @@ import Api from '../../api/user';
 						duration: 1000,
 						success:function(){
 							uni.switchTab({
-								url: '/pages/his_wo/his_wo'
+								url: '/pages/custum_work_order/custum_work_order'
 							});
 						}
 					})
