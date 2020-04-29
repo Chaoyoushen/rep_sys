@@ -43,7 +43,7 @@
 			</view>
 		</view>
 		<view class="cu-form-group bg-white">
-			<text>{{description}}</text>
+			<text class="detail_text">{{description}}</text>
 		</view>
 		<view class="cu-form-group">
 			<view class="title">故障区域</view>
@@ -391,5 +391,14 @@
 
 	button {
 		width: 90%;
+	}
+	
+	.detail_text{
+	  display: -webkit-box;
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	  word-break: break-all;
+	  -webkit-box-orient: vertical;
+	  -webkit-line-clamp: 100;
 	}
 </style>

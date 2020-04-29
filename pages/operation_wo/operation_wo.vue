@@ -26,7 +26,7 @@
 				</view>
 			</view>
 			<view class="cu-form-group bg-white">
-				<text>{{operationInfo}}</text>
+				<text class="detail_text">{{operationInfo}}</text>
 			</view>
 		</form>
 	</view>
@@ -60,5 +60,13 @@ import Api from '../../api/wo';
 <style>
 	.cu-form-group .title {
 		min-width: calc(4em + 15px);
+	}
+	.detail_text{
+	  display: -webkit-box;
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	  word-break: break-all;
+	  -webkit-box-orient: vertical;
+	  -webkit-line-clamp: 100;
 	}
 </style>
