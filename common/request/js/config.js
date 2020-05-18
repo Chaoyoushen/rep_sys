@@ -13,7 +13,7 @@ export const globalInterceptor = {
  * `header` 中`content-type`设置特殊参数 或 配置其他会导致触发 跨域 问题，出现跨域会直接进入响应拦截器的catch函数中
  */
 export const config = {
-    baseURL: 'https://bnld.chaoyous.cn',
+    baseURL: 'https://dev.bnld.chaoyous.cn',
 	// baseURL:'http://127.0.0.1:7002',
     header: {
         // 'X-Auth-Token': 'xxxx',

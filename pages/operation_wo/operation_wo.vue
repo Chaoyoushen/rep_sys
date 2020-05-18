@@ -8,12 +8,6 @@
 				</view>
 			</view>
 			<view class="cu-form-group">
-			 <view class="title">操作号</view>
-			 <view>
-			  <text>{{operationId}}</text>
-			 </view>
-			</view>
-			<view class="cu-form-group">
 			 <view class="title">操作人</view>
 			 <view>
 			  <text>{{person}}</text>

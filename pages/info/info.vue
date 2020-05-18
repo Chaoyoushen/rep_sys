@@ -11,7 +11,7 @@
 			<text>{{name}}</text>
 		</view>
 		<view class="cu-form-group">
-			<view class="title">联系电话</view>
+			<view class="title">联系手机</view>
 			<text>{{phone}}</text>
 		</view>
 		<view class="cu-form-group">

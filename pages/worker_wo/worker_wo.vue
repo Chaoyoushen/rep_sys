@@ -1,7 +1,23 @@
 <template>
 	<view>
 		<form>
-			<view class="cu-bar bg-white">
+			<view v-if="wosts!=='1'">
+				<view class="cu-bar bg-white margin-top">
+					<view class="action">
+						<text class="cuIcon-title text-green"></text>
+						<text>工程师</text>
+					</view>
+				</view>
+				<view class="cu-form-group">
+					<view class="title">姓名</view>
+					<text>{{acctPerson}}</text>
+				</view>
+				<view class="cu-form-group">
+					<view class="title">手机号码</view>
+					<text>{{acctPhone}}</text>
+				</view>
+			</view>
+			<view class="cu-bar bg-white margin-top">
 				<view class="action">
 					<text class="cuIcon-title text-green"></text>
 					<text>联系方式</text>
@@ -63,8 +79,8 @@
 					<view class="title">满意度</view>
 					<uni-rate :value="rate" @change="rateChange"></uni-rate>
 					</view>
-					<view class="cu-form-group" v-if="rate!==5">
-						<textarea maxlength="-1" @input="setPointDiscuss" placeholder="请留下您的宝贵意见方便我们更好的进步"></textarea>
+					<view class="cu-form-group" v-if="rate!==5&&rate!==4">
+						<textarea maxlength="-1" @input="setPointDiscuss" placeholder="请留下您的宝贵意见以便我们更好的进步"></textarea>
 					</view>
 				</view>
 				<view class="padding flex flex-direction margin-top">
@@ -89,6 +105,8 @@ import uniRate from '@/components/uni-rate/uni-rate.vue'
 		onLoad:function(option){
 			Api.getWOInfo(option.orderId).then(res=>{
 				console.log(res)
+				this.acctPerson = res.data.acctPerson
+				this.acctPhone = res.data.acctPhone
 				this.person=res.data.person
 				this.phone=res.data.phone
 				this.br=res.data.br
@@ -126,7 +144,9 @@ import uniRate from '@/components/uni-rate/uni-rate.vue'
 				woid: '',
 				suggestion: '',
 				rate: 5,
-				isDisable: false
+				isDisable: false,
+				acctPerson: '',
+				acctPhone: ''
 			};
 		},
 		methods: {
@@ -142,10 +162,10 @@ import uniRate from '@/components/uni-rate/uni-rate.vue'
 				})
 			},
 			point(){
-				if(this.rate!==5&&this.suggestion===''){
+				if(this.rate!==5&&this.rate!==4&&this.suggestion===''){
 					uni.showToast({
 						icon:"none",
-						title:"请留下您宝贵的建议"
+						title:"请留下您宝贵的建议",
 					})
 				}else{
 					const data = {

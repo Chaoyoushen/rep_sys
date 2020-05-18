@@ -1,8 +1,11 @@
 <template>
 	<view>
 		<form name="cusWO">
-			<view class="cu-bar margin-top">
-				<text style="color: #ED1C24;margin-left: 20rpx;margin-right: 10rpx;">报修范围：支持办公及电子设备故障报修,开通网络权限、531交易报错请提交生产运维工单</text>
+			<view class="margin-top">
+				<text style="color: #ED1C24;margin-left: 20rpx;margin-right: 10rpx;">1.报修范围：支持办公及电子设备故障报修</text>
+			</view>
+			<view>
+				<text style="color: #ED1C24;margin-left: 20rpx;margin-right: 10rpx;">2.开通网络权限、531交易报错请提交生产运维工单</text>
 			</view>
 
 			<view class="cu-bar bg-white margin-top">
@@ -16,7 +19,7 @@
 				<input @input="setPerson" style="text-align:right" :value="person"></input>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">电话号码</view>
+				<view class="title">手机号码</view>
 				<input @input="setPhone" style="text-align:right" :value="phone"></input>
 			</view>
 			<view class="cu-form-group">
@@ -35,10 +38,20 @@
 				<view class="title">设备类型</view>
 				<picker mode="multiSelector" @change="MultiChange" range-key="label" @columnchange="MultiColumnChange" :value="multiIndex"
 				 :range="multiArray">
-					<view class="picker">
-						{{multiArray[0][multiIndex[0]].children.length===0?multiArray[0][multiIndex[0]].label:multiArray[1][multiIndex[1]].label}}
+					<view class="picker">	
+						{{multiArray.length===0?'请选择':multiArray[0][multiIndex[0]].children.length===0?multiArray[0][multiIndex[0]].label:multiArray[1][multiIndex[1]].label}}
 					</view>
 				</picker>
+			</view>
+			<view v-if="visible">
+				<view class="cu-form-group">
+					<view class="title">工程师</view>
+					<text>{{workerName}}</text>
+				</view>
+				<view class="cu-form-group">
+					<view class="title">工程师电话</view>
+					<text>{{workerPhone}}</text>
+				</view>
 			</view>
 			<view class="cu-bar bg-white margin-top">
 				<view class="action">
@@ -55,7 +68,7 @@
 					<text>图片上传</text>
 				</view>
 				<view class="action">
-					{{imgList.length}}/4
+					{{imgList.length}}/2
 				</view>
 			</view>
 			<view class="cu-form-group">
@@ -66,7 +79,7 @@
 							<text class='cuIcon-close'></text>
 						</view>
 					</view>
-					<view class="solids" @tap="ChooseImage" v-if="imgList.length<4">
+					<view class="solids" @tap="ChooseImage" v-if="imgList.length<2">
 						<text class='cuIcon-cameraadd'></text>
 					</view>
 				</view>
@@ -98,6 +111,20 @@
 				this.phone = res.data.phone
 				this.tmplIds.push(res.data.tmpId)
 				uni.hideLoading()
+				if(res.data.flag==="1"){
+					uni.showModal({
+						title: "温馨提示",
+						content: "您存在未评价工单，完成评价后才可以提新的工单！",
+						showCancel: false,
+						confirmText: "去评价",
+						success: function() {
+							uni.hideLoading()
+							uni.reLaunch({
+								url: '/pages/his_wo/his_wo'
+							})
+						}
+					})
+				}
 			})
 		},
 		onShow:function(){
@@ -141,7 +168,10 @@
 				phone: '',
 				orgId: '',
 				isDisable: false,
-				tmplIds: []
+				tmplIds: [],
+				workerName: '',
+				workerPhone: '',
+				visible: false
 			};
 		},
 		methods: {
@@ -155,7 +185,7 @@
 			},
 			ChooseImage() {
 				uni.chooseImage({
-					count: 4, //默认9
+					count: 2, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album', 'camera'],
 					success: (res) => {
@@ -198,8 +228,16 @@
 				this.multiIndex = e.detail.value
 				if (this.multiArray[0][this.multiIndex[0]].children.length === 0) {
 					this.machineId = this.multiArray[0][this.multiIndex[0]].value
+					this.visible = false
 				} else {
 					this.machineId = this.multiArray[1][this.multiIndex[1]].value
+					if(this.multiArray[1][this.multiIndex[1]].person !== null&&this.multiArray[1][this.multiIndex[1]].person !== null){
+						this.workerName = this.multiArray[1][this.multiIndex[1]].person
+						this.workerPhone = this.multiArray[1][this.multiIndex[1]].phone
+						this.visible = true
+					}else{
+						this.visible = false
+					}
 				}
 			},
 			MultiColumnChange(e) {
@@ -231,6 +269,7 @@
 				this.person = e.detail.value
 			},
 			createWO() {
+				const that = this
 				let data = {
 					machineId: this.machineId,
 					faultId: this.faultId,
@@ -275,7 +314,6 @@
 					})
 					return
 				}
-				const that = this
 				this.isDisable = true
 				uni.showLoading({
 					title: '提交中',
@@ -283,17 +321,17 @@
 				Api.createWO(data, this.imgList).then(res => {
 					uni.hideLoading()
 					if (res.code == 200) {
-						this.index = -1
-						this.imgList = []
-						this.multiIndex = [0, 0]
-						this.flag = false
-						this.machineId = ''
-						this.faultId = ''
-						this.description = ''
-						this.person = ''
-						this.phone = ''
+						that.index = -1
+						that.imgList = []
+						that.multiIndex = [0, 0]
+						that.flag = false
+						that.machineId = ''
+						that.faultId = ''
+						that.description = ''
+						that.person = ''
+						that.phone = ''
 						wx.requestSubscribeMessage({
-							tmplIds: this.tmplIds,
+							tmplIds: that.tmplIds,
 							success(res){
 								console.log('success')
 								console.log(res)

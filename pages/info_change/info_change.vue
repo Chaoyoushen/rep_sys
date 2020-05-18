@@ -11,7 +11,7 @@
 			<text>{{data.name}}</text>
 		</view>
 		<view class="cu-form-group">
-			<view class="title">联系电话</view>
+			<view class="title">联系手机</view>
 			<input :value="data.phone" style="text-align:right" @input="setPhone"></text>
 		</view>
 		<view class="cu-form-group" @click="goChangeOrg">
