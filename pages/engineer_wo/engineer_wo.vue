@@ -15,7 +15,7 @@
 		<view class="cu-bar bg-white margin-top">
 			<view class="action">
 				<text class="cuIcon-title text-green"></text>
-				<text>工单具体信息</text>
+				<text>工单联系人</text>
 			</view>
 		</view>
 		<view class="cu-form-group">
@@ -44,6 +44,36 @@
 		</view>
 		<view class="cu-form-group bg-white">
 			<text class="detail_text">{{description}}</text>
+		</view>
+
+		<view v-if="images.length>0">
+			<view class="cu-bar bg-white margin-top">
+				<view class="action">
+					<text class="cuIcon-title text-green"></text>
+					<text>工单图片</text>
+				</view>
+			</view>
+			<view class="cu-form-group">
+				<view class="grid col-4 grid-square flex-sub">
+					<view class="bg-img" v-for="(item,index) in images" :key="index" @tap="onImageTouch(index)">
+						<image :src="item" mode="aspectFill"></image>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="cu-bar bg-white margin-top">
+			<view class="action">
+				<text class="cuIcon-title text-green"></text>
+				<text>工单操作</text>
+			</view>
+		</view>
+		<view class="cu-form-group">
+			<view class="title">技术难度评估</view>
+			<picker @change="difChange" :value="difIndex" :range="difPickerArray" range-key="label">
+				<view class="picker">
+					{{difIndex>-1?difPickerArray[difIndex].label:'请评估处理时间'}}
+				</view>
+			</picker>
 		</view>
 		<view class="cu-form-group">
 			<view class="title">故障区域</view>
@@ -78,21 +108,6 @@
 					{{multiPersonIndex[1]>-1?multiPersonArray[1][multiPersonIndex[1]].label:'请选择转单人'}}
 				</view>
 			</picker>
-		</view>
-		<view v-if="images.length>0">
-			<view class="cu-bar bg-white margin-top">
-				<view class="action">
-					<text class="cuIcon-title text-green"></text>
-					<text>工单图片</text>
-				</view>
-			</view>
-			<view class="image-list cu-form-group bg-white">
-				<view class="image-item" v-for="(item,index) in images" :key="index">
-					<view class="image-content">
-						<image style="width: 180rpx; height: 200rpx;" mode="aspectFit" :src="item" @click="onImageTouch(index)"></image>
-					</view>
-				</view>
-			</view>
 		</view>
 		<view class="cu-bar margin-top bg-white" v-show="sts === '2'">
 			<view class="action">
@@ -132,6 +147,7 @@
 				title: '加载中'
 			})
 			Api.getWOInfo(option.orderId).then(res => {
+				console.log(res)
 				this.orderId = option.orderId
 				this.person = res.data.person
 				this.phone = res.data.phone
@@ -143,6 +159,10 @@
 				this.faultId = res.data.faultId
 				this.faultType = res.data.faultType
 				this.machineId = res.data.machineId
+				if(res.data.difIndex !== null){
+					console.log("==================================")
+					this.difIndex = res.data.difIndex
+				}
 				if (res.data.faultType.length == 0) {
 					this.faultType = '请选择故障类型'
 				}
@@ -203,7 +223,10 @@
 				personId: '',
 				nextPersonId: '',
 				complete: false,
-				isDisable: false
+				isDisable: false,
+				difPickerArray: [{label:'10分钟以内',value : '1'},{label:'10-30分钟',value : '2'},{label:'30-60分钟',value : '3'},{label:'60分钟及以上',value : '4'},{label:'上门处理',value : '6'}],
+				difValue: '',
+				difIndex: -1
 			};
 		},
 		methods: {
@@ -214,6 +237,14 @@
 					this.index = e.detail.value
 				}
 				this.faultId = this.faultPickerArray[this.index].value
+			},
+			difChange(e) {
+				if (e.detail.value === -1) {
+					this.difIndex = 0
+				} else {
+					this.difIndex = e.detail.value
+				}
+				this.difValue = this.difPickerArray[this.difIndex].value
 			},
 			FaultPickerChange(e) {
 				if (e.detail.value === -1) {
@@ -238,6 +269,9 @@
 				let len = data.multiArray[0].length
 				console.log('len:' + len)
 				data.multiIndex[e.detail.column] = e.detail.value
+				if(e.detail.column === 0){
+					data.multiIndex[1] = 0
+				}
 				if (data.multiArray[0][data.multiIndex[0]].children === null || data.multiArray[0][data.multiIndex[0]].children.length ===
 					0) {
 					data.multiArray[1] = []
@@ -261,6 +295,9 @@
 				let len = data.multiPersonArray[0].length
 				console.log('len:' + len)
 				data.multiPersonIndex[e.detail.column] = e.detail.value
+				if(e.detail.column === 0){
+					data.multiPersonIndex[1] = 0
+				}
 				data.multiPersonArray[1] = data.multiPersonArray[0][data.multiPersonIndex[0]].children
 				this.multiPersonIndex.splice(1, 0)
 				this.multiPersonArray = data.multiPersonArray
@@ -289,11 +326,19 @@
 					complete: this.complete,
 					nextPersonId: this.personId,
 					faultType: this.faultIndex,
+					difFlag: this.difValue
 				}
 				console.log(data)
 				if (data.operationInfo == '') {
 					uni.showToast({
 						title: '请填写意见',
+						icon: 'none'
+					})
+					return
+				}
+				if (data.difFlag == '') {
+					uni.showToast({
+						title: '请评估处理时间',
 						icon: 'none'
 					})
 					return

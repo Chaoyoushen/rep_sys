@@ -50,7 +50,7 @@
 				</view>
 				<view class="cu-form-group">
 					<view class="title">工程师电话</view>
-					<text>{{workerPhone}}</text>
+					<text @longtap="makeCall">{{workerPhone}}</text>
 				</view>
 			</view>
 			<view class="cu-bar bg-white margin-top">
@@ -184,12 +184,17 @@
 				}
 			},
 			ChooseImage() {
+				let count = 2
+				if(this.imgList.length!=0){
+					count = count - this.imgList.length
+				}
 				uni.chooseImage({
-					count: 2, //默认9
+					count: count, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album', 'camera'],
 					success: (res) => {
 						if (this.imgList.length != 0) {
+							if(res.tempFilePaths)
 							this.imgList = this.imgList.concat(res.tempFilePaths)
 						} else {
 							this.imgList = res.tempFilePaths
@@ -240,6 +245,13 @@
 					}
 				}
 			},
+			makeCall(){
+				if(this.workerPhone!=null&&this.workerPhone.length>7){
+					uni.makePhoneCall({
+						phoneNumber:this.workerPhone
+					})
+				}
+			},
 			MultiColumnChange(e) {
 				let data = {
 					multiArray: this.multiArray,
@@ -248,6 +260,9 @@
 				let len = data.multiArray[0].length
 				console.log('len:' + len)
 				data.multiIndex[e.detail.column] = e.detail.value
+				if(e.detail.column === 0){
+					data.multiIndex[1] = 0
+				}
 				if (data.multiArray[0][data.multiIndex[0]].children === null || data.multiArray[0][data.multiIndex[0]].children.length ===
 					0) {
 					data.multiArray[1] = []
@@ -318,30 +333,21 @@
 				uni.showLoading({
 					title: '提交中',
 				})
-				Api.createWO(data, this.imgList).then(res => {
-					uni.hideLoading()
-					if (res.code == 200) {
-						that.index = -1
-						that.imgList = []
-						that.multiIndex = [0, 0]
-						that.flag = false
-						that.machineId = ''
-						that.faultId = ''
-						that.description = ''
-						that.person = ''
-						that.phone = ''
-						wx.requestSubscribeMessage({
-							tmplIds: that.tmplIds,
-							success(res){
-								console.log('success')
-								console.log(res)
-								that.createWO(data)
-							},
-							fail(res){
-								console.log('fail')
-								console.log(res)
-							},
-							complete(){
+				wx.requestSubscribeMessage({
+					tmplIds: that.tmplIds,
+					complete(){
+						Api.createWO(data, that.imgList).then(res => {
+							uni.hideLoading()
+							if (res.code == 200) {
+								that.index = -1
+								that.imgList = []
+								that.multiIndex = [0, 0]
+								that.flag = false
+								that.machineId = ''
+								that.faultId = ''
+								that.description = ''
+								that.person = ''
+								that.phone = ''
 								uni.showModal({
 									title: "提交成功",
 									content: "你已完成报修工单的提交！",
@@ -354,31 +360,32 @@
 										})
 									}
 								})
-							}
-						})
-
-					}else if (res.code===501&&res.data===6005){
-						uni.showModal({
-							title: "提交失败",
-							content: "你还存在未评价工单！",
-							showCancel: false,
-							confirmText: "去评价",
-							success: function() {
-								uni.hideLoading()
-								uni.reLaunch({
-									url: '/pages/his_wo/his_wo'
+							}else if (res.code===501&&res.data===6005){
+								uni.showModal({
+									title: "提交失败",
+									content: "你还存在未评价工单！",
+									showCancel: false,
+									confirmText: "去评价",
+									success: function() {
+										uni.hideLoading()
+										uni.reLaunch({
+											url: '/pages/his_wo/his_wo'
+										})
+									}
+								})
+							}else {
+								wx.showToast({
+									icon: 'none',
+									title: '提交失败',
+									mask: true,
+									duration: 2000
 								})
 							}
 						})
-					}else {
-						wx.showToast({
-							icon: 'none',
-							title: '提交失败',
-							mask: true,
-							duration: 2000
-						})
+
 					}
 				})
+
 
 			}
 

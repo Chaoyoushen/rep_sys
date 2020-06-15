@@ -14,7 +14,7 @@
 				</view>
 				<view class="cu-form-group">
 					<view class="title">手机号码</view>
-					<text>{{acctPhone}}</text>
+					<text @longtap="makeCall">{{acctPhone}}</text>
 				</view>
 			</view>
 			<view class="cu-bar bg-white margin-top">
@@ -59,10 +59,10 @@
 						<text>工单图片</text>
 					</view>
 				</view>
-				<view class="image-list cu-form-group bg-white">
-					<view class="image-item" v-for="(item,index) in images" :key="index">
-						<view class="image-content">
-							<image style="width: 180rpx; height: 200rpx;" mode="aspectFit" :src="item" @click="onImageTouch(index)"></image>
+				<view class="cu-form-group">
+					<view class="grid col-4 grid-square flex-sub">
+						<view class="bg-img" v-for="(item,index) in images" :key="index" @tap="onImageTouch(index)">
+							<image :src="item" mode="aspectFill"></image>
 						</view>
 					</view>
 				</view>
@@ -160,6 +160,13 @@ import uniRate from '@/components/uni-rate/uni-rate.vue'
 				uni.navigateTo({
 					url: '/pages/operation_his/operation_his?orderId=' + this.woid
 				})
+			},
+			makeCall(){
+				if(this.acctPhone!=null&&this.acctPhone.length>7){
+					uni.makePhoneCall({
+						phoneNumber:this.acctPhone
+					})
+				}
 			},
 			point(){
 				if(this.rate!==5&&this.rate!==4&&this.suggestion===''){

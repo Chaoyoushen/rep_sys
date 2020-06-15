@@ -14,7 +14,7 @@ export const globalInterceptor = {
  */
 export const config = {
     baseURL: 'https://dev.bnld.chaoyous.cn',
-	// baseURL:'http://127.0.0.1:7002',
+	// baseURL:'http://127.0.0.1:7001',
     header: {
         // 'X-Auth-Token': 'xxxx',
         contentType: 'application/x-www-form-urlencoded'

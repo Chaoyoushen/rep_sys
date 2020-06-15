@@ -87,7 +87,7 @@ export default {
 		});
 	},
 	completeWO(data) {
-		return Request().post('/wo/acceptWO', {
+		return Request().post('/wo/completeWO', {
 			header: {
 				contentType: 'application/json'
 			},
