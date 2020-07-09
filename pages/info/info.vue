@@ -26,6 +26,10 @@
 			<view class="title">历史工单查询</view>
 			<text class="lg text-gray cuIcon-right"></text>
 		</view>
+		<view class="cu-form-group bg-white margin-top" @click="washPage">
+			<view class="title">洗衣报送</view>
+			<text class="lg text-gray cuIcon-right"></text>
+		</view>
 		<view class="padding flex flex-direction margin-top">
 			<button class="cu-btn bg-gradual-blue lg" @click="logout">退出登录</button>
 		</view>
@@ -77,6 +81,11 @@
 			intoClosedWO(){
 				uni.navigateTo({
 					url:"../close_wo_list/close_wo_list"
+				})
+			},
+			washPage(){
+				uni.navigateTo({
+					url:"../wash_page/wash_page"
 				})
 			}
 		}
