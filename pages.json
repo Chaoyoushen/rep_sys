@@ -92,6 +92,18 @@
             "path" : "pages/wash_page/wash_page",
             "style" : {}
         }
+        ,{
+            "path" : "pages/wash_his/wash_his",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/wash_detail/wash_detail",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/home/home",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

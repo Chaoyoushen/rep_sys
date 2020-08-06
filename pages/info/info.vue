@@ -30,6 +30,10 @@
 			<view class="title">洗衣报送</view>
 			<text class="lg text-gray cuIcon-right"></text>
 		</view>
+		<view class="cu-form-group bg-white" @click="washHis">
+			<view class="title">送洗记录</view>
+			<text class="lg text-gray cuIcon-right"></text>
+		</view>
 		<view class="padding flex flex-direction margin-top">
 			<button class="cu-btn bg-gradual-blue lg" @click="logout">退出登录</button>
 		</view>
@@ -87,6 +91,11 @@
 				uni.navigateTo({
 					url:"../wash_page/wash_page"
 				})
+			},
+			washHis(){
+					uni.navigateTo({
+					url:"../wash_his/wash_his"
+			})
 			}
 		}
 	}
