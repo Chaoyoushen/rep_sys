@@ -20,37 +20,14 @@
 					<text>洗衣数量</text>
 				</view>
 			</view>
-			<view class="cu-form-group">
-				<view class="title">西装上装</view>
-				<input style="text-align:right" type="number" v-model="formData.xzsz" placeholder="0"></input>
+			<view v-for="item in items" :key="item.cloType">
+				<view class="cu-form-group">
+					<view class="title">{{item.cloName}}</view>
+					<input style="text-align:right" type="number" v-model="formData.itemList[item.cloType]" placeholder="0" @input="countChange()"></input>
+				</view>
 			</view>
-			<view class="cu-form-group">
-				<view class="title">西装下装</view>
-				<input style="text-align:right" v-model="formData.xzxz" placeholder="0"></input>
-			</view>
-			<view class="cu-form-group">
-				<view class="title">衬衣</view>
-				<input style="text-align:right" type="number" v-model="formData.cy" placeholder="0"></input>
-			</view>
-			<view class="cu-form-group">
-				<view class="title">西背</view>
-				<input style="text-align:right" type="number" v-model="formData.xb" placeholder="0"></input>
-			</view>
-			<view class="cu-form-group">
-				<view class="title">丝巾</view>
-				<input style="text-align:right" type="number" v-model="formData.sj" placeholder="0"></input>
-			</view>
-			<view class="cu-form-group">
-				<view class="title">领带</view>
-				<input style="text-align:right" type="number" v-model="formData.ld" placeholder="0"></input>
-			</view>
-			<view class="cu-form-group">
-				<view class="title">大衣</view>
-				<input style="text-align:right" type="number" v-model="formData.dy" placeholder="0"></input>
-			</view>
-			<view class="cu-form-group">
-				<view class="title">其他</view>
-				<input style="text-align:right" type="number" v-model="formData.qt" placeholder="0"></input>
+			<view class="margin-top">
+				<text style="color: #ED1C24;margin-left: 20rpx;margin-right: 10rpx;">预计花费：{{count}}元</text>
 			</view>
 			<view class="padding flex flex-direction margin-top">
 				<button class="cu-btn bg-gradual-blue lg" @tap="createWO">提交</button>
@@ -66,39 +43,42 @@
 		onShow:function() {
 			Api.initwashAmount().then(res=>{
 			console.log(res)
+			this.items = res.data.items
 		    this.rest = res.data.rest;
 		   })		
 		},
 		data() {
 			return {
+				items:[],
 				formData:{
-					phone: '',
-					xzsz: '',
-					xzxz: '',
-					cy: '',
-					xb: '',
-					sj: '',
-					ld: '',
-					dy: '',
-					qt: '',
-					person:'',
+					itemList:{}
 				},
-				rest: ''
+				rest: 0,
+				count: 0
 			}
 		},
 		methods: {
+			countChange(){
+				this.count = 0
+				let i = 0
+				for(i = 0;i<this.items.length;i++){
+					if(null != this.formData.itemList[this.items[i].cloType]){
+						this.count = this.count + this.items[i].cloCast * this.formData.itemList[this.items[i].cloType]
+					}
+				}
+				
+			},
 			createWO(){
-				console.log(this.formData)
 				Api.createWash(this.formData).then(res=>{
 					uni.showModal({
 						title: "提交成功",
-					success: function() {
-						uni.hideLoading()
-						uni.navigateBack({
-							url: '/pages/wash_his/wash_his'
-						})
-					}
-						})
+						success: function() {
+							uni.hideLoading()
+							uni.navigateBack({
+								url: '/pages/wash_his/wash_his'
+							})
+						}
+					})
 				})
 			}
 		}
