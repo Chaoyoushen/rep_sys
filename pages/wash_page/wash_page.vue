@@ -22,7 +22,7 @@
 			</view>
 			<view v-for="item in items" :key="item.cloType">
 				<view class="cu-form-group">
-					<view class="title">{{item.cloName}}</view>
+					<view class="title margin-right-sm">{{item.cloName}}<text class="margin-right-xs text-cut" style="font-size: 12px;color: #BBBBBB;">{{item.cloCast + '元/件'}}</text></view>
 					<input style="text-align:right" type="number" v-model="formData.itemList[item.cloType]" placeholder="0" @input="countChange()"></input>
 				</view>
 			</view>
@@ -32,7 +32,6 @@
 			<view class="padding flex flex-direction margin-top">
 				<button class="cu-btn bg-gradual-blue lg" @tap="createWO">提交</button>
 			</view>
-
 		</form>
 	</view>
 </template>
@@ -69,6 +68,18 @@
 				
 			},
 			createWO(){
+				if(count>rest){
+					uni.showModal({
+						title: "提交失败",
+						content:"余额不足",
+						success: function() {
+							uni.hideLoading()
+							uni.navigateBack({
+								url: '/pages/wash_his/wash_his'
+							})
+						}
+					})
+				}
 				Api.createWash(this.formData).then(res=>{
 					uni.showModal({
 						title: "提交成功",
