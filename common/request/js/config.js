@@ -13,8 +13,8 @@ export const globalInterceptor = {
  * `header` 中`content-type`设置特殊参数 或 配置其他会导致触发 跨域 问题，出现跨域会直接进入响应拦截器的catch函数中
  */
 export const config = {
-    baseURL: 'https://dev.bnld.chaoyous.cn',
-	// baseURL:'http://127.0.0.1:7001',
+    // baseURL: 'https://bnld.xuexuebaobei.com',
+	baseURL:'http://127.0.0.1:7001',
     header: {
         // 'X-Auth-Token': 'xxxx',
         contentType: 'application/x-www-form-urlencoded'
@@ -51,7 +51,7 @@ globalInterceptor.request.use(
  *
  * `return res` 继续返回数据
  * `return false` 停止返回数据，不会进入错误数据拦截，也不会进入catch函数中
- * `return Promise.reject('xxxxx')` 返回错误信息, 会错误数据拦截，也会进入catch函数中
+ * `return Promise.reject('xxxxx')` 返回错误信息, 会错误数据拦截，也会进入catch函数中w
  *
  * @param {Object} res 请求返回的数据
  * @param {Object} config 发送请求的配置数据

@@ -1,7 +1,7 @@
 <template>
 <view>
-	<view class="cu-list menu" v-for="item in WOList":key="item.id" >
-			<view class="cu-item"  @click="WashDetail(item.id)">
+	<view class="cu-list menu" v-for="item in WOList" :key="item.id" >
+			<view class="cu-item"  @click="WashDetail(item)">
 				<view class="content padding-tb-sm">
 					<view>
 						<text class="margin-right-xs text-cut">{{item.person}}</text>
@@ -46,10 +46,10 @@
 				var DD = date.getDate()
 				return YY+"年"+MM+"月"+DD+"日"
 			},
-			WashDetail(id){
-				console.log(id)
+			WashDetail(item){
+				console.log(item)
 				uni.navigateTo({
-					url:'../wash_detail/wash_detail?id='+id
+					url:'../wash_detail/wash_detail?id='+item.id+'&sts='+item.sts
 				})
 			}
 			

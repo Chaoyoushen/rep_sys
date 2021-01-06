@@ -64,6 +64,7 @@ import Api from '../../api/user';
 								}else{
 									uni.setStorageSync('token', res.data.token);
 									uni.setStorageSync('role', res.data.role);
+									uni.setStorageSync('washFlag', res.data.washFlag);
 									this.direct(res.data.role)
 								}
 							}

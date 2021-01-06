@@ -10,6 +10,15 @@ export default {
         });
     },
 	
+	feedback(data) {
+	    return Request().post('/feedback/makeFeedback', {
+	        header: {
+	            contentType: 'application/json'
+	        },
+	        data: data
+	    });
+	},
+	
 	logout() {
 	    return Request().post('/user/logout', {
 	        header: {

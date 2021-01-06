@@ -26,12 +26,18 @@
 			<view class="title">历史工单查询</view>
 			<text class="lg text-gray cuIcon-right"></text>
 		</view>
-		<view class="cu-form-group bg-white margin-top" @click="washPage">
-			<view class="title">洗衣报送</view>
-			<text class="lg text-gray cuIcon-right"></text>
+		<view v-if="washFlag=='1'">
+			<view class="cu-form-group bg-white margin-top" @click="washPage">
+				<view class="title">洗衣报送</view>
+				<text class="lg text-gray cuIcon-right"></text>
+			</view>
+			<view class="cu-form-group bg-white" @click="washHis">
+				<view class="title">送洗记录</view>
+				<text class="lg text-gray cuIcon-right"></text>
+			</view>
 		</view>
-		<view class="cu-form-group bg-white" @click="washHis">
-			<view class="title">送洗记录</view>
+		<view class="cu-form-group bg-white margin-top" @click="feedback">
+			<view class="title">意见反馈</view>
 			<text class="lg text-gray cuIcon-right"></text>
 		</view>
 		<view class="padding flex flex-direction margin-top">
@@ -50,14 +56,7 @@
 					this.bkName = res.data.bkName
 					this.name = res.data.name
 					this.phone = res.data.phone
-				})
-		},
-		onLoad:function(){
-			Api.getUserInfo().then(res => {
-					console.log(res)
-					this.bkName = res.data.bkName
-					this.name = res.data.name
-					this.phone = res.data.phone
+					this.washFlag = res.data.washFlag
 				})
 		},
 		data() {
@@ -65,6 +64,7 @@
 				bkName: '',
 				name: '',
 				phone: '',
+				washFlag: '0'
 			};
 		},
 		methods: {
@@ -90,6 +90,11 @@
 			washPage(){
 				uni.navigateTo({
 					url:"../wash_page/wash_page"
+				})
+			},
+			feedback(){
+				uni.navigateTo({
+					url:"../feedback/feedback"
 				})
 			},
 			washHis(){
