@@ -40,6 +40,10 @@
 			<view class="title">意见反馈</view>
 			<text class="lg text-gray cuIcon-right"></text>
 		</view>
+		<view class="cu-form-group bg-white margin-top" @click="orderReport">
+			<view class="title">年度报修账单</view>
+			<text class="lg text-gray cuIcon-right"></text>
+		</view>
 		<view class="padding flex flex-direction margin-top">
 			<button class="cu-btn bg-gradual-blue lg" @click="logout">退出登录</button>
 		</view>
@@ -95,6 +99,11 @@
 			feedback(){
 				uni.navigateTo({
 					url:"../feedback/feedback"
+				})
+			},
+			orderReport(){
+				uni.navigateTo({
+					url:"../order_report/order_report"
 				})
 			},
 			washHis(){

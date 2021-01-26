@@ -113,6 +113,12 @@
             }
             
         }
+		,{
+            "path" : "pages/order_report/order_report",
+            "style" : {
+				"navigationBarTitleText": "年度报修账单"
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

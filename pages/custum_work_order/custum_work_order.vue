@@ -88,16 +88,35 @@
 				<button class="cu-btn bg-gradual-blue lg" @tap="createWO" :disabled="isDisable">提交</button>
 			</view>
 		</form>
+		<uni-popup ref="showImage" :mask-click="false" @change="change">
+			<view class="uni-image">
+				<image class="image" src="/static/popup.png" mode="scaleToFill" @click="imageBtn" />
+				<view class="uni-image-close" @click="cancel('Image')">
+					<uni-icons type="clear" color="#fff" size="40" />
+				</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
 	import Api from '../../api/wo';
+	import uniPopup from '@/components/uni-popup/uni-popup.vue';
+	import uniIcons from '@/components/uni-icons/uni-icons.vue';
 	export default {
+		components: {
+			uniPopup,
+			uniIcons
+		},
 		onLoad: function() {
 			uni.showLoading({
 				title: '加载中'
 			});
+			
+			/* this.$nextTick(() => {
+				this.$refs['showImage'].open();
+			}); */
+			
 			Api.initWO().then(res => {
 				this.bkName = res.data.org
 				console.log(res.data)
@@ -111,6 +130,9 @@
 				this.phone = res.data.phone
 				this.tmplIds.push(res.data.tmpId)
 				uni.hideLoading()
+				this.$nextTick(() => {
+					this.$refs['showImage'].open();
+				})
 				if(res.data.flag==="1"){
 					uni.showModal({
 						title: "温馨提示",
@@ -125,12 +147,30 @@
 						}
 					})
 				}
-			})
+			});
+			
+			/* uni.showModal({
+				title:"发现报修系统年度账单",
+				content:"是否前往查看？",
+				showCancel:true,
+				cancelText:'取消',
+				confirmText:"前往",
+				confirmColor:'#f55850',
+				cancelColor:'#39B54A',
+				success:(res)=>{
+					if(res.confirm){
+						uni.reLaunch({
+							url:'/pages/order_report/order_report'
+						})
+					}
+				}
+			}); */
 		},
 		onShow:function(){
 			uni.showLoading({
 			    title: '加载中'
 			});
+			/* this.$refs['showImage'].open(); */
 			if(uni.getStorageSync('refresh_flag') === '1'){
 				Api.initWO().then(res => {
 						this.bkName = res.data.org
@@ -175,6 +215,17 @@
 			};
 		},
 		methods: {
+			cancel(type) {
+				this.$refs['show' + type].close()
+			},
+			change(e) {
+				console.log('是否打开:' + e.show)
+			},
+			imageBtn(){
+				uni.navigateTo({
+					url:'/pages/order_report/order_report'
+				})
+			},
 			ValidatePhone(val) {
 				var isPhone = /^1[3456789]\d{9}$/ //手机号码
 				if (isPhone.test(val)) {
@@ -394,6 +445,18 @@
 </script>
 
 <style>
+	.uni-image {
+		/* position: relative; */
+	}
+	.image {
+		width: 300px;
+		height: 300px;
+	}
+	.uni-image-close {
+		margin-top: 30px;
+		text-align: center;
+	}
+	
 	.cu-form-group .title {
 		min-width: calc(4em + 15px);
 	}

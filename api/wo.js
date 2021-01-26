@@ -155,7 +155,14 @@ export default {
             }
         });
         return instance;
-    }
+    },
+	getPerOR() {
+	    return Request().post('/wo/getPerOR', {
+	        header: {
+	            contentType: 'application/json'
+	        },
+	    });
+	},
 	
 	
 }
