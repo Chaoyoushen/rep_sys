@@ -38,10 +38,10 @@
 						<view class="padding shadow-blur radius text-xxl text-bold text-shadow"
 						 style="width: 100%;">
 							<view class="text-left padding">
-								从<text class="text-purple padding">{{data.earlyTime}}</text>点
+								最早<text class="text-purple padding">{{data.earlyTime}}</text>报修
 							</view>
 							<view class="text-left padding">
-								至<text class="text-purple padding">{{data.lastlyTime}}</text>点
+								最晚<text class="text-purple padding">{{data.lastlyTime}}</text>报修
 							</view>
 							<view class="text-center padding">您的努力</view>
 							<view class="text-center padding">都是值得的</view>
@@ -83,21 +83,24 @@
 				</swiper-item>
 				<swiper-item>
 					<view class="swiper-item justify-center align-center bg-img">
-						<image class="pic_background" src="/static/orbg.jpg" />
+						<image class="pic_background" src="/static/orbg1.jpg" />
 						<view class="padding shadow-blur radius text-xxl text-bold text-shadow"
 						 style="width: 100%;">
-							<view class="text-center padding">二零二零年，您的年度评价是</view>
+							<!-- <view class="text-center padding text-mauve" style="margin-top: 30px;">二零二零年，您的年度评价是</view> -->
 							<view v-if="data.allNum <= 5">
-								<view class="text-center padding text-purple">报修尝鲜者</view>
-								<view class="text-center padding text-mauve">敢于尝试新鲜事物，才能发现数字化的便捷</view>
+								<view class="text-center padding text-mauve" style="margin-top: 30px;">二零二零年，您的年度评价是</view>
+								<view class="text-center padding text-purple" style="margin-top: 40px;">报修尝鲜者</view>
+								<view class="text-center padding text-mauve" style="margin-top: 90px;">敢于尝试新鲜事物，才能发现数字化的便捷</view>
 							</view>
 							<view v-else-if="data.allNum <= 14">
-								<view class="text-center padding text-purple">报修能手</view>
-								<view class="text-center padding text-mauve">困难不用愁，一键有人修</view>
+								<view class="text-center padding text-mauve" style="margin-top: 10px;">二零二零年，您的年度评价是</view>
+								<view class="text-center padding text-purple" style="margin-top: 30px;">报修能手</view>
+								<view class="text-center padding text-mauve" style="margin-top: 90px;">困难不用愁，一键有人修</view>
 							</view>
 							<view v-else-if="data.allNum >= 15">
-								<view class="text-center padding text-purple">报修高手</view>
-								<view class="text-center padding text-mauve">具备数字化思维，才能事半功倍</view>
+							<view class="text-center padding text-mauve" style="margin-top: 10px;">二零二零年，您的年度评价是</view>
+								<view class="text-center padding text-purple" style="margin-top: 40px;">报修高手</view>
+								<view class="text-center padding text-mauve" style="margin-top: 90px;">具备数字化思维，才能事半功倍</view>
 							</view>
 						</view>
 					</view>
@@ -120,7 +123,7 @@
 					this.data.lastlyTime = res.data.lastlyTime
 					this.data.allNum = res.data.allNum
 					this.data.rank = res.data.rank
-					this.data.beatNum = Number((res.data.beatNum).toFixed(3)) + '%'
+					this.data.beatNum = ((res.data.beatNum).toFixed(2))*100 + '%'
 					this.data.netNum = res.data.netNum
 					this.data.osNum = res.data.osNum
 					this.data.hardwareNum = res.data.hardwareNum
@@ -262,7 +265,8 @@
 <style>
 	.screen-swiper {
 		/* min-height: 567upx; */
-		min-height: 1210upx;
+		/* min-height: 1210upx; */
+		min-height: 1240upx;
 	}
 	swiper-item .swiper-item {
 		display: flex;

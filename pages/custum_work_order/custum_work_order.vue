@@ -92,7 +92,7 @@
 			<view class="uni-image">
 				<image class="image" src="/static/popup.png" mode="scaleToFill" @click="imageBtn" />
 				<view class="uni-image-close" @click="cancel('Image')">
-					<uni-icons type="clear" color="#fff" size="40" />
+					<uni-icons type="clear" color="#fff" size="30" />
 				</view>
 			</view>
 		</uni-popup>
@@ -449,11 +449,11 @@
 		/* position: relative; */
 	}
 	.image {
-		width: 300px;
-		height: 300px;
+		width: 350px;
+		height: 350px;
 	}
 	.uni-image-close {
-		margin-top: 30px;
+		margin-top: 0px;
 		text-align: center;
 	}
 	
